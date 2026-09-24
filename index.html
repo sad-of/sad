@@ -346,10 +346,10 @@
     <div id="masterKeyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-red-500/40 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-cat"></i></div>
-            <h3 class="text-lg font-black text-gray-900 dark:text-white">إذن مبرمج الموقع مطلوب 🔒</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص لمبرمج الموقع (1962) لإتمام هذه العملية</p>
+            <h3 class="text-lg font-black text-gray-900 dark:text-white">تأكيد الحذف 🔒</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي (1962) لإتمام هذه العملية</p>
             <form onsubmit="confirmMasterKeyAction(event)" class="space-y-3">
-                <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل رمز المبرمج السرّي..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
+                <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل الرمز السرّي (1962)..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
                 <div class="flex gap-2">
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs">تأكيد العملية</button>
                     <button type="button" onclick="closeMasterKeyModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
@@ -599,7 +599,7 @@
                     <!-- قائمة الموظفين الحاليين -->
                     <div class="bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 space-y-3">
                         <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
-                            <i class="fa-solid fa-users text-indigo-500"></i> الموظفين المسجلين حالياً (حذف الموظفين محمي بالرمز 1962):
+                            <i class="fa-solid fa-users text-indigo-500"></i> الموظفين المسجلين حالياً:
                         </h4>
                         <div id="staffMembersList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                     </div>
@@ -612,7 +612,7 @@
                             <h4 class="font-bold text-sm text-gray-900 dark:text-white flex items-center gap-2">
                                 <i class="fa-solid fa-clock-rotate-left text-amber-500"></i> سجل أحدث الإشعارات والتعديلات المباشرة
                             </h4>
-                            <button onclick="requestMasterKeyForAction('clearLogs')" class="text-[10px] bg-red-500/20 text-red-500 hover:bg-red-500/30 px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-shield-halved ml-1"></i> مسح السجل (1962)</button>
+                            <button onclick="requestMasterKeyForAction('clearLogs')" class="text-[10px] bg-red-500/20 text-red-500 hover:bg-red-500/30 px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-trash-can ml-1"></i> مسح السجل والإشعارات</button>
                         </div>
 
                         <div id="logsContainerList" class="space-y-2 max-h-80 overflow-y-auto pr-1">
@@ -797,11 +797,11 @@
             console.error("Firebase Initialization Error:", e);
         }
 
-        const MASTER_PIN_CODE = "1962"; // الرمز المخصص والمثبت لمبرمج الموقع الرئيسي
+        const MASTER_PIN_CODE = "1962"; // الرمز المخصص والمثبت
         let pendingMasterAction = null;
         let targetStaffToDelete = null;
 
-        // قائمة الحسابات المعتمدة - رمز "حسين" و"مبرمج الموقع" تم تعيينهما إلى 1962
+        // قائمة الحسابات المعتمدة الأساسية
         let authorizedUsersList = {
             "حسين": { 
                 pin: "1962", 
@@ -848,7 +848,7 @@
             phone3Owner: "",
             workHours: "يومياً من 9:00 صباحاً حتى 11:00 مساءً",
             workDays: "طيلة أيام الأسبوع",
-            currentStaffList: ["سعد"], // مصفوفة لتخزين أكثر من موظف مناوب بآن واحد
+            currentStaffList: ["سعد"],
             facebook: "https://www.facebook.com/share/1EZL4V5ELX/?mibextid=wwXIfr",
             instagram: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr",
             devName: "مبرمج الموقع",
@@ -922,7 +922,7 @@
         }
 
         function verifyDevPin(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             const input = document.getElementById('devPinInput').value.trim();
             if(input === MASTER_PIN_CODE) {
                 isDevUnlocked = true;
@@ -940,8 +940,14 @@
             document.getElementById('devPinInput').value = '';
         }
 
-        // --- نظام تأكيد رمز المبرمج الرئيسي 1962 ---
+        // --- نظام تأكيد الرمز للحذف ---
         function requestMasterKeyForAction(action, data = null) {
+            // إذا كان المستخدم حسين أو المبرمج أو مفتوح الصلاحيات ينفذ فوراً
+            if(loggedInUser === "حسين" || loggedInUser === "مبرمج الموقع" || isDevUnlocked) {
+                if(action === 'clearLogs') executeClearAuditLogs();
+                else if(action === 'deleteStaff') executeDeleteStaffMember(data);
+                return;
+            }
             pendingMasterAction = action;
             targetStaffToDelete = data;
             document.getElementById('masterKeyInput').value = '';
@@ -956,19 +962,21 @@
         }
 
         function confirmMasterKeyAction(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             const enteredKey = document.getElementById('masterKeyInput').value.trim();
 
             if(enteredKey === MASTER_PIN_CODE) {
+                const act = pendingMasterAction;
+                const staff = targetStaffToDelete;
                 closeMasterKeyModal();
 
-                if(pendingMasterAction === 'clearLogs') {
+                if(act === 'clearLogs') {
                     executeClearAuditLogs();
-                } else if(pendingMasterAction === 'deleteStaff' && targetStaffToDelete) {
-                    executeDeleteStaffMember(targetStaffToDelete);
+                } else if(act === 'deleteStaff' && staff) {
+                    executeDeleteStaffMember(staff);
                 }
             } else {
-                showToast('رمز الحماية السرّي المخصص غير صحيح! ❌');
+                showToast('الرمز السرّي غير صحيح! ❌');
                 document.getElementById('masterKeyInput').value = '';
             }
         }
@@ -1014,7 +1022,7 @@
             container.innerHTML = '';
 
             if(auditLogsList.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد سجلات تعديل حالية.</p>';
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد سجلات أو إشعارات حالية.</p>';
                 return;
             }
 
@@ -1032,38 +1040,39 @@
         }
 
         function executeClearAuditLogs() {
-            if(isFirebaseActive) database.ref('auditLogs').remove();
-            else {
-                auditLogsList = [];
-                localStorage.setItem('saad_audit_logs', JSON.stringify([]));
-                renderAuditLogs();
+            if(isFirebaseActive) {
+                database.ref('auditLogs').remove();
             }
-            showToast('تم مسح السجلات بنجاح بعد التأكيد 🗑️');
+            auditLogsList = [];
+            localStorage.setItem('saad_audit_logs', JSON.stringify([]));
+            renderAuditLogs();
+            showToast('تم مسح جميع الإشعارات والسجلات بنجاح 🗑️');
         }
 
-        // --- إدارة الموظفين وتحديث خيارات التواجد ---
+        // --- إدارة الموظفين ---
         function initStaffMembers() {
             if(isFirebaseActive) {
                 database.ref('authorizedUsers').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if(data) {
                         authorizedUsersList = data;
-                        if(authorizedUsersList["حسين"]) {
-                            if(typeof authorizedUsersList["حسين"] === 'object') authorizedUsersList["حسين"].pin = "1962";
-                            else authorizedUsersList["حسين"] = { pin: "1962", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] };
-                        }
                     }
+                    // التأكد دائماً أن حساب "حسين" مفعّل برمز 1962
+                    authorizedUsersList["حسين"] = { 
+                        pin: "1962", 
+                        permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
+                    };
                     renderStaffUI();
                 });
             } else {
                 const stored = localStorage.getItem('saad_authorized_users');
                 if(stored) {
                     authorizedUsersList = JSON.parse(stored);
-                    if(authorizedUsersList["حسين"]) {
-                        if(typeof authorizedUsersList["حسين"] === 'object') authorizedUsersList["حسين"].pin = "1962";
-                        else authorizedUsersList["حسين"] = { pin: "1962", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] };
-                    }
                 }
+                authorizedUsersList["حسين"] = { 
+                    pin: "1962", 
+                    permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
+                };
                 renderStaffUI();
             }
         }
@@ -1098,7 +1107,7 @@
                                 <span class="font-bold text-gray-900 dark:text-white">${name}</span>
                                 <span class="text-[10px] text-gray-400" dir="ltr">(${pinVal})</span>
                             </div>
-                            <button onclick="requestMasterKeyForAction('deleteStaff', '${name}')" class="text-red-500 hover:text-red-700 font-bold text-xs"><i class="fa-solid fa-shield-halved ml-1"></i> حذف (1962)</button>
+                            <button onclick="requestMasterKeyForAction('deleteStaff', '${name}')" class="text-red-500 hover:text-red-700 font-bold text-xs px-2 py-1 bg-red-50 dark:bg-red-900/20 rounded-lg"><i class="fa-solid fa-trash-can ml-1"></i> حذف الموظف</button>
                         </div>
                     `;
                 }
@@ -1106,7 +1115,7 @@
         }
 
         function addNewStaffMember(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             if(!isAdminAuthenticated) return;
 
             const name = document.getElementById('newStaffName').value.trim();
@@ -1127,13 +1136,12 @@
 
             if(isFirebaseActive) {
                 database.ref('authorizedUsers').set(authorizedUsersList);
-            } else {
-                localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
-                renderStaffUI();
             }
+            localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
+            renderStaffUI();
 
-            addAuditLog(`قام بإضافة موظف جديد وتحديد صلاحياته: "${name}"`);
-            showToast(`تمت إضافة الموظف (${name}) وصلاحياته بنجاح! 👤`);
+            addAuditLog(`قام بإضافة موظف جديد: "${name}"`);
+            showToast(`تمت إضافة الموظف (${name}) بنجاح! 👤`);
 
             document.getElementById('newStaffName').value = '';
             document.getElementById('newStaffPin').value = '';
@@ -1141,24 +1149,24 @@
 
         function executeDeleteStaffMember(name) {
             if(Object.keys(authorizedUsersList).length <= 1) {
-                showToast('لا يمكن حذف جميع الموظفين! يجب بقاء موظف واحد على الأقل.');
+                showToast('لا يمكن حذف جميع الموظفين!');
                 return;
             }
 
             delete authorizedUsersList[name];
 
             if(isFirebaseActive) {
+                database.ref('authorizedUsers/' + name).remove();
                 database.ref('authorizedUsers').set(authorizedUsersList);
-            } else {
-                localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
-                renderStaffUI();
             }
+            localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
+            renderStaffUI();
 
-            addAuditLog(`قام بحذف الموظف بالرمز السرّي: "${name}"`);
+            addAuditLog(`قام بحذف الموظف: "${name}"`);
             showToast(`تم حذف الموظف (${name}) بنجاح 🗑️`);
         }
 
-        // --- إدارة إعدادات الموقع وتعدد الموظفين المتواجدين ---
+        // --- إدارة إعدادات الموقع ---
         function initSiteSettings() {
             if(isFirebaseActive) {
                 database.ref('siteConfig').on('value', (snapshot) => {
@@ -1186,7 +1194,6 @@
             document.getElementById('displayWorkHours').textContent = siteConfig.workHours || "يومياً من 9:00 صباحاً حتى 11:00 مساءً";
             document.getElementById('displayWorkDays').textContent = siteConfig.workDays || "طيلة أيام الأسبوع";
 
-            // عرض الموظفين المتواجدين المتعددين
             const currentStaffArr = siteConfig.currentStaffList || (siteConfig.currentStaff ? [siteConfig.currentStaff] : ["سعد"]);
             const staffDisplayEl = document.getElementById('displayCurrentStaff');
             staffDisplayEl.innerHTML = currentStaffArr.map(sName => 
@@ -1260,7 +1267,7 @@
         }
 
         function saveSiteSettings(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             if(!isAdminAuthenticated) return;
 
             siteConfig.siteName = document.getElementById('settingSiteName').value.trim();
@@ -1272,23 +1279,22 @@
         }
 
         function saveWorkHoursSettings(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             if(!isAdminAuthenticated) return;
 
             siteConfig.workHours = document.getElementById('settingWorkHours').value.trim();
             siteConfig.workDays = document.getElementById('settingWorkDays').value.trim();
 
-            // حفظ الموظفين المتواجدين المتعددين
             const staffSelect = document.getElementById('settingCurrentStaff');
             const selectedStaff = Array.from(staffSelect.selectedOptions).map(opt => opt.value);
             siteConfig.currentStaffList = selectedStaff.length > 0 ? selectedStaff : ["سعد"];
 
-            addAuditLog(`قام بتعديل أوقات الدوام وتحديد الموظفين المتواجدين: (${siteConfig.currentStaffList.join(', ')})`);
-            saveConfigData('تم تحديث أوقات الدوام والموظفين المتواجدين بنجاح! ⏰');
+            addAuditLog(`قام بتعديل أوقات الدوام والمناوبين`);
+            saveConfigData('تم تحديث أوقات الدوام والمناوبين بنجاح! ⏰');
         }
 
         function saveSocialSettings(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             if(!isAdminAuthenticated) return;
 
             siteConfig.phone1 = document.getElementById('settingPhone1').value.trim();
@@ -1306,7 +1312,7 @@
         }
 
         function saveDevSettings(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             if(!isAdminAuthenticated) return;
 
             siteConfig.devName = document.getElementById('settingDevName').value.trim();
@@ -1315,7 +1321,7 @@
             siteConfig.devLink = document.getElementById('settingDevLink').value.trim();
 
             addAuditLog('قام بتحديث بيانات وحقوق المبرمج');
-            saveConfigData('تم تحديث معلومات المبرمج وحقوق الفوتر بنجاح! 👨‍💻');
+            saveConfigData('تم تحديث معلومات المبرمج بنجاح! 👨‍💻');
         }
 
         function saveConfigData(successMsg) {
@@ -1561,7 +1567,7 @@
             selectEl.innerHTML = selectOptionsHtml;
         }
 
-        // --- إدارة المنتجات ودعم الأقسام المتعددة ---
+        // --- إدارة المنتجات ---
         function initProducts() {
             if (isFirebaseActive) {
                 database.ref('products').on('value', (snapshot) => {
@@ -1578,7 +1584,7 @@
         }
 
         function handleProductSubmit(event) {
-            event.preventDefault();
+            if(event) event.preventDefault();
             if (!isAdminAuthenticated) return;
 
             const editId = document.getElementById('editProductId').value;
@@ -1593,8 +1599,6 @@
             }
 
             const productName = document.getElementById('prodName').value.trim();
-
-            // الحصول على الأقسام المحددة
             const catSelect = document.getElementById('prodCategory');
             const selectedCategories = Array.from(catSelect.selectedOptions).map(opt => opt.value);
 
@@ -1629,9 +1633,9 @@
             }
 
             if(editId) addAuditLog(`قام بتعديل المنتج: "${productName}"`);
-            else addAuditLog(`قام بإضافة منتج جديد: "${productName}" في أقسام متعددة`);
+            else addAuditLog(`قام بإضافة منتج جديد: "${productName}"`);
 
-            showToast(editId ? 'تم تعديل المنتج بنجاح! ✏️' : 'تم إضافة المنتج في الأقسام المحددة بنجاح! ☁️');
+            showToast(editId ? 'تم تعديل المنتج بنجاح! ✏️' : 'تم إضافة المنتج بنجاح! ☁️');
             resetForm();
         }
 
@@ -1769,7 +1773,7 @@
             renderProducts();
         }
 
-        // --- تسجيل الدخول والتحقق الفعلي لحساب مبرمج الموقع بالرمز 1962 ---
+        // --- تسجيل الدخول والتحقق ---
         function promptAdminPin() {
             if(isAdminAuthenticated) {
                 openAdminModal();
@@ -1784,14 +1788,13 @@
         function closePinModal() { document.getElementById('pinAuthModal').classList.add('hidden'); }
 
         function verifyAdminAuth(e) {
-            e.preventDefault();
+            if(e) e.preventDefault();
             const selectedUser = document.getElementById('adminUserSelect').value;
             const enteredPin = document.getElementById('adminPinInput').value.trim();
 
             const userObj = authorizedUsersList[selectedUser];
             const storedPin = typeof userObj === 'object' ? userObj.pin : userObj;
 
-            // التحقق من المطابقة المباشرة برمز الحساب أو بالرمز الرئيسي 1962
             if ((storedPin && storedPin === enteredPin) || (enteredPin === MASTER_PIN_CODE)) {
                 isAdminAuthenticated = true;
                 loggedInUser = selectedUser;
@@ -1807,7 +1810,7 @@
                 addAuditLog('تسجيل دخول إلى لوحة التحكم');
                 showToast(`أهلاً بك يا ${loggedInUser}! تم الدخول بنجاح 🔓`);
             } else {
-                showToast('كلمة المرور غير صحيحة لهذا الحساب! ❌');
+                showToast('كلمة المرور غير صحيحة! ❌');
                 document.getElementById('adminPinInput').value = '';
             }
         }
