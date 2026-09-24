@@ -107,7 +107,6 @@
             border-radius: 4px;
         }
 
-        /* Mobile touch tap highlights */
         button, a, input, select, textarea {
             -webkit-tap-highlight-color: transparent;
         }
@@ -141,18 +140,12 @@
                     <a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">تواصل معنا</a>
                 </nav>
 
-                <!-- Action Controls (Theme Toggle & Admin Trigger) -->
+                <!-- Action Controls (Theme Toggle) -->
                 <div class="flex items-center space-x-1.5 sm:space-x-3 space-x-reverse">
                     <!-- Day/Night Toggle Button -->
                     <button id="themeToggle" onclick="toggleTheme()" class="p-2 sm:p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center gap-1.5 text-xs sm:text-sm font-semibold border border-gray-200 dark:border-gray-700 active:scale-95" title="تبديل المظهر">
                         <i id="themeIcon" class="fa-solid fa-sun text-base sm:text-lg"></i>
                         <span id="themeLabel" class="hidden lg:inline">الوضع النهاري</span>
-                    </button>
-
-                    <!-- Admin Control Panel Trigger Button -->
-                    <button onclick="openAdminModal()" class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5 active:scale-95">
-                        <i class="fa-solid fa-sliders text-xs sm:text-sm"></i>
-                        <span class="hidden xs:inline">لوحة التحكم</span>
                     </button>
 
                     <!-- Mobile Menu Button -->
@@ -236,10 +229,10 @@
                     <i class="fa-solid fa-store text-brand-600 dark:text-neon-blue"></i>
                     معرض المنتجات
                 </h2>
-                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">تصفح التشكيلة الكاملة أو تصفح حسب القسم المطلوب</p>
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">تصفح التشكيلة الكاملة أو اختر القسم المطلوب</p>
             </div>
 
-            <!-- Filter Buttons (Scrollable on small mobile screens) -->
+            <!-- Filter Buttons -->
             <div class="overflow-x-auto pb-1 sm:pb-0 -mx-3 px-3 sm:mx-0 sm:px-0">
                 <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-gray-200/70 dark:bg-gray-800/80 p-1.5 rounded-2xl border border-gray-300/50 dark:border-gray-700/50 whitespace-nowrap min-w-full xs:min-w-0">
                     <button onclick="filterCategory('all')" id="cat-all" class="cat-btn active px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-brand-600 text-white shadow-sm">
@@ -258,16 +251,16 @@
             </div>
         </div>
 
-        <!-- Fully Responsive Grid Layout: 1 col on mobile, 2 cols on tablet, 3 cols on desktop -->
+        <!-- Fully Responsive 3-Column Grid Layout -->
         <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <!-- Product cards dynamically loaded here -->
+            <!-- Dynamic product cards populated via JavaScript -->
         </div>
 
         <!-- Empty State Message -->
         <div id="noProductsMessage" class="hidden text-center py-12 sm:py-16 bg-white dark:bg-gray-800/40 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-gray-800 my-6">
             <i class="fa-solid fa-box-open text-4xl sm:text-5xl text-gray-400 mb-3 sm:mb-4"></i>
             <h3 class="text-lg sm:text-xl font-bold text-gray-700 dark:text-gray-300">لا توجد منتجات في هذا القسم حالياً</h3>
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">يمكنك إضافة منتجات جديدة من خلال لوحة التحكم</p>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">يمكن إضافة منتجات جديدة عبر لوحة الإدارة</p>
         </div>
     </main>
 
@@ -390,17 +383,49 @@
         </div>
     </section>
 
+    <div id="pinAuthModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transform transition-all p-6 text-center space-y-4">
+            <div class="w-12 h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-black text-gray-900 dark:text-white">دخول لوحة الإدارة</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">يرجى إدخال الرمز السري للوصول للوحة التحكم</p>
+            </div>
+            
+            <form onsubmit="verifyAdminPin(event)" class="space-y-3">
+                <div>
+                    <input type="password" id="adminPinInput" maxlength="10" required placeholder="أدخل الرمز السري..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all active:scale-95">
+                        تأكيد الدخول
+                    </button>
+                    <button type="button" onclick="closePinModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs transition-all active:scale-95">
+                        إلغاء
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="adminModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 transition-all overflow-y-auto">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transform transition-all my-auto">
             <!-- Modal Header -->
             <div class="bg-gradient-to-r from-brand-600 to-indigo-700 px-4 sm:px-6 py-3.5 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-base sm:text-lg"></i>
-                    <h3 class="font-bold text-sm sm:text-base">لوحة التحكم وإدارة المنتجات</h3>
+                    <h3 class="font-bold text-sm sm:text-base">لوحة الإدارة والتعديل</h3>
                 </div>
-                <button onclick="closeAdminModal()" class="text-white/80 hover:text-white p-1 rounded-lg">
-                    <i class="fa-solid fa-xmark text-lg sm:text-xl"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="logoutAdmin()" class="text-xs bg-red-500/30 hover:bg-red-500/50 px-2.5 py-1 rounded-lg border border-red-400/30 text-white transition-colors flex items-center gap-1" title="تسجيل الخروج">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>خروج</span>
+                    </button>
+                    <button onclick="closeAdminModal()" class="text-white/80 hover:text-white p-1 rounded-lg">
+                        <i class="fa-solid fa-xmark text-lg sm:text-xl"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Modal Content Body -->
@@ -436,7 +461,7 @@
                         <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رابط الصورة (GitHub أو رابط مباشر)</label>
                         <input type="url" id="prodImage" required placeholder="https://raw.githubusercontent.com/... أو رابط الصورة" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" dir="ltr">
                         <p class="text-[10px] sm:text-[11px] text-amber-600 dark:text-amber-400 mt-1">
-                            <i class="fa-solid fa-shield-halved"></i> تم تفعيل نظام الاحتياط: في حال تم حذف الصورة من GitHub ستستمر بالظهور تلقائياً.
+                            <i class="fa-solid fa-shield-halved"></i> نظام حماية الصورة: حتى لو حُذفت الصورة من المكان الاصلي ستظهر صورة بديلة تلقائياً.
                         </p>
                     </div>
 
@@ -457,7 +482,7 @@
                         <button onclick="resetDefaultProducts()" class="text-[11px] text-red-500 hover:underline">استعادة الافتراضي</button>
                     </h4>
                     <div id="adminProductList" class="space-y-2 max-h-44 overflow-y-auto pr-1">
-                        <!-- Admin list loaded via JavaScript -->
+                        <!-- Dynamic list loaded via JavaScript -->
                     </div>
                 </div>
 
@@ -471,9 +496,18 @@
                 <i class="fa-solid fa-gamepad"></i>
                 <span>سعد للإلكترونيات</span>
             </div>
+            
             <p class="text-[11px] sm:text-xs text-gray-400">جميع الحقوق محفوظة © 2026 سعد للإلكترونيات - تأسست عام 1996 | العراق</p>
             
-            <!-- Strictly Required Developer Credit Footer -->
+            <!-- Bottom Admin Control Link -->
+            <div class="pt-1">
+                <button onclick="promptAdminPin()" class="text-xs text-gray-400 hover:text-brand-400 underline transition-colors inline-flex items-center gap-1.5 font-bold px-3 py-1 rounded-lg hover:bg-gray-800">
+                    <i class="fa-solid fa-lock text-[10px]"></i>
+                    <span>لوحة الإدارة</span>
+                </button>
+            </div>
+
+            <!-- Developer Credit Footer -->
             <div class="pt-3 border-t border-gray-800 text-[11px] sm:text-xs text-gray-300 font-medium leading-relaxed">
                 تم تصميم وبرمجة الموقع بواسطة <span class="font-bold text-white">حسين محمد</span> | رقم الهاتف: <a href="tel:07722337379" class="text-brand-400 underline hover:text-brand-300" dir="ltr">07722337379</a> | إنستغرام: <a href="https://instagram.com/xv8f" target="_blank" class="text-brand-400 font-bold underline hover:text-brand-300" dir="ltr">xv8f</a>
             </div>
@@ -481,14 +515,18 @@
     </footer>
 
     <script>
-        // High Quality SVG Fallback Data URIs for broken or deleted images
+        // Required Secret Admin PIN Code
+        const ADMIN_PIN_CODE = "141312";
+        let isAdminAuthenticated = false;
+
+        // SVG Fallbacks for missing/deleted GitHub images
         const FALLBACK_IMAGES = {
             playstation: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%231e1b4b'/><path d='M150 120 L250 120 L250 180 L150 180 Z' fill='%234f46e5'/><text x='200' y='145' font-family='sans-serif' font-size='20' font-weight='bold' fill='%23ffffff' text-anchor='middle'>PlayStation</text><text x='200' y='175' font-family='sans-serif' font-size='14' fill='%2393c5fd' text-anchor='middle'>سعد للإلكترونيات</text></svg>",
             electronics: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%230f172a'/><circle cx='200' cy='140' r='50' fill='%230284c7'/><text x='200' y='145' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إلكترونيات</text><text x='200' y='220' font-family='sans-serif' font-size='14' fill='%237dd3fc' text-anchor='middle'>سعد للإلكترونيات</text></svg>",
             accessories: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%2318182b'/><path d='M130 150 Q200 100 270 150' stroke='%23a855f7' stroke-width='12' fill='none'/><text x='200' y='180' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إكسسوارات الأصلي</text></svg>"
         };
 
-        // Initial Sample Products
+        // Default Sample Products
         const DEFAULT_PRODUCTS = [
             {
                 id: 'p1',
@@ -543,12 +581,10 @@
         let products = [];
         let currentCategory = 'all';
 
-        // Format Currency in Iraqi Dinar (د.ع)
         function formatIQD(price) {
             return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع';
         }
 
-        // Initialize Day/Night Theme (Default: Day theme)
         function initTheme() {
             const savedTheme = localStorage.getItem('saad_theme') || 'light';
             if (savedTheme === 'dark') {
@@ -591,7 +627,6 @@
             }
         }
 
-        // Initialize Products
         function initProducts() {
             const storedProducts = localStorage.getItem('saad_products');
             if (storedProducts) {
@@ -605,21 +640,18 @@
                 saveProductsToStorage();
             }
             renderProducts();
-            renderAdminProductList();
         }
 
         function saveProductsToStorage() {
             localStorage.setItem('saad_products', JSON.stringify(products));
         }
 
-        // Handle Broken or Deleted GitHub Images using SVG Fallbacks
         function handleImageError(imgElement, category) {
             const fallback = FALLBACK_IMAGES[category] || FALLBACK_IMAGES.electronics;
             imgElement.src = fallback;
             imgElement.onerror = null;
         }
 
-        // Render Product Cards Grid
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             const emptyMsg = document.getElementById('noProductsMessage');
@@ -643,7 +675,6 @@
                 const cardHtml = `
                     <div class="product-card glass-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between border border-gray-200 dark:border-gray-800">
                         <div>
-                            <!-- Product Image Container -->
                             <div class="relative h-44 sm:h-52 bg-gray-100 dark:bg-gray-800 overflow-hidden">
                                 <img src="${product.image}" 
                                      alt="${product.name}" 
@@ -655,7 +686,6 @@
                                 </div>
                             </div>
 
-                            <!-- Product Info -->
                             <div class="p-4 sm:p-5 space-y-1.5 sm:space-y-2">
                                 <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white line-clamp-1 leading-snug">${product.name}</h3>
                                 <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
@@ -664,7 +694,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Footer -->
                         <div class="p-4 sm:p-5 pt-0 mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800/60 pt-3 sm:pt-4">
                             <div>
                                 <span class="block text-[10px] sm:text-[11px] text-gray-400 font-medium">السعر الحالي</span>
@@ -697,7 +726,6 @@
             }
         }
 
-        // Category Filter Function
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -712,8 +740,45 @@
             renderProducts();
         }
 
-        // Admin Modal Controls
+        function promptAdminPin() {
+            if (isAdminAuthenticated) {
+                openAdminModal();
+            } else {
+                document.getElementById('adminPinInput').value = '';
+                document.getElementById('pinAuthModal').classList.remove('hidden');
+                document.getElementById('adminPinInput').focus();
+            }
+        }
+
+        function closePinModal() {
+            document.getElementById('pinAuthModal').classList.add('hidden');
+        }
+
+        function verifyAdminPin(e) {
+            e.preventDefault();
+            const inputPin = document.getElementById('adminPinInput').value.trim();
+            if (inputPin === ADMIN_PIN_CODE) {
+                isAdminAuthenticated = true;
+                closePinModal();
+                openAdminModal();
+                showToast('تم تسجيل الدخول للوحة الإدارة بنجاح 🔓');
+            } else {
+                showToast('الرمز السري غير صحيح! تم رفض الوصول ❌');
+                document.getElementById('adminPinInput').value = '';
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminAuthenticated = false;
+            closeAdminModal();
+            showToast('تم تسجيل الخروج وقفل لوحة الإدارة 🔒');
+        }
+
         function openAdminModal() {
+            if (!isAdminAuthenticated) {
+                promptAdminPin();
+                return;
+            }
             document.getElementById('adminModal').classList.remove('hidden');
             renderAdminProductList();
         }
@@ -724,6 +789,8 @@
 
         function handleAddProduct(event) {
             event.preventDefault();
+            if (!isAdminAuthenticated) return;
+
             const name = document.getElementById('prodName').value.trim();
             const category = document.getElementById('prodCategory').value;
             const price = parseFloat(document.getElementById('prodPrice').value);
@@ -731,7 +798,7 @@
             const description = document.getElementById('prodDesc').value.trim();
 
             if (!name || !price || !image) {
-                showToast('يرجى إكمال الحقول المطلوبة!');
+                showToast('يرجى إكمال جميع الحقول المطلوب!');
                 return;
             }
 
@@ -754,6 +821,7 @@
         }
 
         function deleteProduct(id) {
+            if (!isAdminAuthenticated) return;
             if (confirm('هل أنت تأكد من رغبتك في حذف هذا المنتج من المتجر؟')) {
                 products = products.filter(p => p.id !== id);
                 saveProductsToStorage();
@@ -764,6 +832,7 @@
         }
 
         function resetDefaultProducts() {
+            if (!isAdminAuthenticated) return;
             if (confirm('هل ترغب بإعادة ضبط قائمة المنتجات الافتراضية؟')) {
                 products = [...DEFAULT_PRODUCTS];
                 saveProductsToStorage();
@@ -810,7 +879,6 @@
             }
         }
 
-        // Custom Toast Notification System
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -829,7 +897,6 @@
             }, 3000);
         }
 
-        // Start animation and theme logic on window load
         window.onload = function() {
             initTheme();
             initProducts();
