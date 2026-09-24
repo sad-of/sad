@@ -477,8 +477,9 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">القسم</label>
-                                <select id="prodCategory" required class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm"></select>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">الأقسام (يمكنك اختيار أكثر من قسم بخاصية التحديد المتعدد)</label>
+                                <select id="prodCategory" required multiple class="w-full px-3.5 py-2 h-28 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm"></select>
+                                <span class="text-[10px] text-gray-400 font-medium block mt-1">اضغط مع السحب أو المتابعة لاختيار عدة أقسام دون الحاجة لإعادة رفع الصورة.</span>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">السعر (بالدينار)</label>
@@ -1531,7 +1532,7 @@
             selectEl.innerHTML = selectOptionsHtml;
         }
 
-        // --- إدارة المنتجات ---
+        // --- إدارة المنتجات والدعم الأقسام المتعددة ---
         function initProducts() {
             if (isFirebaseActive) {
                 database.ref('products').on('value', (snapshot) => {
@@ -1564,10 +1565,20 @@
 
             const productName = document.getElementById('prodName').value.trim();
 
+            // الحصول على جميع الأقسام المحددة (تحديد متعدد)
+            const catSelect = document.getElementById('prodCategory');
+            const selectedCategories = Array.from(catSelect.selectedOptions).map(opt => opt.value);
+
+            if(selectedCategories.length === 0) {
+                showToast('يرجى اختيار قسم واحد على الأقل للمنتج!');
+                return;
+            }
+
             const productData = {
                 id: editId || ('prod_' + Date.now()),
                 name: productName,
-                category: document.getElementById('prodCategory').value,
+                categories: selectedCategories, // مصفوفة أقسام متعدة
+                category: selectedCategories[0], // للبيانات القديمة
                 price: parseFloat(document.getElementById('prodPrice').value),
                 image: finalImage,
                 description: document.getElementById('prodDesc').value.trim(),
@@ -1589,9 +1600,9 @@
             }
 
             if(editId) addAuditLog(`قام بتعديل المنتج: "${productName}"`);
-            else addAuditLog(`قام بإضافة منتج جديد: "${productName}"`);
+            else addAuditLog(`قام بإضافة منتج جديد: "${productName}" في أقسام متعددة`);
 
-            showToast(editId ? 'تم تعديل المنتج بنجاح! ✏️' : 'تم إضافة المنتج بنجاح! ☁️');
+            showToast(editId ? 'تم تعديل المنتج بنجاح! ✏️' : 'تم إضافة المنتج في الأقسام المحددة بنجاح! ☁️');
             resetForm();
         }
 
@@ -1601,7 +1612,14 @@
 
             document.getElementById('editProductId').value = prod.id;
             document.getElementById('prodName').value = prod.name;
-            document.getElementById('prodCategory').value = prod.category;
+            
+            // تحديد الأقسام المحفوظة في خيار التحديد المتعدد
+            const catSelect = document.getElementById('prodCategory');
+            const prodCats = prod.categories || (prod.category ? [prod.category] : []);
+            Array.from(catSelect.options).forEach(opt => {
+                opt.selected = prodCats.includes(opt.value);
+            });
+
             document.getElementById('prodPrice').value = prod.price;
             document.getElementById('prodDesc').value = prod.description || '';
 
@@ -1656,7 +1674,14 @@
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             const emptyMsg = document.getElementById('noProductsMessage');
-            const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+            
+            // تصفية المنتج بناء على الأقسام المتعددة
+            const filtered = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => {
+                    const pCats = p.categories || (p.category ? [p.category] : []);
+                    return pCats.includes(currentCategory);
+                });
             
             grid.innerHTML = '';
             
@@ -1675,7 +1700,7 @@
                             <div>
                                 <div class="relative h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
                                     <img src="${product.image}" alt="${product.name}" onerror="handleImageError(this, '${product.category}')" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" loading="lazy">
-                                    <div class="absolute top-2.5 right-2.5">${getCategoryBadge(product.category)}</div>
+                                    <div class="absolute top-2.5 right-2.5 flex flex-wrap gap-1">${getCategoryBadges(product)}</div>
                                 </div>
                                 <div class="p-4 sm:p-5 space-y-1.5">
                                     <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white line-clamp-1">${product.name}</h3>
@@ -1694,10 +1719,13 @@
             }
         }
 
-        function getCategoryBadge(category) {
-            const found = categoriesList.find(c => c.id === category);
-            const name = found ? found.name : 'قسم عام';
-            return `<span class="bg-indigo-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-layer-group"></i> ${name}</span>`;
+        function getCategoryBadges(product) {
+            const cats = product.categories || (product.category ? [product.category] : []);
+            return cats.map(cId => {
+                const found = categoriesList.find(c => c.id === cId);
+                const name = found ? found.name : 'قسم عام';
+                return `<span class="bg-indigo-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-layer-group"></i> ${name}</span>`;
+            }).join(' ');
         }
 
         function filterCategory(cat) {
