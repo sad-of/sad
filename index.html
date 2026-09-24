@@ -294,7 +294,7 @@
         </div>
     </div>
 
-    <!-- Admin Management Modal (إضافة + تعديل + حذف + تعديل/حذف/إضافة الأقسام) -->
+    <!-- Admin Management Modal (إضافة + تعديل + حذف + تعديل/حذف/إضافة الأقسام + رفع صورة مباشر) -->
     <div id="adminModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden my-auto">
             <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-6 py-4 text-white flex items-center justify-between">
@@ -351,6 +351,7 @@
                 <!-- Add or Edit Product Form -->
                 <form id="productForm" onsubmit="handleProductSubmit(event)" class="space-y-3.5">
                     <input type="hidden" id="editProductId" value="">
+                    <input type="hidden" id="prodImageData" value="">
                     <h4 id="formHeader" class="font-bold text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-1.5">
                         <i class="fa-solid fa-plus-circle text-brand-600"></i> إضافة منتج جديد
                     </h4>
@@ -375,9 +376,32 @@
                         </div>
                     </div>
 
+                    <!-- اختيار/رفع الصورة من الجهاز أو عبر رابط -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رابط الصورة (مباشر)</label>
-                        <input type="url" id="prodImage" required class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm" dir="ltr">
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">صورة المنتج</label>
+                        <div class="space-y-2">
+                            <!-- رفع من الاستوديو/الجهاز -->
+                            <div class="flex items-center gap-2">
+                                <input type="file" id="prodFileInput" accept="image/*" onchange="handleFileSelect(event)" class="hidden">
+                                <button type="button" onclick="document.getElementById('prodFileInput').click()" class="w-full py-2.5 px-4 rounded-xl border border-dashed border-brand-500 bg-brand-50/50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-300 font-bold text-xs flex items-center justify-center gap-2 hover:bg-brand-100 transition-colors">
+                                    <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                                    <span>اختيار صورة من الجهاز / الاستوديو</span>
+                                </button>
+                            </div>
+
+                            <!-- معاينة الصورة المحددة -->
+                            <div id="imagePreviewContainer" class="hidden flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                                <div class="flex items-center gap-2 truncate">
+                                    <img id="imagePreview" class="w-10 h-10 object-cover rounded-lg border">
+                                    <span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">تم اختيار الصورة المباشرة بنجاح ✓</span>
+                                </div>
+                                <button type="button" onclick="clearImageSelection()" class="text-red-500 hover:text-red-700 text-xs px-2"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+
+                            <p class="text-[10px] text-gray-400 text-center font-medium">أو اختياري: يمكنك استخدام رابط صورة خارجي إذا فضّلت ذلك</p>
+                            
+                            <input type="url" id="prodImage" placeholder="https://example.com/image.jpg (اختياري)" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm" dir="ltr">
+                        </div>
                     </div>
 
                     <div>
@@ -481,6 +505,50 @@
             label.textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
         }
 
+        // --- التعامل مع رفع وتحويل الصور المباشرة من جهاز المستخدم ---
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // ضغط وقراءة الصورة لتقليل حجمها قبل التخزين السحابي
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const max_size = 800; // الحد الأقصى للأبعاد لأداء عالي وسريع
+
+                    if (width > height) {
+                        if (width > max_size) { height *= max_size / width; width = max_size; }
+                    } else {
+                        if (height > max_size) { width *= max_size / height; height = max_size; }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75); // ضغط الجودة إلى 75%
+                    document.getElementById('prodImageData').value = compressedBase64;
+                    document.getElementById('imagePreview').src = compressedBase64;
+                    document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                    document.getElementById('prodImage').value = ''; // إلغاء رابط الخارجي عند رفع ملف مباشر
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearImageSelection() {
+            document.getElementById('prodFileInput').value = '';
+            document.getElementById('prodImageData').value = '';
+            document.getElementById('imagePreview').src = '';
+            document.getElementById('imagePreviewContainer').classList.add('hidden');
+        }
+
         // --- نظام تتبع وحساب عدد المستخدمين والزوار الفريدين للموقع ككل ---
         function trackVisitors() {
             let visitorId = localStorage.getItem('saad_visitor_uid');
@@ -555,7 +623,6 @@
             if(!name) { showToast('يرجى كتابة اسم القسم أولاً!'); return; }
 
             if(editCatId) {
-                // تعديل اسم قسم موجود
                 const catObj = { id: editCatId, name: name };
                 if(isFirebaseActive) {
                     database.ref('categories/' + editCatId).set(catObj);
@@ -568,7 +635,6 @@
                 }
                 showToast('تم تعديل اسم القسم بنجاح ✏️');
             } else {
-                // إضافة قسم جديد
                 const catId = 'cat_' + Date.now();
                 const newCat = { id: catId, name: name };
 
@@ -612,10 +678,9 @@
                     renderAdminCategoriesList();
                 }
 
-                // تحويل المنتجات المتربطة بهذا القسم إلى قسم "الكل" أو قسم آخر لمنع فقدانها
                 products.forEach(p => {
                     if(p.category === catId) {
-                        p.category = 'electronics'; // قسم احتياطي
+                        p.category = 'electronics';
                         if(isFirebaseActive) database.ref('products/' + p.id).set(p);
                     }
                 });
@@ -706,19 +771,30 @@
             if (!isAdminAuthenticated) return;
 
             const editId = document.getElementById('editProductId').value;
+            const fileImageData = document.getElementById('prodImageData').value;
+            const urlImage = document.getElementById('prodImage').value.trim();
+
+            // استخدام الصورة المرفوعة المباشرة أو الرابط
+            const finalImage = fileImageData || urlImage;
+
+            if(!finalImage) {
+                showToast('يرجى اختيار صورة من الجهاز أو إضافة رابط صورة!');
+                return;
+            }
+
             const productData = {
                 id: editId || ('prod_' + Date.now()),
                 name: document.getElementById('prodName').value.trim(),
                 category: document.getElementById('prodCategory').value,
                 price: parseFloat(document.getElementById('prodPrice').value),
-                image: document.getElementById('prodImage').value.trim(),
+                image: finalImage,
                 description: document.getElementById('prodDesc').value.trim(),
                 timestamp: Date.now()
             };
 
             if (isFirebaseActive) {
                 database.ref('products/' + productData.id).set(productData);
-                showToast(editId ? 'تم تعديل المنتج في السحابة للجميع! ✏️' : 'تم رفع المنتج الجديد للسحابة! ☁️');
+                showToast(editId ? 'تم تعديل المنتج في السحابة للجميع! ✏️' : 'تم رفع المنتج الجديد بالسحابة! ☁️');
             } else {
                 if(editId) {
                     const idx = products.findIndex(p => p.id === editId);
@@ -742,8 +818,17 @@
             document.getElementById('prodName').value = prod.name;
             document.getElementById('prodCategory').value = prod.category;
             document.getElementById('prodPrice').value = prod.price;
-            document.getElementById('prodImage').value = prod.image;
             document.getElementById('prodDesc').value = prod.description || '';
+
+            if (prod.image && prod.image.startsWith('data:image')) {
+                document.getElementById('prodImageData').value = prod.image;
+                document.getElementById('imagePreview').src = prod.image;
+                document.getElementById('imagePreviewContainer').classList.remove('hidden');
+                document.getElementById('prodImage').value = '';
+            } else {
+                clearImageSelection();
+                document.getElementById('prodImage').value = prod.image || '';
+            }
 
             document.getElementById('formHeader').innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-500"></i> تعديل المنتج الحالي`;
             document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-check"></i> حفظ التعديلات`;
@@ -753,6 +838,7 @@
         function resetForm() {
             document.getElementById('productForm').reset();
             document.getElementById('editProductId').value = '';
+            clearImageSelection();
             document.getElementById('formHeader').innerHTML = `<i class="fa-solid fa-plus-circle text-brand-600"></i> إضافة منتج جديد`;
             document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> حفظ التغييرات للجميع`;
             document.getElementById('cancelEditBtn').classList.add('hidden');
