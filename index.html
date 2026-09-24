@@ -97,7 +97,14 @@
                 </nav>
 
                 <!-- Action Controls -->
-                <div class="flex items-center space-x-1.5 sm:space-x-3 space-x-reverse">
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <!-- Cart Button in Header -->
+                    <button onclick="toggleCartModal()" class="relative p-2.5 sm:px-3 sm:py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold transition-all flex items-center gap-2 text-xs sm:text-sm shadow-md active:scale-95" title="سلة المشتريات">
+                        <i class="fa-solid fa-cart-shopping text-base"></i>
+                        <span class="hidden sm:inline">السلة</span>
+                        <span id="cartItemCount" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black shadow-md border-2 border-white dark:border-[#12121e]">0</span>
+                    </button>
+
                     <button id="themeToggle" onclick="toggleTheme()" class="p-2 sm:p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center gap-1.5 text-xs sm:text-sm font-semibold border border-gray-200 dark:border-gray-700 active:scale-95" title="تبديل المظهر">
                         <i id="themeIcon" class="fa-solid fa-sun text-base sm:text-lg"></i>
                         <span id="themeLabel" class="hidden lg:inline">الوضع النهاري</span>
@@ -319,6 +326,62 @@
             </div>
         </div>
     </section>
+
+    <!-- Floating Cart Button (أيقونة السلة العائمة) -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <button onclick="toggleCartModal()" class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group">
+            <i class="fa-solid fa-cart-shopping text-2xl"></i>
+            <span id="floatingCartCount" class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white dark:border-[#12121e] shadow-lg">0</span>
+        </button>
+    </div>
+
+    <!-- Cart Modal (نافذة السلة التفصيلية) -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col max-h-[85vh]">
+            
+            <!-- Cart Header -->
+            <div class="bg-gradient-to-r from-brand-600 to-indigo-700 px-5 py-4 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base sm:text-lg">سلة المشتريات</h3>
+                        <p class="text-[11px] text-brand-100">راجع منتجاتك وأرسل الطلب مباشرة عبر الواتساب</p>
+                    </div>
+                </div>
+                <button onclick="toggleCartModal()" class="text-white/80 hover:text-white p-1 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsContainer" class="p-4 sm:p-5 overflow-y-auto space-y-3.5 flex-grow">
+                <!-- يتم تعبئة المنتجات هنا برمجياً -->
+            </div>
+
+            <!-- Cart Footer & Checkout -->
+            <div class="p-4 sm:p-5 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 shrink-0 space-y-3">
+                <div class="flex items-center justify-between text-base sm:text-lg font-black text-gray-900 dark:text-white">
+                    <span>المجموع الكلي:</span>
+                    <span id="cartTotalPrice" class="text-brand-600 dark:text-neon-blue">0 د.ع</span>
+                </div>
+
+                <div class="space-y-2">
+                    <input type="text" id="customerName" placeholder="اسم الزتر الكريم (اختياري)..." class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-xs sm:text-sm font-semibold">
+                    <textarea id="customerNote" rows="2" placeholder="ملاحظات إضافية حول التوصيل أو الطلب (اختياري)..." class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-xs sm:text-sm font-semibold"></textarea>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="checkoutViaWhatsApp()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> إرسال الطلب عبر الواتساب
+                    </button>
+                    <button onclick="clearCart()" class="px-4 py-3 rounded-xl bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-300 hover:bg-red-200 font-bold text-xs transition-all">
+                        <i class="fa-solid fa-trash-can"></i> إفراغ
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Admin Login Modal -->
     <div id="pinAuthModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
@@ -910,6 +973,9 @@
         let auditLogsList = [];
         let currentCategory = 'all';
 
+        // --- نظام السلة (Shopping Cart State) ---
+        let cartItems = [];
+
         let siteConfig = {
             siteName: "سعد للإلكترونيات",
             siteEst: "1996",
@@ -934,6 +1000,179 @@
 
         function formatIQD(price) { return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع'; }
 
+        // --- وظائف نظام السلة (Shopping Cart Functions) ---
+        function initCart() {
+            const savedCart = localStorage.getItem('saad_shopping_cart');
+            if(savedCart) {
+                try { cartItems = JSON.parse(savedCart); } catch(e) { cartItems = []; }
+            }
+            updateCartUI();
+        }
+
+        function saveCartToLocalStorage() {
+            localStorage.setItem('saad_shopping_cart', JSON.stringify(cartItems));
+            updateCartUI();
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+
+            const finalPrice = (product.discountPrice && product.discountPrice < product.price) ? product.discountPrice : product.price;
+
+            const existingItem = cartItems.find(item => item.id === productId);
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push({
+                    id: product.id,
+                    name: product.name,
+                    price: finalPrice,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+
+            saveCartToLocalStorage();
+            showToast(`تمت إضافة "${product.name}" إلى سلة المشتريات 🛒`);
+        }
+
+        function updateCartQuantity(productId, change) {
+            const item = cartItems.find(i => i.id === productId);
+            if(!item) return;
+
+            item.quantity += change;
+            if(item.quantity <= 0) {
+                cartItems = cartItems.filter(i => i.id !== productId);
+            }
+
+            saveCartToLocalStorage();
+        }
+
+        function removeFromCart(productId) {
+            cartItems = cartItems.filter(i => i.id !== productId);
+            saveCartToLocalStorage();
+            showToast('تمت إزالة المنتج من السلة 🗑️');
+        }
+
+        function clearCart() {
+            if(cartItems.length === 0) return;
+            if(confirm('هل أنت متأكد من إفراغ سلة المشتريات بالكامل؟')) {
+                cartItems = [];
+                saveCartToLocalStorage();
+                showToast('تم إفراغ سلة المشتريات 🗑️');
+            }
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            if(!modal.classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+
+        function updateCartUI() {
+            const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const badge1 = document.getElementById('cartItemCount');
+            const badge2 = document.getElementById('floatingCartCount');
+
+            if(badge1) badge1.textContent = totalCount;
+            if(badge2) badge2.textContent = totalCount;
+
+            const cartContainer = document.getElementById('cartItemsContainer');
+            if(cartContainer && !document.getElementById('cartModal').classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalPriceEl = document.getElementById('cartTotalPrice');
+            if(!container) return;
+
+            container.innerHTML = '';
+
+            if(cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <h4 class="font-bold text-base text-gray-700 dark:text-gray-300">سلة المشتريات فارغة</h4>
+                        <p class="text-xs text-gray-400">تصفح المنتجات وأضف ما يعجبك إلى السلة</p>
+                    </div>
+                `;
+                if(totalPriceEl) totalPriceEl.textContent = '0 د.ع';
+                return;
+            }
+
+            let grandTotal = 0;
+
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
+
+                container.innerHTML += `
+                    <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <div class="flex items-center gap-3 truncate">
+                            <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover shrink-0" onerror="this.src='https://placehold.co/100x100/6366f1/ffffff?text=Product'">
+                            <div class="truncate">
+                                <h5 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white truncate">${item.name}</h5>
+                                <p class="text-xs font-black text-brand-600 dark:text-neon-blue mt-0.5">${formatIQD(item.price)}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 shrink-0">
+                            <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-xl border border-gray-200 dark:border-gray-600">
+                                <button onclick="updateCartQuantity('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-bold text-xs flex items-center justify-center shadow-sm hover:bg-gray-200">-</button>
+                                <span class="w-6 text-center font-black text-xs text-gray-900 dark:text-white">${item.quantity}</span>
+                                <button onclick="updateCartQuantity('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-bold text-xs flex items-center justify-center shadow-sm hover:bg-gray-200">+</button>
+                            </div>
+                            <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-700 p-1.5 text-xs"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if(totalPriceEl) totalPriceEl.textContent = formatIQD(grandTotal);
+        }
+
+        function checkoutViaWhatsApp() {
+            if(cartItems.length === 0) {
+                showToast('السلة فارغة، أضف منتجات أولاً!');
+                return;
+            }
+
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerNote = document.getElementById('customerNote').value.trim();
+
+            let message = `🛒 *طلب جديد عبر موقع ${siteConfig.siteName}* \n`;
+            if(customerName) message += `👤 الزبون: *${customerName}* \n`;
+            message += `----------------------------\n`;
+
+            let grandTotal = 0;
+            cartItems.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
+                message += `${index + 1}. *${item.name}*\n   الكمية: ${item.quantity} | السعر: ${formatIQD(item.price)} | المجموع: ${formatIQD(itemTotal)}\n`;
+            });
+
+            message += `----------------------------\n`;
+            message += `💰 *المجموع الكلي للطلب:* *${formatIQD(grandTotal)}*\n`;
+            if(customerNote) message += `📝 ملاحظات: ${customerNote}\n`;
+            message += `📍 العنوان: ${siteConfig.siteAddress}`;
+
+            const primaryPhone = siteConfig.phone1 || '07718277535';
+            const cleanPhone = primaryPhone.replace(/[^0-9]/g, '');
+            const intlPhone = cleanPhone.startsWith('0') ? '964' + cleanPhone.substring(1) : cleanPhone;
+
+            const whatsappUrl = `https://wa.me/${intlPhone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- وظائف عامة ---
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -1110,7 +1349,7 @@
             container.innerHTML = '';
 
             if(auditLogsList.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد سجلات أو إشعارات حالية.</p>';
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">لا توجد تعديلات مسجلة بعد.</p>';
                 return;
             }
 
@@ -1972,7 +2211,14 @@
                                     <span class="block text-[10px] text-gray-400 font-medium">السعر</span>
                                     ${priceHtml}
                                 </div>
-                                <a href="https://wa.me/${intlPhone}?text=${waText}" target="_blank" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 active:scale-95"><i class="fa-brands fa-whatsapp text-sm"></i><span>طلب</span></a>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="addToCart('${product.id}')" class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 active:scale-95" title="إضافة للسلة">
+                                        <i class="fa-solid fa-cart-plus"></i> <span class="hidden xs:inline">أضف للسلة</span>
+                                    </button>
+                                    <a href="https://wa.me/${intlPhone}?text=${waText}" target="_blank" class="p-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center active:scale-95" title="طلب مباشر واتساب">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>`;
                 });
@@ -2117,6 +2363,7 @@
             initProducts(); 
             initAuditLogs();
             trackVisitors(); 
+            initCart();
         };
     </script>
 </body>
