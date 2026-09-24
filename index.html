@@ -397,16 +397,17 @@
 
     <script>
         // ======= إعدادات Firebase السحابية =======
-        // ⚠️ مهم جداً: استبدل القيم أدناه بمعلومات مشروعك من موقع Firebase لتعمل قاعدة البيانات للجميع.
-        // إذا تركتها هكذا، سيعمل الموقع على نظام التخزين المحلي للمتصفح (Local Storage) كبديل للطوارئ.
+        // إعدادات مشروع Firebase الخاص بسعد للإلكترونيات.
+        // يلزم ضبط قواعد Realtime Database في Firebase Console قبل الاستخدام العام.
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyB-rA8w5O7MLCtHFYDZtBpfFfYCRqHU4XQ",
+            authDomain: "sad-ec.firebaseapp.com",
+            databaseURL: "https://sad-ec-default-rtdb.firebaseio.com",
+            projectId: "sad-ec",
+            storageBucket: "sad-ec.firebasestorage.app",
+            messagingSenderId: "944090267220",
+            appId: "1:944090267220:web:13506897c6d814b7f0b7c1",
+            measurementId: "G-W8QDN9Q9CD"
         };
 
         let database = null;
@@ -422,10 +423,12 @@
                 document.getElementById('firebaseStatus').className = 'text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold';
             } catch(e) {
                 console.error("Firebase Error: ", e);
+                document.getElementById('firebaseStatus').textContent = 'تعذر الاتصال بالسحابة';
+                document.getElementById('firebaseStatus').className = 'text-[10px] px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 font-bold';
             }
         }
 
-        const ADMIN_PIN_CODE = "141312";
+        const ADMIN_PIN_CODE = "1";
         let isAdminAuthenticated = false;
 
         // SVG Fallbacks 
