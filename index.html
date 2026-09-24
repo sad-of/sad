@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <!-- Mobile Nav (تم التعديل: زر الموقع يوجه مباشرة للمعلومات) -->
+        <!-- Mobile Nav -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#181824]/95 backdrop-blur-md px-4 py-3 space-y-2 font-semibold text-sm transition-all">
             <a href="#top" onclick="toggleMobileMenu()" class="block text-brand-600 dark:text-neon-blue py-2 border-b border-gray-100 dark:border-gray-800/50 font-bold"><i class="fa-solid fa-house ml-1.5"></i> الرئيسية</a>
             <a href="#products" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50">المنتجات</a>
@@ -228,7 +228,7 @@
         </div>
     </main>
 
-    <!-- Location & About Us Section (قسم الموقع ومن نحن - مفعل بشكل كامل) -->
+    <!-- Location & About Us Section -->
     <section id="about-us" class="py-12 bg-brand-50/50 dark:bg-gray-900/50 border-t border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div class="text-center space-y-3">
@@ -346,8 +346,8 @@
     <div id="masterKeyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-red-500/40 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-cat"></i></div>
-            <h3 class="text-lg font-black text-gray-900 dark:text-white">إذن المبرمج حسين مطلوب 🔒</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص للمبرمج (1962) لإتمام هذه العملية</p>
+            <h3 class="text-lg font-black text-gray-900 dark:text-white">إذن مبرمج الموقع مطلوب 🔒</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص لمبرمج الموقع (1962) لإتمام هذه العملية</p>
             <form onsubmit="confirmMasterKeyAction(event)" class="space-y-3">
                 <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل رمز المبرمج السرّي..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
                 <div class="flex gap-2">
@@ -678,7 +678,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-bold text-gray-700 dark:text-gray-300 mb-1">اسم صاحب الرقم الثاني</label>
-                                    <input type="text" id="settingPhone2Owner" placeholder="مثال: حسين" class="w-full px-3 py-1.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-xs">
+                                    <input type="text" id="settingPhone2Owner" placeholder="مثال: مبرمج الموقع" class="w-full px-3 py-1.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-xs">
                                 </div>
                             </div>
 
@@ -720,7 +720,7 @@
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">اسم المبرمج / الشركة</label>
-                            <input type="text" id="settingDevName" required placeholder="حسين محمد" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
+                            <input type="text" id="settingDevName" required placeholder="مبرمج الموقع" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -765,7 +765,7 @@
             </div>
 
             <div class="pt-3 border-t border-gray-800 text-[11px] sm:text-xs text-gray-300 font-medium leading-relaxed">
-                تم تصميم وبرمجة الموقع بواسطة <span id="devNameDisplay" class="font-bold text-white">حسين محمد</span> | رقم الهاتف: <a id="devPhoneDisplay" href="tel:07722337379" class="text-brand-400 underline" dir="ltr">07722337379</a> | إنستغرام: <a id="devUserLink" href="https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr" target="_blank" class="text-brand-400 font-bold underline" dir="ltr"><span id="devUserDisplay">xv8f</span></a>
+                تم تصميم وبرمجة الموقع بواسطة <span id="devNameDisplay" class="font-bold text-white">مبرمج الموقع</span> | رقم الهاتف: <a id="devPhoneDisplay" href="tel:07722337379" class="text-brand-400 underline" dir="ltr">07722337379</a> | إنستغرام: <a id="devUserLink" href="https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr" target="_blank" class="text-brand-400 font-bold underline" dir="ltr"><span id="devUserDisplay">xv8f</span></a>
             </div>
         </div>
     </footer>
@@ -795,14 +795,16 @@
             console.error("Firebase Initialization Error:", e);
         }
 
-        const MASTER_PIN_CODE = "1962"; // الرمز المخصص لحسين لمبرمج الموقع الرئيسي
+        const MASTER_PIN_CODE = "1962"; // الرمز المخصص لمبرمج الموقع الرئيسي
         let pendingMasterAction = null;
         let targetStaffToDelete = null;
 
-        // هيكل الموظفين ومفاتيح الدخول:
-        // حسين عند دخوله بـ sad2007 يدخل كموظف عادي (نفس سعد)، وعند الدخول بـ 1962 يتحول لمبرمج الموقع
+        // تم التعديل: تغيير اسم "حسين" إلى "مبرمج الموقع" برمز 1962 وفتح كامل الأقسام والصلاحيات له تلقائياً
         let authorizedUsersList = {
-            "حسين": { pin: "sad2007", permissions: ["productsTab", "hoursTab", "socialTab"] },
+            "مبرمج الموقع": { 
+                pin: "1962", 
+                permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
+            },
             "سعد": { pin: "sad1996", permissions: ["productsTab", "hoursTab", "socialTab"] },
             "وسام": { pin: "sad1984", permissions: ["productsTab", "hoursTab"] }
         };
@@ -835,7 +837,7 @@
             phone1: "07718277535",
             phone1Owner: "سعد",
             phone2: "",
-            phone2Owner: "",
+            phone2Owner: "مبرمج الموقع",
             phone3: "",
             phone3Owner: "",
             workHours: "يومياً من 9:00 صباحاً حتى 11:00 مساءً",
@@ -843,7 +845,7 @@
             currentStaff: "سعد",
             facebook: "https://www.facebook.com/share/1EZL4V5ELX/?mibextid=wwXIfr",
             instagram: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr",
-            devName: "حسين محمد",
+            devName: "مبرمج الموقع",
             devPhone: "07722337379",
             devUser: "xv8f",
             devLink: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr"
@@ -873,9 +875,8 @@
         function applyUserPermissionsUI() {
             if(!loggedInUser || !authorizedUsersList[loggedInUser]) return;
             
-            // إذا كان المطور مَفتاحاً بـ 1962 يملك كافة الصلاحيات
-            const isDevMaster = isDevUnlocked;
-            const perms = isDevMaster 
+            // مبرمج الموقع يمتلك كل الأقسام مجتمعة تلقائياً
+            const perms = (loggedInUser === "مبرمج الموقع" || isDevUnlocked) 
                 ? ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"]
                 : (authorizedUsersList[loggedInUser].permissions || []);
 
@@ -893,7 +894,7 @@
         }
 
         function switchAdminTab(tabId) {
-            if(tabId === 'devTab' && !isDevUnlocked) {
+            if(tabId === 'devTab' && !isDevUnlocked && loggedInUser !== 'مبرمج الموقع') {
                 document.getElementById('devLockModal').classList.remove('hidden');
                 document.getElementById('devPinInput').focus();
                 return;
@@ -921,7 +922,7 @@
             if(input === MASTER_PIN_CODE) {
                 isDevUnlocked = true;
                 closeDevLockModal();
-                showToast('أهلاً بك يا حسين، تم تسجيلك كـ مبرمج الموقع المباشر 🔓');
+                showToast('أهلاً بك، تم فتح صلاحيات مبرمج الموقع المباشر 🔓');
                 applyUserPermissionsUI();
                 switchAdminTab('devTab');
             } else {
@@ -934,7 +935,7 @@
             document.getElementById('devPinInput').value = '';
         }
 
-        // --- نظام تأكيد رمز المبرمج الرئيسية 1962 ---
+        // --- نظام تأكيد رمز المبرمج الرئيسي 1962 ---
         function requestMasterKeyForAction(action, data = null) {
             pendingMasterAction = action;
             targetStaffToDelete = data;
@@ -969,7 +970,7 @@
 
         // --- سجلات التعديل والعمليات ---
         function addAuditLog(actionText) {
-            const user = (isDevUnlocked ? 'حسين (المبرمج)' : loggedInUser) || 'غير معروف';
+            const user = loggedInUser || 'غير معروف';
             const timestamp = new Date().toLocaleString('ar-IQ', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric' });
             
             const logEntry = {
@@ -1713,7 +1714,7 @@
             renderProducts();
         }
 
-        // --- تسجيل الدخول والتحقق من حسين (سواء كموظف أو مبرمج) ---
+        // --- تسجيل الدخول والتحقق من حساب مبرمج الموقع ---
         function promptAdminPin() {
             if(isAdminAuthenticated) {
                 openAdminModal();
@@ -1732,29 +1733,24 @@
             const selectedUser = document.getElementById('adminUserSelect').value;
             const enteredPin = document.getElementById('adminPinInput').value.trim();
 
-            // التحقق من حالة المطور المباشر عبر الرمز 1962
-            if(enteredPin === MASTER_PIN_CODE) {
-                isAdminAuthenticated = true;
-                loggedInUser = selectedUser;
-                isDevUnlocked = true;
-                closePinModal();
-                openAdminModal();
-                addAuditLog('تسجيل دخول كـ مبرمج بالرمز Master 1962');
-                showToast(`أهلاً بك المبرمج (${loggedInUser})! تم فتح جميع صلاحيات المطور 🔓`);
-                return;
-            }
-
             const userObj = authorizedUsersList[selectedUser];
             const storedPin = typeof userObj === 'object' ? userObj.pin : userObj;
 
             if (storedPin && storedPin === enteredPin) {
                 isAdminAuthenticated = true;
                 loggedInUser = selectedUser;
-                isDevUnlocked = false; // كموظف عادي
+
+                // إذا كان المستخدم هو "مبرمج الموقع" فتح صلاحيات المطور كاملة تلقائياً
+                if(selectedUser === "مبرمج الموقع" || enteredPin === MASTER_PIN_CODE) {
+                    isDevUnlocked = true;
+                } else {
+                    isDevUnlocked = false;
+                }
+
                 closePinModal();
                 openAdminModal();
-                addAuditLog('تسجيل دخول إلى لوحة التحكم كموظف');
-                showToast(`أهلاً بك يا ${loggedInUser}! تم الدخول كموظف بنجاح 🔓`);
+                addAuditLog('تسجيل دخول إلى لوحة التحكم');
+                showToast(`أهلاً بك يا ${loggedInUser}! تم الدخول بنجاح 🔓`);
             } else {
                 showToast('كلمة المرور غير صحيحة لهذا الحساب! ❌');
                 document.getElementById('adminPinInput').value = '';
@@ -1771,7 +1767,7 @@
         }
 
         function openAdminModal() { 
-            document.getElementById('currentUserBadge').textContent = loggedInUser + (isDevUnlocked ? ' (مبرمج)' : '');
+            document.getElementById('currentUserBadge').textContent = loggedInUser + (isDevUnlocked ? ' (المبرمج)' : '');
             document.getElementById('adminModal').classList.remove('hidden'); 
             renderAdminCategoriesList(); 
             renderAdminProductList(); 
