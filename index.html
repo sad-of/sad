@@ -64,7 +64,7 @@
         button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-[#12121e] dark:text-gray-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+<body id="top" class="bg-gray-50 text-gray-800 dark:bg-[#12121e] dark:text-gray-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
     <!-- Header / الشريط الأعلى -->
     <header class="sticky top-0 z-40 w-full glass-card shadow-sm transition-all duration-300">
@@ -88,6 +88,7 @@
 
                 <!-- Desktop Nav -->
                 <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 space-x-reverse font-bold text-sm">
+                    <a href="#top" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors flex items-center gap-1"><i class="fa-solid fa-house"></i> الرئيسية</a>
                     <a href="#products" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">المنتجات</a>
                     <a href="#categories" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">الأقسام</a>
                     <a href="#location" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors flex items-center gap-1"><i class="fa-solid fa-map-pin text-red-500"></i> الموقع</a>
@@ -107,11 +108,12 @@
             </div>
         </div>
 
-        <!-- Mobile Nav -->
+        <!-- Mobile Nav (الثلاث خطوط) -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#181824]/95 backdrop-blur-md px-4 py-3 space-y-2 font-semibold text-sm transition-all">
+            <a href="#top" onclick="toggleMobileMenu()" class="block text-brand-600 dark:text-neon-blue py-2 border-b border-gray-100 dark:border-gray-800/50 font-bold"><i class="fa-solid fa-house ml-1.5"></i> الرئيسية</a>
             <a href="#products" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50">المنتجات</a>
             <a href="#categories" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50">الأقسام</a>
-            <a href="#location" onclick="toggleMobileMenu()" class="block text-brand-600 dark:text-neon-blue py-2 border-b border-gray-100 dark:border-gray-800/50"><i class="fa-solid fa-location-dot ml-1"></i> بابل - المسيب - شارع الحسينية</a>
+            <a href="#location" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50"><i class="fa-solid fa-location-dot ml-1 text-red-500"></i> بابل - المسيب - شارع الحسينية</a>
             <a href="#contact" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2">تواصل معنا</a>
         </div>
     </header>
@@ -172,6 +174,32 @@
 
     <!-- Products Section -->
     <main id="products" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full flex-grow">
+        
+        <!-- شريط الإحصائيات العام في الموقع (عرض الكلي والدخول اليومي) -->
+        <div class="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-500/30 shadow-xl">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-400/30 flex items-center justify-center text-neon-blue text-lg shrink-0">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base text-white flex items-center gap-2">إحصائيات زوار وزيارات الموقع المباشرة</h3>
+                        <p class="text-[11px] text-gray-300">يتم التحديث والتسجيل الفوري للزوار الكليين والتصفح اليومي</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 w-full sm:w-auto">
+                    <div class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 text-center">
+                        <span class="block text-[10px] sm:text-xs text-gray-300 font-semibold">المستخدمين الكلي (الفريدين)</span>
+                        <span id="publicUniqueVisitors" class="text-base sm:text-xl font-black text-neon-blue">0</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 text-center">
+                        <span class="block text-[10px] sm:text-xs text-gray-300 font-semibold">الدخول والزيارات اليومية</span>
+                        <span id="publicTotalViews" class="text-base sm:text-xl font-black text-emerald-400">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Categories Filter -->
         <div id="categories" class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
             <div>
@@ -184,8 +212,9 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto pb-1 sm:pb-0">
-                <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-gray-200/70 dark:bg-gray-800/80 p-1.5 rounded-2xl border border-gray-300/50 dark:border-gray-700/50 whitespace-nowrap">
+            <!-- أزرار الأقسام الديناميكية -->
+            <div class="overflow-x-auto pb-1 sm:pb-0 max-w-full">
+                <div id="categoriesContainer" class="inline-flex items-center gap-1.5 sm:gap-2 bg-gray-200/70 dark:bg-gray-800/80 p-1.5 rounded-2xl border border-gray-300/50 dark:border-gray-700/50 whitespace-nowrap">
                     <button onclick="filterCategory('all')" id="cat-all" class="cat-btn active px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-brand-600 text-white shadow-sm">الكل</button>
                     <button onclick="filterCategory('playstation')" id="cat-playstation" class="cat-btn px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300"><i class="fa-brands fa-playstation ml-1"></i> بلايستيشن</button>
                     <button onclick="filterCategory('electronics')" id="cat-electronics" class="cat-btn px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300"><i class="fa-solid fa-tv ml-1"></i> إلكترونيات</button>
@@ -242,9 +271,7 @@
                     <div class="w-12 h-12 mx-auto rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-share-nodes"></i></div>
                     <h3 class="font-bold text-lg text-gray-900 dark:text-white">مواقع التواصل</h3>
                     <div class="flex justify-center gap-3 pt-1">
-                        <!-- تم إضافة رابط فيسبوك المحدث -->
                         <a href="https://www.facebook.com/share/1EZL4V5ELX/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-all shadow-md hover:scale-105"><i class="fa-brands fa-facebook-f text-lg"></i></a>
-                        <!-- تم إضافة رابط إنستغرام المحدث -->
                         <a href="https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white flex items-center justify-center transition-all shadow-md hover:scale-105"><i class="fa-brands fa-instagram text-xl"></i></a>
                     </div>
                 </div>
@@ -267,11 +294,11 @@
         </div>
     </div>
 
-    <!-- Admin Management Modal (إضافة + تعديل + حذف + عداد الزوار الحقيقي) -->
+    <!-- Admin Management Modal (إضافة + تعديل + حذف + عداد الزوار الحقيقي + إضافة قسم جديد) -->
     <div id="adminModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden my-auto">
             <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-6 py-4 text-white flex items-center justify-between">
-                <div class="flex items-center gap-2"><i class="fa-solid fa-sliders text-lg"></i><h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم بالمنتجات والمستخدمين</h3></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-sliders text-lg"></i><h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم بالأقسام والمنتجات</h3></div>
                 <div class="flex items-center gap-2">
                     <button onclick="logoutAdmin()" class="text-xs bg-red-500/30 px-2.5 py-1 rounded-lg border border-red-400/30 text-white"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
                     <button onclick="closeAdminModal()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -288,15 +315,27 @@
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="bg-white/80 dark:bg-gray-800/80 p-3 rounded-xl text-center border border-gray-200 dark:border-gray-700">
-                            <span class="block text-[11px] text-gray-500 dark:text-gray-400 font-semibold mb-1">الزوار الفريدين</span>
+                            <span class="block text-[11px] text-gray-500 dark:text-gray-400 font-semibold mb-1">الزوار الفريدين (الكلي)</span>
                             <span id="uniqueVisitorsCount" class="text-xl sm:text-2xl font-black text-brand-600 dark:text-neon-blue">0</span>
                         </div>
                         <div class="bg-white/80 dark:bg-gray-800/80 p-3 rounded-xl text-center border border-gray-200 dark:border-gray-700">
-                            <span class="block text-[11px] text-gray-500 dark:text-gray-400 font-semibold mb-1">إجمالي التصفح</span>
+                            <span class="block text-[11px] text-gray-500 dark:text-gray-400 font-semibold mb-1">إجمالي التصفح اليومي</span>
                             <span id="totalViewsCount" class="text-xl sm:text-2xl font-black text-emerald-500">0</span>
                         </div>
                     </div>
-                    <p class="text-[10px] text-gray-400 text-center">يتم التجديد والتأكد من الزوار الفريدين لعدم احتساب الزائر الواحد أكثر من مرة عند الدخول المتكرر.</p>
+                </div>
+
+                <!-- نموذج إضافة قسم جديد -->
+                <div class="bg-gray-100 dark:bg-gray-800/60 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 space-y-3">
+                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
+                        <i class="fa-solid fa-folder-plus text-emerald-500"></i> إضافة قسم جديد للأقسام الإلكترونية
+                    </h4>
+                    <div class="flex gap-2">
+                        <input type="text" id="newCategoryName" placeholder="اسم القسم الجديد (مثال: ألعاب فيديو، شاشات...)" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
+                        <button type="button" onclick="addNewCategory()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> إضافة القسم
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Add or Edit Product Form -->
@@ -338,7 +377,7 @@
 
                     <div class="flex gap-2">
                         <button type="submit" id="submitBtn" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> حفظ المغيرات للجميع
+                            <i class="fa-solid fa-cloud-arrow-up"></i> حفظ التغييرات للجميع
                         </button>
                         <button type="button" id="cancelEditBtn" onclick="resetForm()" class="hidden w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
                     </div>
@@ -409,6 +448,7 @@
         };
 
         let products = [];
+        let customCategories = [];
         let currentCategory = 'all';
 
         function formatIQD(price) { return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع'; }
@@ -431,7 +471,7 @@
             label.textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
         }
 
-        // --- نظام تتبع وحساب عدد المستخدمين والزوار الفريدين ---
+        // --- نظام تتبع وحساب عدد المستخدمين والزوار الفريدين للموقع ككل ---
         function trackVisitors() {
             let visitorId = localStorage.getItem('saad_visitor_uid');
             let isNewVisitor = false;
@@ -443,10 +483,10 @@
             }
 
             if (isFirebaseActive) {
-                // زيادة إجمالي مشاهدات الصفحة
+                // زيادة إجمالي مشاهدات الصفحة والدخول اليومي
                 database.ref('analytics/totalViews').transaction(current => (current || 0) + 1);
 
-                // تسجيل زائر فريد جديد في حالة أول مرة يدخل الموقع فقط
+                // تسجيل زائر فريد جديد
                 if (isNewVisitor) {
                     database.ref('analytics/uniqueVisitors').transaction(current => (current || 0) + 1);
                     database.ref('analytics/visitorsList/' + visitorId).set({
@@ -455,19 +495,19 @@
                     });
                 }
 
-                // التجديد التلقائي للعداد كل يوم أو يومين
-                checkAndIncrementCycle();
-
-                // الاستماع للتغييرات في الوقت الفعلي لوحة التحكم
+                // الاستماع للتغييرات في الوقت الفعلي وتحديث العداد بجميع أرجاء الموقع
                 database.ref('analytics').on('value', (snapshot) => {
                     const data = snapshot.val() || {};
-                    const uniqueElem = document.getElementById('uniqueVisitorsCount');
-                    const totalElem = document.getElementById('totalViewsCount');
-                    if (uniqueElem) uniqueElem.textContent = data.uniqueVisitors || 1;
-                    if (totalElem) totalElem.textContent = data.totalViews || 1;
+                    const uVal = data.uniqueVisitors || 1;
+                    const tVal = data.totalViews || 1;
+
+                    // تحديث العداد بالواجهة الرئيسية والمودال
+                    document.getElementById('uniqueVisitorsCount').textContent = uVal;
+                    document.getElementById('totalViewsCount').textContent = tVal;
+                    document.getElementById('publicUniqueVisitors').textContent = uVal;
+                    document.getElementById('publicTotalViews').textContent = tVal;
                 });
             } else {
-                // التتبع المحلي في حالة عدم الاتصال بالسحابة
                 let localUnique = parseInt(localStorage.getItem('saad_unique_visitors') || '0');
                 let localTotal = parseInt(localStorage.getItem('saad_total_views') || '0') + 1;
                 
@@ -477,28 +517,77 @@
                 }
                 localStorage.setItem('saad_total_views', localTotal);
 
-                const uniqueElem = document.getElementById('uniqueVisitorsCount');
-                const totalElem = document.getElementById('totalViewsCount');
-                if (uniqueElem) uniqueElem.textContent = localUnique || 1;
-                if (totalElem) totalElem.textContent = localTotal || 1;
+                document.getElementById('uniqueVisitorsCount').textContent = localUnique || 1;
+                document.getElementById('totalViewsCount').textContent = localTotal || 1;
+                document.getElementById('publicUniqueVisitors').textContent = localUnique || 1;
+                document.getElementById('publicTotalViews').textContent = localTotal || 1;
             }
         }
 
-        // التحقق من مرور يوم أو يومين لتجديد وتحديث عدد الزوار تلقائياً
-        function checkAndIncrementCycle() {
-            const now = Date.now();
-            const twoDaysMs = 48 * 60 * 60 * 1000; // 48 ساعة
+        // --- إدارة الأقسام الديناميكية ---
+        function initCategories() {
+            if (isFirebaseActive) {
+                database.ref('categories').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    customCategories = data ? Object.values(data) : [];
+                    renderCategoriesUI();
+                });
+            } else {
+                const storedCats = localStorage.getItem('saad_custom_categories');
+                customCategories = storedCats ? JSON.parse(storedCats) : [];
+                renderCategoriesUI();
+            }
+        }
 
-            database.ref('analytics/lastCycleUpdate').get().then((snapshot) => {
-                const lastUpdate = snapshot.val() || 0;
-                if (now - lastUpdate > twoDaysMs) {
-                    // إضافة عدد زوار تفاعلي جديد للتجديد الدوري
-                    const incrementAmount = Math.floor(Math.random() * 5) + 2; // من 2 إلى 6 مستخدمين جدد
-                    database.ref('analytics/uniqueVisitors').transaction(current => (current || 0) + incrementAmount);
-                    database.ref('analytics/totalViews').transaction(current => (current || 0) + (incrementAmount * 2));
-                    database.ref('analytics/lastCycleUpdate').set(now);
-                }
-            }).catch(err => console.error(err));
+        function addNewCategory() {
+            const catInput = document.getElementById('newCategoryName');
+            const name = catInput.value.trim();
+            if(!name) { showToast('يرجى كتابة اسم القسم الجديد!'); return; }
+
+            const catId = 'cat_' + Date.now();
+            const newCat = { id: catId, name: name };
+
+            if(isFirebaseActive) {
+                database.ref('categories/' + catId).set(newCat);
+            } else {
+                customCategories.push(newCat);
+                localStorage.setItem('saad_custom_categories', JSON.stringify(customCategories));
+                renderCategoriesUI();
+            }
+
+            catInput.value = '';
+            showToast('تمت إضافة القسم الجديد بنجاح! 📁');
+        }
+
+        function renderCategoriesUI() {
+            const container = document.getElementById('categoriesContainer');
+            const selectEl = document.getElementById('prodCategory');
+
+            // إرجاع خيارات القائمة الأساسية
+            let defaultButtonsHtml = `
+                <button onclick="filterCategory('all')" id="cat-all" class="cat-btn ${currentCategory === 'all' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all">الكل</button>
+                <button onclick="filterCategory('playstation')" id="cat-playstation" class="cat-btn ${currentCategory === 'playstation' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all"><i class="fa-brands fa-playstation ml-1"></i> بلايستيشن</button>
+                <button onclick="filterCategory('electronics')" id="cat-electronics" class="cat-btn ${currentCategory === 'electronics' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all"><i class="fa-solid fa-tv ml-1"></i> إلكترونيات</button>
+                <button onclick="filterCategory('accessories')" id="cat-accessories" class="cat-btn ${currentCategory === 'accessories' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all"><i class="fa-solid fa-headset ml-1"></i> إكسسوارات</button>
+            `;
+
+            let selectOptionsHtml = `
+                <option value="playstation">بلايستيشن (PlayStation)</option>
+                <option value="electronics">أجهزة إلكترونية</option>
+                <option value="accessories">إكسسوارات بلايستيشن</option>
+            `;
+
+            // إضافة الأقسام المضافة من اللوحة
+            customCategories.forEach(cat => {
+                const isActive = currentCategory === cat.id;
+                defaultButtonsHtml += `
+                    <button onclick="filterCategory('${cat.id}')" id="cat-${cat.id}" class="cat-btn ${isActive ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all"><i class="fa-solid fa-layer-group ml-1"></i> ${cat.name}</button>
+                `;
+                selectOptionsHtml += `<option value="${cat.id}">${cat.name}</option>`;
+            });
+
+            container.innerHTML = defaultButtonsHtml;
+            selectEl.innerHTML = selectOptionsHtml;
         }
 
         // --- Realtime Cloud Firebase Integration ---
@@ -570,7 +659,7 @@
             document.getElementById('productForm').reset();
             document.getElementById('editProductId').value = '';
             document.getElementById('formHeader').innerHTML = `<i class="fa-solid fa-plus-circle text-brand-600"></i> إضافة منتج جديد`;
-            document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> حفظ المغيرات للجميع`;
+            document.getElementById('submitBtn').innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> حفظ التغييرات للجميع`;
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
@@ -634,7 +723,11 @@
         function getCategoryBadge(category) {
             if(category==='playstation') return `<span class="bg-blue-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-brands fa-playstation"></i> بلايستيشن</span>`;
             if(category==='electronics') return `<span class="bg-amber-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-tv"></i> إلكترونيات</span>`;
-            return `<span class="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-headset"></i> إكسسوارات</span>`;
+            if(category==='accessories') return `<span class="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-headset"></i> إكسسوارات</span>`;
+            
+            const custom = customCategories.find(c => c.id === category);
+            const name = custom ? custom.name : 'قسم خاص';
+            return `<span class="bg-emerald-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-layer-group"></i> ${name}</span>`;
         }
 
         function filterCategory(cat) {
@@ -643,8 +736,11 @@
                 btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
                 btn.classList.add('text-gray-700', 'dark:text-gray-300');
             });
-            document.getElementById(`cat-${cat}`).classList.add('bg-brand-600', 'text-white', 'shadow-sm');
-            document.getElementById(`cat-${cat}`).classList.remove('text-gray-700', 'dark:text-gray-300');
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
+                activeBtn.classList.remove('text-gray-700', 'dark:text-gray-300');
+            }
             renderProducts();
         }
 
@@ -703,8 +799,9 @@
 
         window.onload = function() { 
             initTheme(); 
+            initCategories();
             initProducts(); 
-            trackVisitors(); // تشغيل تتبع عدد زوار ومستخدمي الموقع
+            trackVisitors(); 
         };
     </script>
 </body>
