@@ -4,34 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>سعد للإلكترونيات | سعد بلايستيشن وأجهزة إلكترونية منذ 1996</title>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
-                screens: {
-                    'xs': '475px',
-                    'sm': '640px',
-                    'md': '768px',
-                    'lg': '1024px',
-                    'xl': '1280px',
-                },
+                screens: { 'xs': '475px', 'sm': '640px', 'md': '768px', 'lg': '1024px', 'xl': '1280px' },
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                        },
-                        neon: {
-                            blue: '#00f0ff',
-                            purple: '#7000ff'
-                        }
+                        brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' },
+                        neon: { blue: '#00f0ff', purple: '#7000ff' }
                     },
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
@@ -41,84 +25,52 @@
             }
         }
     </script>
-    <!-- Google Fonts Cairo & Tajawal -->
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDK (Compat version for simple HTML integration) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Cairo', 'Tajawal', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
-            width: 100%;
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Cairo', 'Tajawal', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; width: 100%; }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(229, 231, 235, 0.8);
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(229, 231, 235, 0.8);
         }
-        
         .dark .glass-card {
-            background: rgba(30, 30, 45, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 30, 45, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .product-card {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
+        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         @media (hover: hover) {
-            .product-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.3);
-            }
-            .dark .product-card:hover {
-                box-shadow: 0 12px 24px -10px rgba(0, 240, 255, 0.25);
-            }
+            .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.3); }
+            .dark .product-card:hover { box-shadow: 0 12px 24px -10px rgba(0, 240, 255, 0.25); }
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        .dark ::-webkit-scrollbar-track {
-            background: #181824;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #a5b4fc;
-            border-radius: 4px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #3730a3;
-            border-radius: 4px;
-        }
-
-        button, a, input, select, textarea {
-            -webkit-tap-highlight-color: transparent;
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #181824; }
+        ::-webkit-scrollbar-thumb { background: #a5b4fc; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #3730a3; border-radius: 4px; }
+        button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-[#12121e] dark:text-gray-100 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
+    <!-- Header -->
     <header class="sticky top-0 z-40 w-full glass-card shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
-                
-                <!-- Logo & Branding -->
+                <!-- Logo -->
                 <div class="flex items-center space-x-2.5 sm:space-x-3 space-x-reverse">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 shrink-0">
                         <i class="fa-solid font-bold text-xl sm:text-2xl fa-gamepad"></i>
@@ -132,7 +84,7 @@
                     </div>
                 </div>
 
-                <!-- Desktop Nav Links -->
+                <!-- Desktop Nav -->
                 <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 space-x-reverse font-bold text-sm">
                     <a href="#products" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">المنتجات</a>
                     <a href="#categories" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">الأقسام</a>
@@ -140,15 +92,14 @@
                     <a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">تواصل معنا</a>
                 </nav>
 
-                <!-- Action Controls (Theme Toggle) -->
+                <!-- Action Controls -->
                 <div class="flex items-center space-x-1.5 sm:space-x-3 space-x-reverse">
-                    <!-- Day/Night Toggle Button -->
+                    <!-- Theme Toggle -->
                     <button id="themeToggle" onclick="toggleTheme()" class="p-2 sm:p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center gap-1.5 text-xs sm:text-sm font-semibold border border-gray-200 dark:border-gray-700 active:scale-95" title="تبديل المظهر">
                         <i id="themeIcon" class="fa-solid fa-sun text-base sm:text-lg"></i>
                         <span id="themeLabel" class="hidden lg:inline">الوضع النهاري</span>
                     </button>
-
-                    <!-- Mobile Menu Button -->
+                    <!-- Mobile Menu Btn -->
                     <button onclick="toggleMobileMenu()" class="md:hidden p-2 sm:p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 active:scale-95">
                         <i id="menuIcon" class="fa-solid fa-bars text-lg"></i>
                     </button>
@@ -156,7 +107,7 @@
             </div>
         </div>
 
-        <!-- Mobile Navigation Menu Dropdown -->
+        <!-- Mobile Nav -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#181824]/95 backdrop-blur-md px-4 py-3 space-y-2 font-semibold text-sm transition-all">
             <a href="#products" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 hover:text-brand-600 border-b border-gray-100 dark:border-gray-800/50">المنتجات</a>
             <a href="#categories" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 hover:text-brand-600 border-b border-gray-100 dark:border-gray-800/50">الأقسام</a>
@@ -168,6 +119,7 @@
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-md"></div>
 
+    <!-- Hero Section -->
     <section class="relative overflow-hidden py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-brand-50/50 via-transparent to-transparent dark:from-brand-950/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
@@ -193,7 +145,7 @@
                     </div>
                 </div>
                 
-                <!-- Decorative Graphic Card -->
+                <!-- Graphic Card -->
                 <div class="relative flex justify-center mt-2 md:mt-0">
                     <div class="w-full max-w-sm sm:max-w-md h-64 sm:h-80 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-brand-600 to-indigo-900 p-1 shadow-xl relative overflow-hidden group">
                         <div class="w-full h-full bg-gray-900 rounded-[14px] sm:rounded-[22px] overflow-hidden relative flex flex-col justify-between p-4 sm:p-6 text-white">
@@ -220,66 +172,53 @@
         </div>
     </section>
 
+    <!-- Main Products -->
     <main id="products" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full flex-grow">
-        
-        <!-- Header & Category Filter Tabs -->
+        <!-- Filters -->
         <div id="categories" class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
             <div>
                 <h2 class="text-xl sm:text-3xl font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
                     <i class="fa-solid fa-store text-brand-600 dark:text-neon-blue"></i>
                     معرض المنتجات
                 </h2>
-                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">تصفح التشكيلة الكاملة أو اختر القسم المطلوب</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">تصفح التشكيلة الكاملة أو اختر القسم</p>
+                    <span id="firebaseStatus" class="text-[10px] px-2 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">تخزين محلي</span>
+                </div>
             </div>
 
-            <!-- Filter Buttons -->
             <div class="overflow-x-auto pb-1 sm:pb-0 -mx-3 px-3 sm:mx-0 sm:px-0">
                 <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-gray-200/70 dark:bg-gray-800/80 p-1.5 rounded-2xl border border-gray-300/50 dark:border-gray-700/50 whitespace-nowrap min-w-full xs:min-w-0">
-                    <button onclick="filterCategory('all')" id="cat-all" class="cat-btn active px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-brand-600 text-white shadow-sm">
-                        الكل
-                    </button>
-                    <button onclick="filterCategory('playstation')" id="cat-playstation" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700">
-                        <i class="fa-brands fa-playstation ml-1"></i> بلايستيشن
-                    </button>
-                    <button onclick="filterCategory('electronics')" id="cat-electronics" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700">
-                        <i class="fa-solid fa-tv ml-1"></i> إلكترونيات
-                    </button>
-                    <button onclick="filterCategory('accessories')" id="cat-accessories" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700">
-                        <i class="fa-solid fa-headset ml-1"></i> إكسسوارات
-                    </button>
+                    <button onclick="filterCategory('all')" id="cat-all" class="cat-btn active px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-brand-600 text-white shadow-sm">الكل</button>
+                    <button onclick="filterCategory('playstation')" id="cat-playstation" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"><i class="fa-brands fa-playstation ml-1"></i> بلايستيشن</button>
+                    <button onclick="filterCategory('electronics')" id="cat-electronics" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"><i class="fa-solid fa-tv ml-1"></i> إلكترونيات</button>
+                    <button onclick="filterCategory('accessories')" id="cat-accessories" class="cat-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"><i class="fa-solid fa-headset ml-1"></i> إكسسوارات</button>
                 </div>
             </div>
         </div>
 
-        <!-- Fully Responsive 3-Column Grid Layout -->
+        <!-- Products Grid (3 Columns) -->
         <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <!-- Dynamic product cards populated via JavaScript -->
+            <!-- Populated via JS -->
         </div>
 
-        <!-- Empty State Message -->
         <div id="noProductsMessage" class="hidden text-center py-12 sm:py-16 bg-white dark:bg-gray-800/40 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-gray-800 my-6">
             <i class="fa-solid fa-box-open text-4xl sm:text-5xl text-gray-400 mb-3 sm:mb-4"></i>
             <h3 class="text-lg sm:text-xl font-bold text-gray-700 dark:text-gray-300">لا توجد منتجات في هذا القسم حالياً</h3>
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">يمكن إضافة منتجات جديدة عبر لوحة الإدارة</p>
         </div>
     </main>
 
+    <!-- About Section -->
     <section id="about" class="bg-white dark:bg-[#181826] py-10 sm:py-14 border-t border-b border-gray-200 dark:border-gray-800 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
                 <div class="space-y-3 sm:space-y-4 text-right">
                     <div class="inline-flex items-center gap-1.5 text-brand-600 dark:text-neon-blue font-bold text-xs sm:text-sm">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        سعد للإلكترونيات - الخبرة والأمانة
+                        <i class="fa-solid fa-shield-halved"></i> سعد للإلكترونيات - الخبرة والأمانة
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">
-                        خبرة وخدمة متميزة منذ عام 1996
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">خبرة وخدمة متميزة منذ عام 1996</h2>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-xs sm:text-base">
                         تأسس محل <strong class="text-gray-900 dark:text-white">سعد للإلكترونيات</strong> في عام 1996 ليكون الرائد في مجال توفير أحدث التقنيات وأجهزة الترفيه المنزلي. نقدم أفضل منتجات البلايستيشن الأصلية، الشاشات الذكية، والأجهزة الإلكترونية الحديثة.
-                    </p>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-xs sm:text-base">
-                        نتميز بتقديم خدمات الصيانة المتخصصة، تعديل وتحديث أجهزة البلايستيشن، وتوفير الألعاب والأقراص مع الضمان الحقيقي وخدمة ما بعد البيع.
                     </p>
                     <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-3 text-center">
                         <div class="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700/50">
@@ -302,22 +241,9 @@
                         <i class="fa-solid fa-quote-right text-4xl sm:text-6xl text-brand-500/20 absolute top-3 left-3"></i>
                         <h3 class="text-lg sm:text-xl font-extrabold mb-3 sm:mb-4 border-b border-gray-700 pb-2.5">لماذا تختار سعد للإلكترونيات؟</h3>
                         <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
-                            <li class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i>
-                                <span>أسعار منافسة ومعتمدة بالدينار العراقي (د.ع).</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i>
-                                <span>تشكيلة واسعة من أجهزة PlayStation 5 و PS4 وإكسسواراتها.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i>
-                                <span>فريق صيانة متمرس لإصلاح جميع أعطال أجهزة الألعاب والدستات.</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i>
-                                <span>تواصل مباشر وسريع عبر الواتساب أو الاتصال الهاتفي.</span>
-                            </li>
+                            <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i><span>أسعار منافسة ومعتمدة بالدينار العراقي (د.ع).</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i><span>تشكيلة واسعة من أجهزة PlayStation 5 و PS4 وإكسسواراتها.</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400 text-sm mt-0.5 shrink-0"></i><span>فريق صيانة متمرس لإصلاح جميع أعطال أجهزة الألعاب والدستات.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -325,15 +251,15 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="py-10 sm:py-12 bg-gray-50 dark:bg-[#12121e]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
                 <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">تواصل معنا</h2>
-                <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-1.5">نحن هنا لخدمتك دائماً. يمكنك الاتصال بنا أو زيارتنا أو التواصل عبر منصات التواصل</p>
+                <p class="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-1.5">نحن هنا لخدمتك دائماً. يمكنك الاتصال بنا أو التواصل عبر منصات التواصل</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <!-- Phone Card -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl text-center space-y-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg sm:text-xl">
                         <i class="fa-solid fa-phone"></i>
@@ -341,173 +267,128 @@
                     <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">رقم الهاتف الأساسي</h3>
                     <p class="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-wider" dir="ltr">0771 827 7535</p>
                     <div class="flex justify-center gap-2 pt-1">
-                        <a href="tel:07718277535" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all active:scale-95">
-                            <i class="fa-solid fa-phone-flip"></i> اتصال
-                        </a>
-                        <a href="https://wa.me/9647718277535" target="_blank" class="px-3.5 py-2 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-xs flex items-center gap-1.5 transition-all active:scale-95">
-                            <i class="fa-brands fa-whatsapp text-sm"></i> واتساب
-                        </a>
+                        <a href="tel:07718277535" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all"><i class="fa-solid fa-phone-flip"></i> اتصال</a>
+                        <a href="https://wa.me/9647718277535" target="_blank" class="px-3.5 py-2 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-xs flex items-center gap-1.5 transition-all"><i class="fa-brands fa-whatsapp text-sm"></i> واتساب</a>
                     </div>
                 </div>
 
-                <!-- Store Working Hours Card -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl text-center space-y-3">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-400 flex items-center justify-center text-lg sm:text-xl">
                         <i class="fa-solid fa-clock"></i>
                     </div>
-                    <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">أوقات العمل والخدمة</h3>
+                    <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">أوقات العمل</h3>
                     <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-semibold">يومياً من الساعة 9:00 صباحاً حتى 11:00 مساءً</p>
-                    <p class="text-[11px] text-gray-500 dark:text-gray-400">خدمة الصيانة والمبيعات متوفرة طوال الأسبوع</p>
                 </div>
 
-                <!-- Social Links Card -->
                 <div class="glass-card p-5 sm:p-6 rounded-2xl text-center space-y-3 sm:col-span-2 lg:col-span-1">
                     <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg sm:text-xl">
                         <i class="fa-solid fa-share-nodes"></i>
                     </div>
                     <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white">حسابات التواصل الاجتماعي</h3>
-                    <p class="text-[11px] text-gray-500 dark:text-gray-400">تابعنا للحصول على أحدث العروض والألعاب</p>
                     <div class="flex justify-center gap-3 pt-1">
-                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center hover:opacity-90 transition-opacity active:scale-95" title="فيسبوك">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center hover:opacity-90 transition-opacity active:scale-95" title="إنستغرام">
-                            <i class="fa-brands fa-instagram text-lg"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center hover:opacity-90 transition-opacity active:scale-95" title="تيليجرام">
-                            <i class="fa-brands fa-telegram text-lg"></i>
-                        </a>
+                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center hover:opacity-90"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center hover:opacity-90"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="#" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center hover:opacity-90"><i class="fa-brands fa-telegram text-lg"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Admin Pin Modal -->
     <div id="pinAuthModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
-        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transform transition-all p-6 text-center space-y-4">
-            <div class="w-12 h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl">
-                <i class="fa-solid fa-lock"></i>
-            </div>
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 p-6 text-center space-y-4">
+            <div class="w-12 h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 flex items-center justify-center text-2xl"><i class="fa-solid fa-lock"></i></div>
             <div>
                 <h3 class="text-lg font-black text-gray-900 dark:text-white">دخول لوحة الإدارة</h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">يرجى إدخال الرمز السري للوصول للوحة التحكم</p>
             </div>
-            
             <form onsubmit="verifyAdminPin(event)" class="space-y-3">
-                <div>
-                    <input type="password" id="adminPinInput" maxlength="10" required placeholder="أدخل الرمز السري..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
+                <input type="password" id="adminPinInput" maxlength="10" required placeholder="أدخل الرمز السري..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500">
                 <div class="flex gap-2">
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all active:scale-95">
-                        تأكيد الدخول
-                    </button>
-                    <button type="button" onclick="closePinModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs transition-all active:scale-95">
-                        إلغاء
-                    </button>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all">تأكيد الدخول</button>
+                    <button type="button" onclick="closePinModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs transition-all">إلغاء</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Admin Management Modal -->
     <div id="adminModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 transition-all overflow-y-auto">
-        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transform transition-all my-auto">
-            <!-- Modal Header -->
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden my-auto">
             <div class="bg-gradient-to-r from-brand-600 to-indigo-700 px-4 sm:px-6 py-3.5 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-sliders text-base sm:text-lg"></i><h3 class="font-bold text-sm sm:text-base">لوحة الإدارة (إضافة منتجات للجميع)</h3></div>
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-base sm:text-lg"></i>
-                    <h3 class="font-bold text-sm sm:text-base">لوحة الإدارة والتعديل</h3>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="logoutAdmin()" class="text-xs bg-red-500/30 hover:bg-red-500/50 px-2.5 py-1 rounded-lg border border-red-400/30 text-white transition-colors flex items-center gap-1" title="تسجيل الخروج">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>خروج</span>
-                    </button>
-                    <button onclick="closeAdminModal()" class="text-white/80 hover:text-white p-1 rounded-lg">
-                        <i class="fa-solid fa-xmark text-lg sm:text-xl"></i>
-                    </button>
+                    <button onclick="logoutAdmin()" class="text-xs bg-red-500/30 hover:bg-red-500/50 px-2.5 py-1 rounded-lg border border-red-400/30 text-white transition-colors flex items-center gap-1"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></button>
+                    <button onclick="closeAdminModal()" class="text-white/80 hover:text-white p-1 rounded-lg"><i class="fa-solid fa-xmark text-lg sm:text-xl"></i></button>
                 </div>
             </div>
 
-            <!-- Modal Content Body -->
             <div class="p-4 sm:p-6 max-h-[80vh] overflow-y-auto space-y-5">
-                
-                <!-- Add Product Form -->
                 <form id="addProductForm" onsubmit="handleAddProduct(event)" class="space-y-3.5">
-                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-1.5">
-                        <i class="fa-solid fa-plus-circle text-brand-600"></i> إضافة منتج جديد
-                    </h4>
-
+                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-1.5"><i class="fa-solid fa-plus-circle text-brand-600"></i> إضافة منتج جديد</h4>
+                    
                     <div>
                         <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">اسم المنتج</label>
-                        <input type="text" id="prodName" required placeholder="مثال: يد تحكم سوني 5 دوال سينس" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" id="prodName" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">القسم</label>
-                            <select id="prodCategory" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <select id="prodCategory" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
                                 <option value="playstation">بلايستيشن (PlayStation)</option>
                                 <option value="electronics">أجهزة إلكترونية</option>
                                 <option value="accessories">إكسسوارات بلايستيشن</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">السعر (بالدينار العراقي)</label>
-                            <input type="number" id="prodPrice" required min="0" step="250" placeholder="مثال: 95000" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">السعر (بالدينار)</label>
+                            <input type="number" id="prodPrice" required min="0" step="250" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رابط الصورة (GitHub أو رابط مباشر)</label>
-                        <input type="url" id="prodImage" required placeholder="https://raw.githubusercontent.com/... أو رابط الصورة" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" dir="ltr">
-                        <p class="text-[10px] sm:text-[11px] text-amber-600 dark:text-amber-400 mt-1">
-                            <i class="fa-solid fa-shield-halved"></i> نظام حماية الصورة: حتى لو حُذفت الصورة من المكان الاصلي ستظهر صورة بديلة تلقائياً.
-                        </p>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رابط الصورة (رابط مباشر)</label>
+                        <input type="url" id="prodImage" required class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm" dir="ltr">
+                        <p class="text-[10px] text-amber-600 dark:text-amber-400 mt-1">ملاحظة: إذا حذفت الصورة الأصلية ستظهر صورة بديلة تلقائياً لزوار الموقع.</p>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">وصف المنتج</label>
-                        <textarea id="prodDesc" rows="2" placeholder="اكتب تفاصيل أو مواصفات المنتج..." class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                        <textarea id="prodDesc" rows="2" class="w-full px-3.5 py-2 sm:py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm"></textarea>
                     </div>
 
-                    <button type="submit" class="w-full py-2.5 sm:py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2 active:scale-95">
-                        <i class="fa-solid fa-plus"></i> إضافة المنتج إلى المتجر
+                    <button type="submit" class="w-full py-2.5 sm:py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> رفع المنتج للجميع
                     </button>
                 </form>
 
-                <!-- Current Products List for Management -->
                 <div class="border-t border-gray-200 dark:border-gray-800 pt-3">
-                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white mb-2.5 flex items-center justify-between">
-                        <span><i class="fa-solid fa-boxes-stacked text-brand-600"></i> المنتجات الحالية المتاحة</span>
-                        <button onclick="resetDefaultProducts()" class="text-[11px] text-red-500 hover:underline">استعادة الافتراضي</button>
-                    </h4>
+                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white mb-2.5"><i class="fa-solid fa-boxes-stacked text-brand-600"></i> المنتجات المرفوعة</h4>
                     <div id="adminProductList" class="space-y-2 max-h-44 overflow-y-auto pr-1">
-                        <!-- Dynamic list loaded via JavaScript -->
+                        <!-- Populated via JS -->
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-gray-900 text-white border-t border-gray-800 py-6 sm:py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3 sm:space-y-4">
             <div class="flex items-center justify-center space-x-2 space-x-reverse text-brand-400 font-extrabold text-lg sm:text-xl">
-                <i class="fa-solid fa-gamepad"></i>
-                <span>سعد للإلكترونيات</span>
+                <i class="fa-solid fa-gamepad"></i><span>سعد للإلكترونيات</span>
             </div>
             
             <p class="text-[11px] sm:text-xs text-gray-400">جميع الحقوق محفوظة © 2026 سعد للإلكترونيات - تأسست عام 1996 | العراق</p>
             
-            <!-- Bottom Admin Control Link -->
             <div class="pt-1">
                 <button onclick="promptAdminPin()" class="text-xs text-gray-400 hover:text-brand-400 underline transition-colors inline-flex items-center gap-1.5 font-bold px-3 py-1 rounded-lg hover:bg-gray-800">
-                    <i class="fa-solid fa-lock text-[10px]"></i>
-                    <span>لوحة الإدارة</span>
+                    <i class="fa-solid fa-lock text-[10px]"></i><span>لوحة الإدارة</span>
                 </button>
             </div>
 
-            <!-- Developer Credit Footer -->
             <div class="pt-3 border-t border-gray-800 text-[11px] sm:text-xs text-gray-300 font-medium leading-relaxed">
                 تم تصميم وبرمجة الموقع بواسطة <span class="font-bold text-white">حسين محمد</span> | رقم الهاتف: <a href="tel:07722337379" class="text-brand-400 underline hover:text-brand-300" dir="ltr">07722337379</a> | إنستغرام: <a href="https://instagram.com/xv8f" target="_blank" class="text-brand-400 font-bold underline hover:text-brand-300" dir="ltr">xv8f</a>
             </div>
@@ -515,215 +396,178 @@
     </footer>
 
     <script>
-        // Required Secret Admin PIN Code
+        // ======= إعدادات Firebase السحابية =======
+        // ⚠️ مهم جداً: استبدل القيم أدناه بمعلومات مشروعك من موقع Firebase لتعمل قاعدة البيانات للجميع.
+        // إذا تركتها هكذا، سيعمل الموقع على نظام التخزين المحلي للمتصفح (Local Storage) كبديل للطوارئ.
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let database = null;
+        let isFirebaseActive = false;
+
+        // تهيئة Firebase في حال تم وضع الإعدادات
+        if(firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                database = firebase.database();
+                isFirebaseActive = true;
+                document.getElementById('firebaseStatus').textContent = 'متصل بالسحابة 🟢';
+                document.getElementById('firebaseStatus').className = 'text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 font-bold';
+            } catch(e) {
+                console.error("Firebase Error: ", e);
+            }
+        }
+
         const ADMIN_PIN_CODE = "141312";
         let isAdminAuthenticated = false;
 
-        // SVG Fallbacks for missing/deleted GitHub images
+        // SVG Fallbacks 
         const FALLBACK_IMAGES = {
-            playstation: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%231e1b4b'/><path d='M150 120 L250 120 L250 180 L150 180 Z' fill='%234f46e5'/><text x='200' y='145' font-family='sans-serif' font-size='20' font-weight='bold' fill='%23ffffff' text-anchor='middle'>PlayStation</text><text x='200' y='175' font-family='sans-serif' font-size='14' fill='%2393c5fd' text-anchor='middle'>سعد للإلكترونيات</text></svg>",
-            electronics: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%230f172a'/><circle cx='200' cy='140' r='50' fill='%230284c7'/><text x='200' y='145' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إلكترونيات</text><text x='200' y='220' font-family='sans-serif' font-size='14' fill='%237dd3fc' text-anchor='middle'>سعد للإلكترونيات</text></svg>",
-            accessories: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%2318182b'/><path d='M130 150 Q200 100 270 150' stroke='%23a855f7' stroke-width='12' fill='none'/><text x='200' y='180' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إكسسوارات الأصلي</text></svg>"
+            playstation: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%231e1b4b'/><path d='M150 120 L250 120 L250 180 L150 180 Z' fill='%234f46e5'/><text x='200' y='145' font-family='sans-serif' font-size='20' font-weight='bold' fill='%23ffffff' text-anchor='middle'>PlayStation</text></svg>",
+            electronics: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%230f172a'/><circle cx='200' cy='140' r='50' fill='%230284c7'/><text x='200' y='145' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إلكترونيات</text></svg>",
+            accessories: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%2318182b'/><path d='M130 150 Q200 100 270 150' stroke='%23a855f7' stroke-width='12' fill='none'/><text x='200' y='180' font-family='sans-serif' font-size='18' font-weight='bold' fill='%23ffffff' text-anchor='middle'>إكسسوارات</text></svg>"
         };
 
-        // Default Sample Products
         const DEFAULT_PRODUCTS = [
-            {
-                id: 'p1',
-                name: 'جهاز بلايستيشن 5 النسخة الرقمية (PS5)',
-                category: 'playstation',
-                price: 685000,
-                image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80',
-                description: 'جهاز PlayStation 5 الأصلي مع يد تحكم وسعة تخزين عالية السرعة.'
-            },
-            {
-                id: 'p2',
-                name: 'دستة بلايستيشن 5 دوال سينس الأصلية',
-                category: 'accessories',
-                price: 95000,
-                image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=600&q=80',
-                description: 'يد تحكم لاسلكية مع تقنية اللمس التفاعلي واستجابة اهتزاز حركي.'
-            },
-            {
-                id: 'p3',
-                name: 'شاشة سامسونج 4K الذكية 55 بوصة',
-                category: 'electronics',
-                price: 520000,
-                image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=600&q=80',
-                description: 'شاشة ألعاب جودة فائقة تدعم 120Hz و HDR10 لأفضل تجربة ترفيهية.'
-            },
-            {
-                id: 'p4',
-                name: 'سماعة سوني Pulse 3D لاسلكية',
-                category: 'accessories',
-                price: 135000,
-                image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80',
-                description: 'سماعة رأس لاسلكية مخصصة للصوت المحيطي ثلاثي الأبعاد.'
-            },
-            {
-                id: 'p5',
-                name: 'جهاز بلايستيشن 4 برو (PS4 Pro 1TB)',
-                category: 'playstation',
-                price: 410000,
-                image: 'https://images.unsplash.com/photo-1486401899868-0e435ed85128?auto=format&fit=crop&w=600&q=80',
-                description: 'بلايستيشن 4 برو معدل ومحمل بأحدث الألعاب مع ملحقاته الكاملة.'
-            },
-            {
-                id: 'p6',
-                name: 'منظومة صوتية ومكبر صوت للترفيه',
-                category: 'electronics',
-                price: 180000,
-                image: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=80',
-                description: 'نظام صوتي محيطي عالي الدقة يمنحك تجربة سينمائية أثناء اللعب.'
-            }
+            { id: 'p1', name: 'جهاز بلايستيشن 5 النسخة الرقمية (PS5)', category: 'playstation', price: 685000, image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&q=80', description: 'جهاز PlayStation 5 الأصلي مع يد تحكم.' },
+            { id: 'p2', name: 'دستة بلايستيشن 5 دوال سينس الأصلية', category: 'accessories', price: 95000, image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=600&q=80', description: 'يد تحكم لاسلكية مع تقنية اللمس التفاعلي.' },
+            { id: 'p3', name: 'شاشة سامسونج 4K الذكية 55 بوصة', category: 'electronics', price: 520000, image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&q=80', description: 'شاشة ألعاب جودة فائقة تدعم 120Hz.' }
         ];
 
         let products = [];
         let currentCategory = 'all';
 
-        function formatIQD(price) {
-            return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع';
-        }
+        function formatIQD(price) { return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع'; }
 
+        // Theme Logic
         function initTheme() {
             const savedTheme = localStorage.getItem('saad_theme') || 'light';
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-                updateThemeUI(true);
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-                updateThemeUI(false);
-            }
+            if (savedTheme === 'dark') { document.documentElement.classList.add('dark'); updateThemeUI(true); } 
+            else { document.documentElement.classList.remove('dark'); updateThemeUI(false); }
         }
-
         function toggleTheme() {
             const isDark = document.documentElement.classList.contains('dark');
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
-                localStorage.setItem('saad_theme', 'light');
-                updateThemeUI(false);
-                showToast('تم التبديل إلى الوضع النهاري ☀️');
-            } else {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-                localStorage.setItem('saad_theme', 'dark');
-                updateThemeUI(true);
-                showToast('تم التبديل إلى الوضع الليلي 🌙');
-            }
+            document.documentElement.classList.toggle('dark', !isDark);
+            localStorage.setItem('saad_theme', !isDark ? 'dark' : 'light');
+            updateThemeUI(!isDark);
         }
-
         function updateThemeUI(isDark) {
             const icon = document.getElementById('themeIcon');
             const label = document.getElementById('themeLabel');
-            if (isDark) {
-                icon.className = 'fa-solid fa-moon text-amber-400';
-                label.textContent = 'الوضع الليلي';
-            } else {
-                icon.className = 'fa-solid fa-sun text-amber-500';
-                label.textContent = 'الوضع النهاري';
-            }
+            icon.className = isDark ? 'fa-solid fa-moon text-amber-400' : 'fa-solid fa-sun text-amber-500';
+            label.textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
         }
 
+        // --- Data Logic (Firebase / LocalStorage) ---
         function initProducts() {
-            const storedProducts = localStorage.getItem('saad_products');
-            if (storedProducts) {
-                try {
-                    products = JSON.parse(storedProducts);
-                } catch (e) {
-                    products = [...DEFAULT_PRODUCTS];
-                }
+            if (isFirebaseActive) {
+                // استماع فوري للتحديثات من السحابة
+                database.ref('products').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    // ترتيب المنتجات من الأحدث للأقدم
+                    products = data ? Object.values(data).sort((a,b) => b.timestamp - a.timestamp) : [];
+                    
+                    // رفع المنتجات الافتراضية إذا كانت قاعدة البيانات فارغة تماماً
+                    if(products.length === 0) {
+                        DEFAULT_PRODUCTS.forEach(p => {
+                            p.timestamp = Date.now();
+                            database.ref('products/' + p.id).set(p);
+                        });
+                    } else {
+                        renderProducts();
+                        if(isAdminAuthenticated) renderAdminProductList();
+                    }
+                });
             } else {
-                products = [...DEFAULT_PRODUCTS];
-                saveProductsToStorage();
+                // العمل على التخزين المحلي كبديل
+                const storedProducts = localStorage.getItem('saad_products_local');
+                products = storedProducts ? JSON.parse(storedProducts) : [...DEFAULT_PRODUCTS];
+                renderProducts();
             }
-            renderProducts();
         }
 
-        function saveProductsToStorage() {
-            localStorage.setItem('saad_products', JSON.stringify(products));
+        function saveProductData(product) {
+            if (isFirebaseActive) {
+                database.ref('products/' + product.id).set(product);
+                showToast('تم الرفع إلى السحابة للجميع بنجاح! ☁️');
+            } else {
+                products.unshift(product);
+                localStorage.setItem('saad_products_local', JSON.stringify(products));
+                renderProducts();
+                renderAdminProductList();
+                showToast('تم الحفظ محلياً (إعدادات السحابة مفقودة) ⚠️');
+            }
         }
+
+        function deleteProductData(id) {
+            if (!isAdminAuthenticated) return;
+            if (confirm('هل أنت متأكد من حذف هذا المنتج نهائياً للجميع؟')) {
+                if (isFirebaseActive) {
+                    database.ref('products/' + id).remove();
+                    showToast('تم الحذف من السحابة للجميع 🗑️');
+                } else {
+                    products = products.filter(p => p.id !== id);
+                    localStorage.setItem('saad_products_local', JSON.stringify(products));
+                    renderProducts();
+                    renderAdminProductList();
+                    showToast('تم الحذف محلياً 🗑️');
+                }
+            }
+        }
+        // ---------------------------------------------
 
         function handleImageError(imgElement, category) {
-            const fallback = FALLBACK_IMAGES[category] || FALLBACK_IMAGES.electronics;
-            imgElement.src = fallback;
+            imgElement.src = FALLBACK_IMAGES[category] || FALLBACK_IMAGES.electronics;
             imgElement.onerror = null;
         }
 
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             const emptyMsg = document.getElementById('noProductsMessage');
+            const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
             
-            const filtered = currentCategory === 'all' 
-                ? products 
-                : products.filter(p => p.category === currentCategory);
-
             grid.innerHTML = '';
-
+            
             if (filtered.length === 0) {
                 emptyMsg.classList.remove('hidden');
-                return;
             } else {
                 emptyMsg.classList.add('hidden');
-            }
-
-            filtered.forEach(product => {
-                const categoryBadge = getCategoryBadge(product.category);
-                
-                const cardHtml = `
-                    <div class="product-card glass-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between border border-gray-200 dark:border-gray-800">
-                        <div>
-                            <div class="relative h-44 sm:h-52 bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                                <img src="${product.image}" 
-                                     alt="${product.name}" 
-                                     onerror="handleImageError(this, '${product.category}')"
-                                     class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-300"
-                                     loading="lazy">
-                                <div class="absolute top-2.5 right-2.5">
-                                    ${categoryBadge}
+                filtered.forEach(product => {
+                    grid.innerHTML += `
+                        <div class="product-card glass-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between border border-gray-200 dark:border-gray-800">
+                            <div>
+                                <div class="relative h-44 sm:h-52 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                                    <img src="${product.image}" alt="${product.name}" onerror="handleImageError(this, '${product.category}')" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300" loading="lazy">
+                                    <div class="absolute top-2.5 right-2.5">${getCategoryBadge(product.category)}</div>
+                                </div>
+                                <div class="p-4 sm:p-5 space-y-1.5">
+                                    <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white line-clamp-1">${product.name}</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">${product.description || 'منتج أصلي متوفر.'}</p>
                                 </div>
                             </div>
-
-                            <div class="p-4 sm:p-5 space-y-1.5 sm:space-y-2">
-                                <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white line-clamp-1 leading-snug">${product.name}</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
-                                    ${product.description || 'منتج أصلي متوفر في محل سعد للإلكترونيات مع ضمان الجودة.'}
-                                </p>
+                            <div class="p-4 sm:p-5 pt-0 mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800/60 pt-3 sm:pt-4">
+                                <div>
+                                    <span class="block text-[10px] sm:text-[11px] text-gray-400 font-medium">السعر</span>
+                                    <span class="text-base sm:text-lg font-black text-brand-600 dark:text-neon-blue">${formatIQD(product.price)}</span>
+                                </div>
+                                <a href="https://wa.me/9647718277535?text=${encodeURIComponent('أود الاستفسار عن: ' + product.name)}" target="_blank" class="px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 active:scale-95"><i class="fa-brands fa-whatsapp text-sm sm:text-base"></i><span>طلب</span></a>
                             </div>
-                        </div>
-
-                        <div class="p-4 sm:p-5 pt-0 mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800/60 pt-3 sm:pt-4">
-                            <div>
-                                <span class="block text-[10px] sm:text-[11px] text-gray-400 font-medium">السعر الحالي</span>
-                                <span class="text-base sm:text-lg font-black text-brand-600 dark:text-neon-blue">${formatIQD(product.price)}</span>
-                            </div>
-                            
-                            <a href="https://wa.me/9647718277535?text=${encodeURIComponent('السلام عليكم سعد للإلكترونيات، أود الاستفسار عن شراء: ' + product.name)}" 
-                               target="_blank"
-                               class="px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 active:scale-95">
-                                <i class="fa-brands fa-whatsapp text-sm sm:text-base"></i>
-                                <span>طلب الآن</span>
-                            </a>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += cardHtml;
-            });
+                        </div>`;
+                });
+            }
         }
 
         function getCategoryBadge(category) {
-            switch(category) {
-                case 'playstation':
-                    return `<span class="bg-blue-600/90 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-md shadow-sm"><i class="fa-brands fa-playstation ml-1"></i> بلايستيشن</span>`;
-                case 'electronics':
-                    return `<span class="bg-amber-600/90 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-md shadow-sm"><i class="fa-solid fa-tv ml-1"></i> إلكترونيات</span>`;
-                case 'accessories':
-                    return `<span class="bg-purple-600/90 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-md shadow-sm"><i class="fa-solid fa-headset ml-1"></i> إكسسوارات</span>`;
-                default:
-                    return `<span class="bg-gray-600 text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full">عام</span>`;
-            }
+            if(category==='playstation') return `<span class="bg-blue-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-brands fa-playstation"></i> بلايستيشن</span>`;
+            if(category==='electronics') return `<span class="bg-amber-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-tv"></i> إلكترونيات</span>`;
+            return `<span class="bg-purple-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"><i class="fa-solid fa-headset"></i> إكسسوارات</span>`;
         }
 
         function filterCategory(cat) {
@@ -732,175 +576,77 @@
                 btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
                 btn.classList.add('text-gray-700', 'dark:text-gray-300');
             });
-            const activeBtn = document.getElementById(`cat-${cat}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
-                activeBtn.classList.remove('text-gray-700', 'dark:text-gray-300');
-            }
+            document.getElementById(`cat-${cat}`).classList.add('bg-brand-600', 'text-white', 'shadow-sm');
+            document.getElementById(`cat-${cat}`).classList.remove('text-gray-700', 'dark:text-gray-300');
             renderProducts();
         }
 
-        function promptAdminPin() {
-            if (isAdminAuthenticated) {
-                openAdminModal();
-            } else {
-                document.getElementById('adminPinInput').value = '';
-                document.getElementById('pinAuthModal').classList.remove('hidden');
-                document.getElementById('adminPinInput').focus();
-            }
-        }
-
-        function closePinModal() {
-            document.getElementById('pinAuthModal').classList.add('hidden');
-        }
-
+        // Admin Auth
+        function promptAdminPin() { isAdminAuthenticated ? openAdminModal() : (document.getElementById('adminPinInput').value = '', document.getElementById('pinAuthModal').classList.remove('hidden'), document.getElementById('adminPinInput').focus()); }
+        function closePinModal() { document.getElementById('pinAuthModal').classList.add('hidden'); }
         function verifyAdminPin(e) {
             e.preventDefault();
-            const inputPin = document.getElementById('adminPinInput').value.trim();
-            if (inputPin === ADMIN_PIN_CODE) {
-                isAdminAuthenticated = true;
-                closePinModal();
-                openAdminModal();
-                showToast('تم تسجيل الدخول للوحة الإدارة بنجاح 🔓');
+            if (document.getElementById('adminPinInput').value.trim() === ADMIN_PIN_CODE) {
+                isAdminAuthenticated = true; closePinModal(); openAdminModal(); showToast('تم تسجيل الدخول بنجاح 🔓');
             } else {
-                showToast('الرمز السري غير صحيح! تم رفض الوصول ❌');
-                document.getElementById('adminPinInput').value = '';
+                showToast('الرمز غير صحيح! ❌'); document.getElementById('adminPinInput').value = '';
             }
         }
+        function logoutAdmin() { isAdminAuthenticated = false; closeAdminModal(); showToast('تم تسجيل الخروج 🔒'); }
+        function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); renderAdminProductList(); }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
 
-        function logoutAdmin() {
-            isAdminAuthenticated = false;
-            closeAdminModal();
-            showToast('تم تسجيل الخروج وقفل لوحة الإدارة 🔒');
-        }
-
-        function openAdminModal() {
-            if (!isAdminAuthenticated) {
-                promptAdminPin();
-                return;
-            }
-            document.getElementById('adminModal').classList.remove('hidden');
-            renderAdminProductList();
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
+        // Add Product Event
         function handleAddProduct(event) {
             event.preventDefault();
             if (!isAdminAuthenticated) return;
-
-            const name = document.getElementById('prodName').value.trim();
-            const category = document.getElementById('prodCategory').value;
-            const price = parseFloat(document.getElementById('prodPrice').value);
-            const image = document.getElementById('prodImage').value.trim();
-            const description = document.getElementById('prodDesc').value.trim();
-
-            if (!name || !price || !image) {
-                showToast('يرجى إكمال جميع الحقول المطلوب!');
-                return;
-            }
-
             const newProduct = {
                 id: 'prod_' + Date.now(),
-                name,
-                category,
-                price,
-                image,
-                description
+                name: document.getElementById('prodName').value.trim(),
+                category: document.getElementById('prodCategory').value,
+                price: parseFloat(document.getElementById('prodPrice').value),
+                image: document.getElementById('prodImage').value.trim(),
+                description: document.getElementById('prodDesc').value.trim(),
+                timestamp: Date.now()
             };
-
-            products.unshift(newProduct);
-            saveProductsToStorage();
-            renderProducts();
-            renderAdminProductList();
-
+            saveProductData(newProduct);
             document.getElementById('addProductForm').reset();
-            showToast('تمت إضافة المنتج بنجاح إلى المتجر! 🎉');
-        }
-
-        function deleteProduct(id) {
-            if (!isAdminAuthenticated) return;
-            if (confirm('هل أنت تأكد من رغبتك في حذف هذا المنتج من المتجر؟')) {
-                products = products.filter(p => p.id !== id);
-                saveProductsToStorage();
-                renderProducts();
-                renderAdminProductList();
-                showToast('تم حذف المنتج بنجاح');
-            }
-        }
-
-        function resetDefaultProducts() {
-            if (!isAdminAuthenticated) return;
-            if (confirm('هل ترغب بإعادة ضبط قائمة المنتجات الافتراضية؟')) {
-                products = [...DEFAULT_PRODUCTS];
-                saveProductsToStorage();
-                renderProducts();
-                renderAdminProductList();
-                showToast('تمت استعادة المنتجات الافتراضية');
-            }
         }
 
         function renderAdminProductList() {
             const list = document.getElementById('adminProductList');
             list.innerHTML = '';
-            if (products.length === 0) {
-                list.innerHTML = '<p class="text-xs text-gray-400 text-center py-2">لا توجد منتجات حالياً</p>';
-                return;
-            }
-
+            if (products.length === 0) { list.innerHTML = '<p class="text-xs text-gray-400 text-center py-2">لا توجد منتجات</p>'; return; }
+            
             products.forEach(p => {
                 list.innerHTML += `
                     <div class="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-xl text-xs border border-gray-200 dark:border-gray-700">
                         <div class="flex items-center gap-2 overflow-hidden">
                             <img src="${p.image}" onerror="handleImageError(this, '${p.category}')" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg object-cover shrink-0">
-                            <div class="truncate">
-                                <p class="font-bold text-gray-900 dark:text-white truncate">${p.name}</p>
-                                <p class="text-[10px] text-gray-400">${formatIQD(p.price)}</p>
-                            </div>
+                            <div class="truncate"><p class="font-bold text-gray-900 dark:text-white truncate">${p.name}</p><p class="text-[10px] text-gray-400">${formatIQD(p.price)}</p></div>
                         </div>
-                        <button onclick="deleteProduct('${p.id}')" class="p-1.5 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors shrink-0" title="حذف">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                `;
+                        <button onclick="deleteProductData('${p.id}')" class="p-1.5 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`;
             });
         }
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
-            const icon = document.getElementById('menuIcon');
             menu.classList.toggle('hidden');
-            if (menu.classList.contains('hidden')) {
-                icon.className = 'fa-solid fa-bars text-lg';
-            } else {
-                icon.className = 'fa-solid fa-xmark text-lg';
-            }
+            document.getElementById('menuIcon').className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
         }
 
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            toast.className = 'px-4 py-2.5 sm:py-3 rounded-2xl bg-gray-900 text-white dark:bg-brand-600 shadow-xl text-xs font-bold flex items-center gap-2 transform transition-all duration-300 translate-y-4 opacity-0 pointer-events-auto border border-white/10';
-            toast.innerHTML = `<i class="fa-solid fa-circle-info text-amber-400 text-sm"></i><span>${message}</span>`;
-            
+            toast.className = 'px-4 py-3 rounded-2xl bg-gray-900 text-white dark:bg-brand-600 shadow-xl text-xs font-bold flex items-center gap-2 transform transition-all duration-300 translate-y-4 opacity-0 border border-white/10';
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-amber-400"></i><span>${message}</span>`;
             container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-y-4', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => toast.classList.remove('translate-y-4', 'opacity-0'), 10);
+            setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
-        window.onload = function() {
-            initTheme();
-            initProducts();
-        };
+        window.onload = function() { initTheme(); initProducts(); };
     </script>
 </body>
 </html>
