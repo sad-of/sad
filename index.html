@@ -658,7 +658,7 @@
                         </h4>
 
                         <div class="space-y-3 bg-white dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700">
-                            <span class="block text-xs font-bold text-emerald-600 dark:text-emerald-400">إدارة الأرقام وأسماء أصحاب الأرقام:</span>
+                            <span class="block text-xs font-bold text-emerald-600 dark:text-emerald-400">إدارة الأرقام وأسماء أصحاب الأرقام (تستخدم لطلب المنتجات عبر الواتساب والاتصال):</span>
                             
                             <!-- الرقم الأول -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -713,12 +713,30 @@
                     </form>
                 </div>
 
-                <!-- TAB 4: تعديل صفحة وحقوق وتواصل المبرمج -->
+                <!-- TAB 4: قسم المطور المحمي (تعديل الحقوق، الصلاحيات والتواجد المتعدد) -->
                 <div id="adminTab-devTab" class="admin-tab-content hidden space-y-4">
                     <form onsubmit="saveDevSettings(event)" class="space-y-4 bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-purple-200 dark:border-purple-900/40">
                         <h4 class="font-bold text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-shield-halved text-purple-500"></i> إعدادات حقوق المبرمج المحمية
+                            <i class="fa-solid fa-shield-halved text-purple-500"></i> إعدادات المطور الخاصة وحقوق البرمجة
                         </h4>
+
+                        <!-- خاصية اختيار وتحديد أكثر من موظف متواجد من المطور مباشرة -->
+                        <div class="p-3.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl border border-indigo-200 dark:border-indigo-700 space-y-2">
+                            <h5 class="text-xs font-black text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-users-viewfinder text-indigo-500"></i> التحكم بتحديد أكثر من موظف متواجد بآن واحد بالمحل:
+                            </h5>
+                            <p class="text-[10px] text-gray-500 dark:text-gray-400">يمكنك تحديد عدة موظفين معاً ليظهروا كمناوبين متواجدين للزوار بنفس الوقت:</p>
+                            <select id="devCurrentStaffSelect" multiple class="w-full px-3 py-2 h-28 rounded-xl border border-indigo-300 dark:border-indigo-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs font-bold"></select>
+                        </div>
+
+                        <!-- خيار صلاحية تعديل أرقام الهواتف للموظفين -->
+                        <div class="p-3.5 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-300 dark:border-purple-700 flex items-center justify-between gap-3">
+                            <div>
+                                <h5 class="text-xs font-black text-purple-800 dark:text-purple-300">السماح للموظفين بتعديل أرقام هواتف التواصل</h5>
+                                <p class="text-[10px] text-gray-500 dark:text-gray-400">عند تفعيل هذا الخيار، سيتمكن الموظفون العاديون من تغيير أرقام الهواتف التي يتم التواصل منها لشراء المنتجات عبر الواتساب.</p>
+                            </div>
+                            <input type="checkbox" id="allowStaffPhoneEditToggle" class="w-5 h-5 text-purple-600 rounded focus:ring-purple-500 cursor-pointer">
+                        </div>
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">اسم المبرمج / الشركة</label>
@@ -742,7 +760,7 @@
                         </div>
 
                         <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-code-commit"></i> حفظ بيانات المبرمج
+                            <i class="fa-solid fa-code-commit"></i> حفظ إعدادات المطور والتواجد لجميع السيرفرات
                         </button>
                     </form>
                 </div>
@@ -797,11 +815,10 @@
             console.error("Firebase Initialization Error:", e);
         }
 
-        const MASTER_PIN_CODE = "1962"; // الرمز المخصص والمثبت
+        const MASTER_PIN_CODE = "1962";
         let pendingMasterAction = null;
         let targetStaffToDelete = null;
 
-        // قائمة الحسابات المعتمدة الأساسية
         let authorizedUsersList = {
             "حسين": { 
                 pin: "1962", 
@@ -854,7 +871,8 @@
             devName: "مبرمج الموقع",
             devPhone: "07722337379",
             devUser: "xv8f",
-            devLink: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr"
+            devLink: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr",
+            allowStaffPhoneEdit: true
         };
 
         function formatIQD(price) { return new Intl.NumberFormat('ar-IQ').format(price) + ' د.ع'; }
@@ -881,9 +899,13 @@
         function applyUserPermissionsUI() {
             if(!loggedInUser || !authorizedUsersList[loggedInUser]) return;
             
-            const perms = (loggedInUser === "حسين" || loggedInUser === "مبرمج الموقع" || isDevUnlocked) 
+            let perms = (loggedInUser === "حسين" || loggedInUser === "مبرمج الموقع" || isDevUnlocked) 
                 ? ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"]
-                : (authorizedUsersList[loggedInUser].permissions || []);
+                : [...(authorizedUsersList[loggedInUser].permissions || [])];
+
+            if(siteConfig.allowStaffPhoneEdit === false && loggedInUser !== "حسين" && loggedInUser !== "مبرمج الموقع" && !isDevUnlocked) {
+                perms = perms.filter(p => p !== 'socialTab');
+            }
 
             document.querySelectorAll('.admin-tab-btn').forEach(btn => {
                 const tabName = btn.id.replace('tabBtn-', '');
@@ -942,7 +964,6 @@
 
         // --- نظام تأكيد الرمز للحذف ---
         function requestMasterKeyForAction(action, data = null) {
-            // إذا كان المستخدم حسين أو المبرمج أو مفتوح الصلاحيات ينفذ فوراً
             if(loggedInUser === "حسين" || loggedInUser === "مبرمج الموقع" || isDevUnlocked) {
                 if(action === 'clearLogs') executeClearAuditLogs();
                 else if(action === 'deleteStaff') executeDeleteStaffMember(data);
@@ -1057,7 +1078,6 @@
                     if(data) {
                         authorizedUsersList = data;
                     }
-                    // التأكد دائماً أن حساب "حسين" مفعّل برمز 1962
                     authorizedUsersList["حسين"] = { 
                         pin: "1962", 
                         permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
@@ -1080,10 +1100,12 @@
         function renderStaffUI() {
             const selectEl = document.getElementById('adminUserSelect');
             const staffSelectSetting = document.getElementById('settingCurrentStaff');
+            const devStaffSelectSetting = document.getElementById('devCurrentStaffSelect');
             const staffListEl = document.getElementById('staffMembersList');
 
             if(selectEl) selectEl.innerHTML = '';
             if(staffSelectSetting) staffSelectSetting.innerHTML = '';
+            if(devStaffSelectSetting) devStaffSelectSetting.innerHTML = '';
             if(staffListEl) staffListEl.innerHTML = '';
 
             const currentStaffArr = siteConfig.currentStaffList || (siteConfig.currentStaff ? [siteConfig.currentStaff] : ["سعد"]);
@@ -1091,9 +1113,12 @@
             Object.keys(authorizedUsersList).forEach(name => {
                 if(selectEl) selectEl.innerHTML += `<option value="${name}">${name}</option>`;
                 
+                const selected = currentStaffArr.includes(name) ? 'selected' : '';
                 if(staffSelectSetting) {
-                    const selected = currentStaffArr.includes(name) ? 'selected' : '';
                     staffSelectSetting.innerHTML += `<option value="${name}" ${selected}>${name}</option>`;
+                }
+                if(devStaffSelectSetting) {
+                    devStaffSelectSetting.innerHTML += `<option value="${name}" ${selected}>${name}</option>`;
                 }
 
                 if(staffListEl) {
@@ -1243,6 +1268,8 @@
             document.getElementById('devUserDisplay').textContent = siteConfig.devUser;
             if(siteConfig.devLink) document.getElementById('devUserLink').href = siteConfig.devLink;
 
+            document.getElementById('allowStaffPhoneEditToggle').checked = siteConfig.allowStaffPhoneEdit !== false;
+
             document.getElementById('settingSiteName').value = siteConfig.siteName;
             document.getElementById('settingSiteEst').value = siteConfig.siteEst;
             document.getElementById('settingSiteAddress').value = siteConfig.siteAddress;
@@ -1319,9 +1346,16 @@
             siteConfig.devPhone = document.getElementById('settingDevPhone').value.trim();
             siteConfig.devUser = document.getElementById('settingDevUser').value.trim();
             siteConfig.devLink = document.getElementById('settingDevLink').value.trim();
+            siteConfig.allowStaffPhoneEdit = document.getElementById('allowStaffPhoneEditToggle').checked;
 
-            addAuditLog('قام بتحديث بيانات وحقوق المبرمج');
-            saveConfigData('تم تحديث معلومات المبرمج بنجاح! 👨‍💻');
+            const devStaffSelect = document.getElementById('devCurrentStaffSelect');
+            const selectedDevStaff = Array.from(devStaffSelect.selectedOptions).map(opt => opt.value);
+            if(selectedDevStaff.length > 0) {
+                siteConfig.currentStaffList = selectedDevStaff;
+            }
+
+            addAuditLog('قام بتحديث بيانات المبرمج وإعدادات الموظفين المتواجدين بآن واحد');
+            saveConfigData('تم تحديث معلومات وصلاحيات المبرمج بنجاح! 👨‍💻');
         }
 
         function saveConfigData(successMsg) {
