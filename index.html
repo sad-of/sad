@@ -91,7 +91,8 @@
                     <a href="#top" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors flex items-center gap-1"><i class="fa-solid fa-house"></i> الرئيسية</a>
                     <a href="#products" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">المنتجات</a>
                     <a href="#categories" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">الأقسام</a>
-                    <a href="#location" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors flex items-center gap-1"><i class="fa-solid fa-map-pin text-red-500"></i> الموقع</a>
+                    <a href="#about-us" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors flex items-center gap-1"><i class="fa-solid fa-location-dot text-red-500"></i> الموقع</a>
+                    <a href="#about-us" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">من نحن والمعلومات</a>
                     <a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-brand-600 dark:hover:text-neon-blue transition-colors">تواصل معنا</a>
                 </nav>
 
@@ -108,12 +109,13 @@
             </div>
         </div>
 
-        <!-- Mobile Nav -->
+        <!-- Mobile Nav (تم التعديل: زر الموقع يوجه مباشرة للمعلومات) -->
         <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-[#181824]/95 backdrop-blur-md px-4 py-3 space-y-2 font-semibold text-sm transition-all">
             <a href="#top" onclick="toggleMobileMenu()" class="block text-brand-600 dark:text-neon-blue py-2 border-b border-gray-100 dark:border-gray-800/50 font-bold"><i class="fa-solid fa-house ml-1.5"></i> الرئيسية</a>
             <a href="#products" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50">المنتجات</a>
             <a href="#categories" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50">الأقسام</a>
-            <a href="#location" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50"><i class="fa-solid fa-location-dot ml-1 text-red-500"></i> <span class="site-address-text">بابل - المسيب - شارع الحسينية</span></a>
+            <a href="#about-us" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50"><i class="fa-solid fa-location-dot ml-1 text-red-500"></i> الموقع والمعلومات</a>
+            <a href="#about-us" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2 border-b border-gray-100 dark:border-gray-800/50"><i class="fa-solid fa-circle-info ml-1 text-brand-500"></i> من نحن</a>
             <a href="#contact" onclick="toggleMobileMenu()" class="block text-gray-700 dark:text-gray-200 py-2">تواصل معنا</a>
         </div>
     </header>
@@ -126,10 +128,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
                 <div class="text-right space-y-4 sm:space-y-6">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-800 dark:bg-brand-900/80 dark:text-brand-300 border border-brand-200 dark:border-brand-700">
+                    <a href="#about-us" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-100 text-brand-800 dark:bg-brand-900/80 dark:text-brand-300 border border-brand-200 dark:border-brand-700 hover:scale-105 transition-transform">
                         <i class="fa-solid fa-location-dot text-red-500"></i>
                         <span>العنوان: <span class="site-address-text">بابل - المسيب - شارع الحسينية - عمارة ابن الكاظم</span></span>
-                    </div>
+                    </a>
                     <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight text-gray-900 dark:text-white">
                         مركز <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-neon-blue dark:to-brand-500 site-name-text">سعد للإلكترونيات</span> والبلايستيشن
                     </h2>
@@ -226,17 +228,45 @@
         </div>
     </main>
 
-    <!-- Location Section -->
-    <section id="location" class="py-10 bg-brand-50/50 dark:bg-gray-900/50 border-t border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <div class="inline-flex items-center justify-center p-3 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 mb-1">
-                <i class="fa-solid fa-map-location-dot text-2xl"></i>
+    <!-- Location & About Us Section (قسم الموقع ومن نحن - مفعل بشكل كامل) -->
+    <section id="about-us" class="py-12 bg-brand-50/50 dark:bg-gray-900/50 border-t border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center justify-center p-3 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 mb-1">
+                    <i class="fa-solid fa-map-location-dot text-3xl"></i>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white">موقع <span class="site-name-text">سعد للإلكترونيات</span> و قسم "من نحن"</h2>
+                <p class="text-base sm:text-xl font-bold text-brand-600 dark:text-neon-blue max-w-2xl mx-auto site-address-text">
+                    محافظة بابل - قضاء المسيب - شارع الحسينية - عمارة ابن الكاظم
+                </p>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">موقع <span class="site-name-text">سعد للإلكترونيات</span></h2>
-            <p class="text-lg font-bold text-brand-600 dark:text-neon-blue max-w-2xl mx-auto site-address-text">
-                محافظة بابل - قضاء المسيب - شارع الحسينية - عمارة ابن الكاظم
-            </p>
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">تتوفر لدينا كافة خدمات صيانة البلايستيشن، بيع الأجهزة، الأقراص، والملحقات الأصلية.</p>
+
+            <!-- تفاصيل من نحن والمعلومات -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="glass-card p-6 rounded-2xl text-center space-y-3 border border-brand-500/20">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-blue-500/20 text-blue-500 flex items-center justify-center text-2xl"><i class="fa-solid fa-store"></i></div>
+                    <h3 class="font-bold text-lg text-gray-900 dark:text-white">من نحن؟</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        نحن مركز متخصص وموثوق في قضاء المسيب لتقديم أفضل خدمات وصيانة أجهزة البلايستيشن والإلكترونيات منذ عام 1996.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl text-center space-y-3 border border-emerald-500/20">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-2xl"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h3 class="font-bold text-lg text-gray-900 dark:text-white">خدماتنا المباشرة</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        صيانة دقيقة بالأجهزة الحديثة، الميكروسولدر، تحوير المنظومات، تنزيل الألعاب، وبيع جميع الملحقات الأصلية بأسعار تنافسية.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl text-center space-y-3 border border-purple-500/20">
+                    <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500/20 text-purple-500 flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-check"></i></div>
+                    <h3 class="font-bold text-lg text-gray-900 dark:text-white">جودة وضمان العمل</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        نضمن لك أعلى كفاءة في العمل مع كادر متخصص للتواجد المباشر والإجابة على كافة الاستفسارات الفنية.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -317,11 +347,11 @@
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-red-500/40 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-cat"></i></div>
             <h3 class="text-lg font-black text-gray-900 dark:text-white">إذن المبرمج حسين مطلوب 🔒</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص للحذف (1962) لإتمام هذه العملية</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص للمبرمج (1962) لإتمام هذه العملية</p>
             <form onsubmit="confirmMasterKeyAction(event)" class="space-y-3">
-                <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل رمز الحذف السرّي..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
+                <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل رمز المبرمج السرّي..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
                 <div class="flex gap-2">
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs">تأكيد الحذف النهائي</button>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs">تأكيد العملية</button>
                     <button type="button" onclick="closeMasterKeyModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
                 </div>
             </form>
@@ -333,11 +363,11 @@
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-purple-500/30 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-key"></i></div>
             <h3 class="text-lg font-black text-gray-900 dark:text-white">قسم المبرمج مقفول 🔒</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400">يرجى كتابة رمز حماية المبرمج المخصص لفتح هذا القسم</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل رمز حماية المبرمج (1962) لفتح حقوق وإعدادات المطور كاملة</p>
             <form onsubmit="verifyDevPin(event)" class="space-y-3">
                 <input type="password" id="devPinInput" maxlength="10" required placeholder="رمز المبرمج..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-purple-300 dark:border-purple-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
                 <div class="flex gap-2">
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs">فتح القسم</button>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs">فتح القسم المبرمج</button>
                     <button type="button" onclick="closeDevLockModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
                 </div>
             </form>
@@ -353,7 +383,7 @@
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-xl"></i>
                     <div>
-                        <h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم السحابية - أهلاً بك (<span id="currentUserBadge" class="text-amber-300 font-black"></span>)</h3>
+                        <h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم - أهلاً بك (<span id="currentUserBadge" class="text-amber-300 font-black"></span>)</h3>
                         <p class="text-[10px] text-blue-200">إدارة المنتجات، الأقسام، صلاحيات الموظفين، وأوقات الدوام</p>
                     </div>
                 </div>
@@ -550,7 +580,7 @@
 
                         <!-- تحديد صلاحيات الموظف الجديد -->
                         <div class="p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 space-y-2">
-                            <label class="block text-xs font-bold text-brand-600 dark:text-brand-400">تحديد صلاحيات الدخول والتحكم للعميل/الموظف:</label>
+                            <label class="block text-xs font-bold text-brand-600 dark:text-brand-400">تحديد صلاحيات الدخول والتحكم للموظف:</label>
                             <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
                                 <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permProducts" checked class="rounded"> إدارة المنتجات والأقسام</label>
                                 <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permHours" checked class="rounded"> تعديل أوقات الدوام والمناوب</label>
@@ -741,7 +771,7 @@
     </footer>
 
     <script>
-        // ======= إعدادات Firebase السحابية لمشروع سعد للإلكترونيات =======
+        // ======= إعدادات Firebase السحابية =======
         const firebaseConfig = {
             apiKey: "AIzaSyB-rA8w5O7MLCtHFYDZtBpfFfYCRqHU4XQ",
             authDomain: "sad-ec.firebaseapp.com",
@@ -765,13 +795,14 @@
             console.error("Firebase Initialization Error:", e);
         }
 
-        const MASTER_PIN_CODE = "1962"; // الرمز الرئيسي لحسين والمبرمج للحذف
+        const MASTER_PIN_CODE = "1962"; // الرمز المخصص لحسين لمبرمج الموقع الرئيسي
         let pendingMasterAction = null;
         let targetStaffToDelete = null;
 
-        // هيكل الموظفين مع كلمة السر والصلاحيات الخاصة بكل موظف
+        // هيكل الموظفين ومفاتيح الدخول:
+        // حسين عند دخوله بـ sad2007 يدخل كموظف عادي (نفس سعد)، وعند الدخول بـ 1962 يتحول لمبرمج الموقع
         let authorizedUsersList = {
-            "حسين": { pin: "sad2007", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] },
+            "حسين": { pin: "sad2007", permissions: ["productsTab", "hoursTab", "socialTab"] },
             "سعد": { pin: "sad1996", permissions: ["productsTab", "hoursTab", "socialTab"] },
             "وسام": { pin: "sad1984", permissions: ["productsTab", "hoursTab"] }
         };
@@ -838,14 +869,19 @@
             label.textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
         }
 
-        // --- التحكم بتبويبات اللوحة بناءً على صلاحيات الموظف المسجل ---
+        // --- تطبيق صلاحيات الموظفين والمبرمج ---
         function applyUserPermissionsUI() {
             if(!loggedInUser || !authorizedUsersList[loggedInUser]) return;
-            const perms = authorizedUsersList[loggedInUser].permissions || [];
+            
+            // إذا كان المطور مَفتاحاً بـ 1962 يملك كافة الصلاحيات
+            const isDevMaster = isDevUnlocked;
+            const perms = isDevMaster 
+                ? ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"]
+                : (authorizedUsersList[loggedInUser].permissions || []);
 
             document.querySelectorAll('.admin-tab-btn').forEach(btn => {
                 const tabName = btn.id.replace('tabBtn-', '');
-                if(perms.includes(tabName) || loggedInUser === 'حسين') {
+                if(perms.includes(tabName)) {
                     btn.classList.remove('hidden');
                 } else {
                     btn.classList.add('hidden');
@@ -885,7 +921,8 @@
             if(input === MASTER_PIN_CODE) {
                 isDevUnlocked = true;
                 closeDevLockModal();
-                showToast('تم فتح قسم المبرمج بنجاح 🔓');
+                showToast('أهلاً بك يا حسين، تم تسجيلك كـ مبرمج الموقع المباشر 🔓');
+                applyUserPermissionsUI();
                 switchAdminTab('devTab');
             } else {
                 showToast('رمز حماية المبرمج غير صحيح! ❌');
@@ -897,7 +934,7 @@
             document.getElementById('devPinInput').value = '';
         }
 
-        // --- نظام حماية الحذف المتقدم برمز المبرمج الرئيسي (1962) ---
+        // --- نظام تأكيد رمز المبرمج الرئيسية 1962 ---
         function requestMasterKeyForAction(action, data = null) {
             pendingMasterAction = action;
             targetStaffToDelete = data;
@@ -932,7 +969,7 @@
 
         // --- سجلات التعديل والعمليات ---
         function addAuditLog(actionText) {
-            const user = loggedInUser || 'غير معروف';
+            const user = (isDevUnlocked ? 'حسين (المبرمج)' : loggedInUser) || 'غير معروف';
             const timestamp = new Date().toLocaleString('ar-IQ', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric' });
             
             const logEntry = {
@@ -998,7 +1035,7 @@
             showToast('تم مسح السجلات بنجاح بعد التأكيد 🗑️');
         }
 
-        // --- إدارة الموظفين الجدد والصلاحيات ---
+        // --- إدارة الموظفين ---
         function initStaffMembers() {
             if(isFirebaseActive) {
                 database.ref('authorizedUsers').on('value', (snapshot) => {
@@ -1100,7 +1137,7 @@
             showToast(`تم حذف الموظف (${name}) بنجاح 🗑️`);
         }
 
-        // --- إدارة إعدادات الموقع والعنوان وأوقات الدوام ---
+        // --- إدارة إعدادات الموقع والعنوان ---
         function initSiteSettings() {
             if(isFirebaseActive) {
                 database.ref('siteConfig').on('value', (snapshot) => {
@@ -1352,7 +1389,7 @@
             }
         }
 
-        // --- إدارة الأقسام الشاملة ---
+        // --- إدارة الأقسام ---
         function initCategories() {
             if (isFirebaseActive) {
                 database.ref('categories').on('value', (snapshot) => {
@@ -1493,7 +1530,7 @@
             selectEl.innerHTML = selectOptionsHtml;
         }
 
-        // --- إدارة المنتجات السحابية والمحلية ---
+        // --- إدارة المنتجات ---
         function initProducts() {
             if (isFirebaseActive) {
                 database.ref('products').on('value', (snapshot) => {
@@ -1676,7 +1713,7 @@
             renderProducts();
         }
 
-        // --- نظام تسجيل الدخول بحسابات الموظفين والصلاحيات ---
+        // --- تسجيل الدخول والتحقق من حسين (سواء كموظف أو مبرمج) ---
         function promptAdminPin() {
             if(isAdminAuthenticated) {
                 openAdminModal();
@@ -1695,16 +1732,29 @@
             const selectedUser = document.getElementById('adminUserSelect').value;
             const enteredPin = document.getElementById('adminPinInput').value.trim();
 
+            // التحقق من حالة المطور المباشر عبر الرمز 1962
+            if(enteredPin === MASTER_PIN_CODE) {
+                isAdminAuthenticated = true;
+                loggedInUser = selectedUser;
+                isDevUnlocked = true;
+                closePinModal();
+                openAdminModal();
+                addAuditLog('تسجيل دخول كـ مبرمج بالرمز Master 1962');
+                showToast(`أهلاً بك المبرمج (${loggedInUser})! تم فتح جميع صلاحيات المطور 🔓`);
+                return;
+            }
+
             const userObj = authorizedUsersList[selectedUser];
             const storedPin = typeof userObj === 'object' ? userObj.pin : userObj;
 
             if (storedPin && storedPin === enteredPin) {
                 isAdminAuthenticated = true;
                 loggedInUser = selectedUser;
+                isDevUnlocked = false; // كموظف عادي
                 closePinModal();
                 openAdminModal();
-                addAuditLog('تسجيل دخول إلى لوحة التحكم');
-                showToast(`أهلاً بك يا ${loggedInUser}! تم الدخول بنجاح 🔓`);
+                addAuditLog('تسجيل دخول إلى لوحة التحكم كموظف');
+                showToast(`أهلاً بك يا ${loggedInUser}! تم الدخول كموظف بنجاح 🔓`);
             } else {
                 showToast('كلمة المرور غير صحيحة لهذا الحساب! ❌');
                 document.getElementById('adminPinInput').value = '';
@@ -1721,7 +1771,7 @@
         }
 
         function openAdminModal() { 
-            document.getElementById('currentUserBadge').textContent = loggedInUser || 'أدمن';
+            document.getElementById('currentUserBadge').textContent = loggedInUser + (isDevUnlocked ? ' (مبرمج)' : '');
             document.getElementById('adminModal').classList.remove('hidden'); 
             renderAdminCategoriesList(); 
             renderAdminProductList(); 
