@@ -14,10 +14,9 @@
             --card-bg: #1e293b;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
-            --accent-color: #0070d1; /* PlayStation Blue */
+            --accent-color: #0070d1;
             --accent-hover: #005bb5;
             --border-color: #334155;
-            --success-color: #10b981;
             --danger-color: #ef4444;
             --modal-overlay: rgba(0, 0, 0, 0.75);
         }
@@ -47,7 +46,6 @@
             line-height: 1.6;
         }
 
-        /* Navbar */
         header {
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
@@ -104,7 +102,6 @@
             padding: 8px 12px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
         }
 
         .btn-primary {
@@ -121,25 +118,21 @@
             background-color: var(--accent-hover);
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             background: linear-gradient(180deg, var(--card-bg) 0%, var(--bg-color) 100%);
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
         }
 
         .hero p {
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 25px;
         }
 
-        /* Filter Section */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -170,10 +163,9 @@
             border-color: var(--accent-color);
         }
 
-        /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
@@ -202,6 +194,7 @@
         .product-title {
             font-size: 1.1rem;
             margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .product-price {
@@ -215,45 +208,21 @@
             background-color: var(--danger-color);
             color: #fff;
             border: none;
-            padding: 6px;
+            padding: 8px;
             border-radius: 6px;
             cursor: pointer;
             margin-top: auto;
+            font-weight: bold;
         }
 
-        /* About & Contact */
         .section-box {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
+            padding: 25px;
+            margin: 30px 0;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-        }
-
-        /* Footer */
         footer {
             background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
@@ -262,20 +231,10 @@
             margin-top: 40px;
         }
 
-        .footer-credit {
-            margin-top: 10px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Modals */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--modal-overlay);
             z-index: 2000;
             justify-content: center;
@@ -294,10 +253,9 @@
 
         .close-btn {
             position: absolute;
-            left: 15px;
-            top: 15px;
-            font-size: 1.2rem;
+            left: 15px; top: 15px;
             cursor: pointer;
+            font-size: 1.2rem;
             color: var(--text-muted);
         }
 
@@ -320,21 +278,24 @@
             color: var(--text-color);
         }
 
-        /* Mobile Optimization */
+        .loading-text {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
                 gap: 15px;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <!-- Navbar -->
     <header>
         <div class="navbar">
             <div class="logo">
@@ -357,16 +318,12 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>مرحباً بكم في سعد للإلكترونيات</h1>
         <p>وجهتك الأولى لعالم البلايستيشن والأجهزة الإلكترونية والصيانة الاحترافية منذ عام 1996.</p>
     </section>
 
-    <!-- Main Content -->
     <div class="container">
-        
-        <!-- Filter Options -->
         <div class="filter-bar" id="products">
             <button class="filter-btn active" onclick="filterCategory('all', this)">الكل</button>
             <button class="filter-btn" onclick="filterCategory('playstation', this)">بلايستيشن</button>
@@ -374,35 +331,22 @@
             <button class="filter-btn" onclick="filterCategory('accessories', this)">ملحقات وإكسسوارات</button>
         </div>
 
-        <!-- Products Grid -->
         <div class="products-grid" id="productsGrid">
-            <!-- المنتجات تظهر هنا عبر JS -->
+            <div class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل المنتجات...</div>
         </div>
 
-        <!-- About Us Section -->
         <div class="section-box" id="about">
-            <h2 class="section-title"><i class="fa-solid fa-store"></i> من نحن</h2>
-            <p>محل <strong>سعد للإلكترونيات</strong> هو متجر متخصص في بيع وصيانة أجهزة البلايستيشن بكافة أنواعها، والألعاب، والإلكترونيات الذكية. نعمل بخبرة ممتدة منذ عام 1996 لتقديم أفضل المنتجات والخدمات لعملائنا الكرام.</p>
+            <h2 style="color: var(--accent-color); margin-bottom: 10px;"><i class="fa-solid fa-store"></i> من نحن</h2>
+            <p>متجر متخصص في بيع وصيانة أجهزة البلايستيشن، الألعاب، والأجهزة الإلكترونية الحديثة برمجياً وهاردوير منذ عام 1996.</p>
         </div>
 
-        <!-- Contact Section -->
         <div class="section-box" id="contact">
-            <h2 class="section-title"><i class="fa-solid fa-phone"></i> معلومات التواصل</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent-color);"></i>
-                    <span>الهاتف: 07718277535</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
-                    <a href="https://instagram.com" target="_blank" style="color: var(--text-color); text-decoration: none;">انستغرام المتجر</a>
-                </div>
-            </div>
+            <h2 style="color: var(--accent-color); margin-bottom: 10px;"><i class="fa-solid fa-phone"></i> معلومات التواصل</h2>
+            <p><i class="fa-solid fa-mobile-screen-button"></i> الهاتف: 07718277535</p>
         </div>
-
     </div>
 
-    <!-- Admin Panel Modal -->
+    <!-- Admin Modal -->
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAdminPanel()">&times;</span>
@@ -410,11 +354,11 @@
             <form id="addProductForm" onsubmit="handleAddProduct(event)">
                 <div class="form-group">
                     <label>اسم المنتج</label>
-                    <input type="text" id="prodTitle" required placeholder="مثال: جهاز بلايستيشن 5">
+                    <input type="text" id="prodTitle" required placeholder="مثال: بلايستيشن 5">
                 </div>
                 <div class="form-group">
                     <label>السعر (د.ع)</label>
-                    <input type="number" id="prodPrice" required placeholder="مثال: 650000">
+                    <input type="number" id="prodPrice" required placeholder="مثال: 680000">
                 </div>
                 <div class="form-group">
                     <label>القسم</label>
@@ -428,49 +372,72 @@
                     <label>رابط الصورة</label>
                     <input type="url" id="prodImg" required placeholder="https://example.com/image.jpg">
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">إضافة المنتج</button>
+                <button type="submit" class="btn-primary" style="width: 100%;" id="saveBtn">حفظ وإضافة</button>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 سعد للإلكترونيات - جميع الحقوق محفوظة</p>
-        <div class="footer-credit">
+        <div style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">
             الموقع مصمم ومبرمج بواسطة حسين محمد، رقم الهاتف 07722337379، معرف الإنستغرام xv8f.
         </div>
     </footer>
 
-    <!-- JavaScript logic -->
     <script>
+        const MASTER_KEY = "$2a$10$6ab4c5d77e19fe510f393352"; 
+        const BIN_ID = "$2a$10$QnNaH7ARvdGvDrFjwsMi.ObbOuwUPz/AnNfrPQHU8b6kOfk24MZx2"; 
+
         const ADMIN_CODE = "141312";
         let isAdminLoggedIn = false;
+        let globalProducts = [];
+        let currentFilter = 'all';
 
-        // Default products
-        const defaultProducts = [
-            { id: 1, title: "جهاز بلايستيشن 5", price: 680000, category: "playstation", img: "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMlIhnAA85AmlL2malQ6slEyMvt-ZaMHwjF7xnd46pKdnCCstPc3XEHBM8B8AcpVUHNHgRMu0IenT52N4" },
-            { id: 2, title: "مجموعة ألعاب بلايستيشن 4", price: 35000, category: "playstation", img: "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRPURbODZVTJT0u5OFt4wYEGIFoXlPPR-oeAVWxvzgF-dIhS9NSfJEGx7RspXpmZXGsALGD3aPRaTUAPiQ" }
-        ];
-
-        // Load products from LocalStorage
-        function getProducts() {
-            const stored = localStorage.getItem("saad_products");
-            if (!stored) {
-                localStorage.setItem("saad_products", JSON.stringify(defaultProducts));
-                return defaultProducts;
+        // Fetch products from JSONBin Cloud
+        async function fetchProductsFromCloud() {
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: { "X-Master-Key": MASTER_KEY }
+                });
+                const data = await res.json();
+                globalProducts = Array.isArray(data.record) ? data.record : [];
+                renderProducts();
+            } catch (err) {
+                console.error(err);
+                document.getElementById("productsGrid").innerHTML = `<div class="loading-text">حدث خطأ أثناء تحميل البيانات من الخادم!</div>`;
             }
-            return JSON.parse(stored);
         }
 
-        // Render products
-        function renderProducts(categoryFilter = 'all') {
+        // Save products to JSONBin Cloud
+        async function saveProductsToCloud(productsList) {
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": MASTER_KEY
+                    },
+                    body: JSON.stringify(productsList)
+                });
+                globalProducts = productsList;
+                renderProducts();
+            } catch (err) {
+                alert("حدث خطأ أثناء الاتصال بقاعدة البيانات!");
+            }
+        }
+
+        function renderProducts() {
             const grid = document.getElementById("productsGrid");
-            const products = getProducts();
             grid.innerHTML = "";
 
-            const filtered = categoryFilter === 'all' 
-                ? products 
-                : products.filter(p => p.category === categoryFilter);
+            const filtered = currentFilter === 'all' 
+                ? globalProducts 
+                : globalProducts.filter(p => p.category === currentFilter);
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="loading-text">لا توجد منتجات حالياً في هذا القسم.</div>`;
+                return;
+            }
 
             filtered.forEach(prod => {
                 const card = document.createElement("div");
@@ -487,14 +454,13 @@
             });
         }
 
-        // Filter functionality
         function filterCategory(cat, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderProducts(cat);
+            currentFilter = cat;
+            renderProducts();
         }
 
-        // Theme Toggle
         function toggleTheme() {
             const body = document.body;
             const themeBtn = document.getElementById("themeBtn");
@@ -507,18 +473,17 @@
             }
         }
 
-        // Admin Auth
         function promptAdminLogin() {
             if (isAdminLoggedIn) {
                 document.getElementById("adminModal").style.display = "flex";
                 return;
             }
-            const pass = prompt("يرجى إدخال رمز دخول الأدمن:");
+            const pass = prompt("أدخل رمز دخول الأدمن:");
             if (pass === ADMIN_CODE) {
                 isAdminLoggedIn = true;
                 alert("تم تسجيل الدخول بنجاح كمدير للنظام!");
                 document.getElementById("adminModal").style.display = "flex";
-                renderProducts(); // Re-render to show delete buttons
+                renderProducts();
             } else if (pass !== null) {
                 alert("رمز الدخول غير صحيح!");
             }
@@ -528,46 +493,36 @@
             document.getElementById("adminModal").style.display = "none";
         }
 
-        // Add Product
-        function handleAddProduct(e) {
+        async function handleAddProduct(e) {
             e.preventDefault();
+            const btn = document.getElementById("saveBtn");
+            btn.innerText = "جاري الحفظ...";
+            btn.disabled = true;
+
             const title = document.getElementById("prodTitle").value;
             const price = document.getElementById("prodPrice").value;
             const category = document.getElementById("prodCategory").value;
             const img = document.getElementById("prodImg").value;
 
-            const products = getProducts();
-            const newProd = {
-                id: Date.now(),
-                title,
-                price,
-                category,
-                img
-            };
+            const newProducts = [...globalProducts, { id: Date.now(), title, price, category, img }];
 
-            products.push(newProd);
-            localStorage.setItem("saad_products", JSON.stringify(products));
-            
+            await saveProductsToCloud(newProducts);
+
+            btn.innerText = "حفظ وإضافة";
+            btn.disabled = false;
             document.getElementById("addProductForm").reset();
             closeAdminPanel();
-            renderProducts();
-            alert("تمت إضافة المنتج بنجاح!");
+            alert("تم إدراج المنتج بنجاح وتحديثه لجميع الزوار!");
         }
 
-        // Delete Product
-        function deleteProduct(id) {
-            if (confirm("هل أنت تأكد من رغبتك في حذف هذا المنتج؟")) {
-                let products = getProducts();
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem("saad_products", JSON.stringify(products));
-                renderProducts();
+        async function deleteProduct(id) {
+            if (confirm("هل تريد حذف هذا المنتج نهائياً لجميع الزوار؟")) {
+                const newProducts = globalProducts.filter(p => p.id !== id);
+                await saveProductsToCloud(newProducts);
             }
         }
 
-        // Initial Load
-        window.onload = () => {
-            renderProducts();
-        };
+        window.onload = fetchProductsFromCloud;
     </script>
 </body>
 </html>
