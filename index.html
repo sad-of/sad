@@ -393,23 +393,39 @@
         let globalProducts = [];
         let currentFilter = 'all';
 
-        // Fetch products from JSONBin Cloud
+        // تحميل المنتجات من التخزين المحلي أولاً ثم تحديثها من السحابة
         async function fetchProductsFromCloud() {
+            const localSaved = localStorage.getItem("saad_products_backup");
+            if (localSaved) {
+                try {
+                    globalProducts = JSON.parse(localSaved);
+                    renderProducts();
+                } catch (e) {}
+            }
+
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
                     headers: { "X-Master-Key": MASTER_KEY }
                 });
-                const data = await res.json();
-                globalProducts = Array.isArray(data.record) ? data.record : [];
-                renderProducts();
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data.record) && data.record.length > 0) {
+                        globalProducts = data.record;
+                        localStorage.setItem("saad_products_backup", JSON.stringify(globalProducts));
+                        renderProducts();
+                    }
+                }
             } catch (err) {
-                console.error(err);
-                document.getElementById("productsGrid").innerHTML = `<div class="loading-text">حدث خطأ أثناء تحميل البيانات من الخادم!</div>`;
+                console.log("استخدام البيانات المحلية الاحتياطية.");
             }
         }
 
-        // Save products to JSONBin Cloud
+        // حفظ المنتجات في السحابة وفي التخزين المحلي فوراً
         async function saveProductsToCloud(productsList) {
+            globalProducts = productsList;
+            localStorage.setItem("saad_products_backup", JSON.stringify(productsList));
+            renderProducts();
+
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: "PUT",
@@ -419,10 +435,8 @@
                     },
                     body: JSON.stringify(productsList)
                 });
-                globalProducts = productsList;
-                renderProducts();
             } catch (err) {
-                alert("حدث خطأ أثناء الاتصال بقاعدة البيانات!");
+                console.error("خطأ في المزامنة السحابية:", err);
             }
         }
 
@@ -434,8 +448,8 @@
                 ? globalProducts 
                 : globalProducts.filter(p => p.category === currentFilter);
 
-            if(filtered.length === 0) {
-                grid.innerHTML = `<div class="loading-text">لا توجد منتجات حالياً في هذا القسم.</div>`;
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="loading-text">لا توجد منتجات حالياً.</div>`;
                 return;
             }
 
@@ -443,7 +457,8 @@
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
-                    <img src="${prod.img}" class="product-img" alt="${prod.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                    <img src="${prod.img}" class="product-img" alt="${prod.title}" 
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500';">
                     <div class="product-info">
                         <div class="product-title">${prod.title}</div>
                         <div class="product-price">${Number(prod.price).toLocaleString()} د.ع</div>
@@ -481,7 +496,7 @@
             const pass = prompt("أدخل رمز دخول الأدمن:");
             if (pass === ADMIN_CODE) {
                 isAdminLoggedIn = true;
-                alert("تم تسجيل الدخول بنجاح كمدير للنظام!");
+                alert("تم تسجيل الدخول بنجاح!");
                 document.getElementById("adminModal").style.display = "flex";
                 renderProducts();
             } else if (pass !== null) {
@@ -512,11 +527,11 @@
             btn.disabled = false;
             document.getElementById("addProductForm").reset();
             closeAdminPanel();
-            alert("تم إدراج المنتج بنجاح وتحديثه لجميع الزوار!");
+            alert("تمت إضافة المنتج بنجاح وثباته!");
         }
 
         async function deleteProduct(id) {
-            if (confirm("هل تريد حذف هذا المنتج نهائياً لجميع الزوار؟")) {
+            if (confirm("هل تريد حذف هذا المنتج نهائياً؟")) {
                 const newProducts = globalProducts.filter(p => p.id !== id);
                 await saveProductsToCloud(newProducts);
             }
