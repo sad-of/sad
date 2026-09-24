@@ -342,6 +342,30 @@
         </div>
     </div>
 
+    <!-- Edit Staff Modal (نافذة تعديل اسم ورمز الموظف من المطور) -->
+    <div id="devEditStaffModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-purple-500/40 p-6 text-center space-y-4">
+            <div class="w-12 h-12 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-user-pen"></i></div>
+            <h3 class="text-lg font-black text-gray-900 dark:text-white">تعديل بيانات الموظف ✏️</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">تعديل الاسم أو الرمز السرّي الخاص بالموظف من قسم المطور</p>
+            <form onsubmit="saveDevEditStaff(event)" class="space-y-3 text-right">
+                <input type="hidden" id="devEditOriginalStaffName">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">اسم الموظف</label>
+                    <input type="text" id="devEditStaffNameInput" required class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رمز السر الخاص بالدخول</label>
+                    <input type="text" id="devEditStaffPinInput" required class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm font-bold" dir="ltr">
+                </div>
+                <div class="flex gap-2 pt-2">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs">حفظ التغييرات</button>
+                    <button type="button" onclick="closeDevEditStaffModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Master Key Authorization Modal (نافذة تأكيد الرمز 1962 للحذف) -->
     <div id="masterKeyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-red-500/40 p-6 text-center space-y-4">
@@ -713,12 +737,21 @@
                     </form>
                 </div>
 
-                <!-- TAB 4: قسم المطور المحمي (تعديل الحقوق، الصلاحيات والتواجد المتعدد) -->
+                <!-- TAB 4: قسم المطور المحمي (تعديل أسماء ورُموز الموظفين، الحقوق، التواجد المتعدد) -->
                 <div id="adminTab-devTab" class="admin-tab-content hidden space-y-4">
                     <form onsubmit="saveDevSettings(event)" class="space-y-4 bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-purple-200 dark:border-purple-900/40">
                         <h4 class="font-bold text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-2">
                             <i class="fa-solid fa-shield-halved text-purple-500"></i> إعدادات المطور الخاصة وحقوق البرمجة
                         </h4>
+
+                        <!-- تعديل وإدارة أسماء ورُموز الدخول السرية للموظفين كاملة -->
+                        <div class="p-3.5 bg-purple-50/70 dark:bg-purple-950/40 rounded-xl border border-purple-300 dark:border-purple-700/60 space-y-2.5">
+                            <h5 class="text-xs font-black text-purple-900 dark:text-purple-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-user-pen text-purple-600"></i> تعديل أسماء الموظفين ورُموز الدخول الخاصة بهم (خاص بالمطور):
+                            </h5>
+                            <p class="text-[10px] text-gray-500 dark:text-gray-400">يمكنك هنا كمطور تعديل اسم أي موظف أو تغيير كلمة السر الخاصة بدخوله مباشرة:</p>
+                            <div id="devStaffManagementList" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
+                        </div>
 
                         <!-- خاصية اختيار وتحديد أكثر من موظف متواجد من المطور مباشرة -->
                         <div class="p-3.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl border border-indigo-200 dark:border-indigo-700 space-y-2">
@@ -1102,11 +1135,13 @@
             const staffSelectSetting = document.getElementById('settingCurrentStaff');
             const devStaffSelectSetting = document.getElementById('devCurrentStaffSelect');
             const staffListEl = document.getElementById('staffMembersList');
+            const devStaffListEl = document.getElementById('devStaffManagementList');
 
             if(selectEl) selectEl.innerHTML = '';
             if(staffSelectSetting) staffSelectSetting.innerHTML = '';
             if(devStaffSelectSetting) devStaffSelectSetting.innerHTML = '';
             if(staffListEl) staffListEl.innerHTML = '';
+            if(devStaffListEl) devStaffListEl.innerHTML = '';
 
             const currentStaffArr = siteConfig.currentStaffList || (siteConfig.currentStaff ? [siteConfig.currentStaff] : ["سعد"]);
 
@@ -1121,10 +1156,10 @@
                     devStaffSelectSetting.innerHTML += `<option value="${name}" ${selected}>${name}</option>`;
                 }
 
-                if(staffListEl) {
-                    const uData = authorizedUsersList[name];
-                    const pinVal = typeof uData === 'object' ? uData.pin : uData;
+                const uData = authorizedUsersList[name];
+                const pinVal = typeof uData === 'object' ? uData.pin : uData;
 
+                if(staffListEl) {
                     staffListEl.innerHTML += `
                         <div class="flex items-center justify-between p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
                             <div class="flex items-center gap-2">
@@ -1136,7 +1171,75 @@
                         </div>
                     `;
                 }
+
+                if(devStaffListEl) {
+                    devStaffListEl.innerHTML += `
+                        <div class="flex items-center justify-between p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-purple-200 dark:border-purple-800 text-xs">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-user-shield text-purple-600"></i>
+                                <span class="font-black text-gray-900 dark:text-white">${name}</span>
+                                <span class="text-[10px] bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 font-bold px-2 py-0.5 rounded-md" dir="ltr">الرمز: ${pinVal}</span>
+                            </div>
+                            <button type="button" onclick="openDevEditStaffModal('${name}')" class="text-purple-600 hover:text-purple-800 font-bold text-xs px-2.5 py-1 bg-purple-50 dark:bg-purple-900/30 rounded-lg border border-purple-200 dark:border-purple-700"><i class="fa-solid fa-pen-to-square ml-1"></i> تعديل</button>
+                        </div>
+                    `;
+                }
             });
+        }
+
+        // --- ميزة التعديل على أسماء ورُموز الموظفين من قسم المطور ---
+        function openDevEditStaffModal(staffName) {
+            const uData = authorizedUsersList[staffName];
+            if(!uData) return;
+
+            const pinVal = typeof uData === 'object' ? uData.pin : uData;
+
+            document.getElementById('devEditOriginalStaffName').value = staffName;
+            document.getElementById('devEditStaffNameInput').value = staffName;
+            document.getElementById('devEditStaffPinInput').value = pinVal;
+
+            document.getElementById('devEditStaffModal').classList.remove('hidden');
+        }
+
+        function closeDevEditStaffModal() {
+            document.getElementById('devEditStaffModal').classList.add('hidden');
+        }
+
+        function saveDevEditStaff(e) {
+            if(e) e.preventDefault();
+            const originalName = document.getElementById('devEditOriginalStaffName').value;
+            const newName = document.getElementById('devEditStaffNameInput').value.trim();
+            const newPin = document.getElementById('devEditStaffPinInput').value.trim();
+
+            if(!newName || !newPin) {
+                showToast('يرجى ملء جميع الحقول المطلوب تعديلها!');
+                return;
+            }
+
+            const existingData = authorizedUsersList[originalName] || { permissions: ["productsTab", "hoursTab"] };
+            const existingPerms = typeof existingData === 'object' ? existingData.permissions : ["productsTab", "hoursTab"];
+
+            if (originalName !== newName) {
+                delete authorizedUsersList[originalName];
+                if(isFirebaseActive) {
+                    database.ref('authorizedUsers/' + originalName).remove();
+                }
+            }
+
+            authorizedUsersList[newName] = {
+                pin: newPin,
+                permissions: existingPerms
+            };
+
+            if(isFirebaseActive) {
+                database.ref('authorizedUsers').set(authorizedUsersList);
+            }
+            localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
+
+            closeDevEditStaffModal();
+            renderStaffUI();
+            addAuditLog(`قام المبرمج بتعديل اسم/رمز الموظف "${originalName}" إلى "${newName}"`);
+            showToast(`تم تحديث بيانات الموظف (${newName}) بنجاح! ✏️`);
         }
 
         function addNewStaffMember(e) {
