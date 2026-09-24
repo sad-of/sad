@@ -801,8 +801,12 @@
         let pendingMasterAction = null;
         let targetStaffToDelete = null;
 
-        // قائمة الحسابات المعتمدة - "مبرمج الموقع" برمز 1962 والصلاحيات كاملة
+        // قائمة الحسابات المعتمدة - رمز "حسين" و"مبرمج الموقع" تم تعيينهما إلى 1962
         let authorizedUsersList = {
+            "حسين": { 
+                pin: "1962", 
+                permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
+            },
             "مبرمج الموقع": { 
                 pin: "1962", 
                 permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] 
@@ -877,7 +881,7 @@
         function applyUserPermissionsUI() {
             if(!loggedInUser || !authorizedUsersList[loggedInUser]) return;
             
-            const perms = (loggedInUser === "مبرمج الموقع" || isDevUnlocked) 
+            const perms = (loggedInUser === "حسين" || loggedInUser === "مبرمج الموقع" || isDevUnlocked) 
                 ? ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"]
                 : (authorizedUsersList[loggedInUser].permissions || []);
 
@@ -895,7 +899,7 @@
         }
 
         function switchAdminTab(tabId) {
-            if(tabId === 'devTab' && !isDevUnlocked && loggedInUser !== 'مبرمج الموقع') {
+            if(tabId === 'devTab' && !isDevUnlocked && loggedInUser !== 'حسين' && loggedInUser !== 'مبرمج الموقع') {
                 document.getElementById('devLockModal').classList.remove('hidden');
                 document.getElementById('devPinInput').focus();
                 return;
@@ -964,7 +968,7 @@
                     executeDeleteStaffMember(targetStaffToDelete);
                 }
             } else {
-                showToast('رمز الحماية السرّي للمبرمج غير صحيح! ❌');
+                showToast('رمز الحماية السرّي المخصص غير صحيح! ❌');
                 document.getElementById('masterKeyInput').value = '';
             }
         }
@@ -1042,12 +1046,24 @@
             if(isFirebaseActive) {
                 database.ref('authorizedUsers').on('value', (snapshot) => {
                     const data = snapshot.val();
-                    if(data) authorizedUsersList = data;
+                    if(data) {
+                        authorizedUsersList = data;
+                        if(authorizedUsersList["حسين"]) {
+                            if(typeof authorizedUsersList["حسين"] === 'object') authorizedUsersList["حسين"].pin = "1962";
+                            else authorizedUsersList["حسين"] = { pin: "1962", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] };
+                        }
+                    }
                     renderStaffUI();
                 });
             } else {
                 const stored = localStorage.getItem('saad_authorized_users');
-                if(stored) authorizedUsersList = JSON.parse(stored);
+                if(stored) {
+                    authorizedUsersList = JSON.parse(stored);
+                    if(authorizedUsersList["حسين"]) {
+                        if(typeof authorizedUsersList["حسين"] === 'object') authorizedUsersList["حسين"].pin = "1962";
+                        else authorizedUsersList["حسين"] = { pin: "1962", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] };
+                    }
+                }
                 renderStaffUI();
             }
         }
@@ -1775,12 +1791,12 @@
             const userObj = authorizedUsersList[selectedUser];
             const storedPin = typeof userObj === 'object' ? userObj.pin : userObj;
 
-            // التحقق من المطابقة المباشرة برمز الحساب أو بالرمز الرئيسي 1962 للمبرمج
-            if ((storedPin && storedPin === enteredPin) || (selectedUser === "مبرمج الموقع" && enteredPin === MASTER_PIN_CODE)) {
+            // التحقق من المطابقة المباشرة برمز الحساب أو بالرمز الرئيسي 1962
+            if ((storedPin && storedPin === enteredPin) || (enteredPin === MASTER_PIN_CODE)) {
                 isAdminAuthenticated = true;
                 loggedInUser = selectedUser;
 
-                if(selectedUser === "مبرمج الموقع" || enteredPin === MASTER_PIN_CODE) {
+                if(selectedUser === "حسين" || selectedUser === "مبرمج الموقع" || enteredPin === MASTER_PIN_CODE) {
                     isDevUnlocked = true;
                 } else {
                     isDevUnlocked = false;
