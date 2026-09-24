@@ -294,11 +294,11 @@
         </div>
     </div>
 
-    <!-- Admin Management Modal (إضافة + تعديل + حذف + عداد الزوار الحقيقي + إضافة قسم جديد) -->
+    <!-- Admin Management Modal (إضافة + تعديل + حذف + تعديل/حذف/إضافة الأقسام) -->
     <div id="adminModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden my-auto">
             <div class="bg-gradient-to-r from-blue-700 to-indigo-700 px-6 py-4 text-white flex items-center justify-between">
-                <div class="flex items-center gap-2"><i class="fa-solid fa-sliders text-lg"></i><h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم بالأقسام والمنتجات</h3></div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-sliders text-lg"></i><h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم السحابية بالأقسام والمنتجات</h3></div>
                 <div class="flex items-center gap-2">
                     <button onclick="logoutAdmin()" class="text-xs bg-red-500/30 px-2.5 py-1 rounded-lg border border-red-400/30 text-white"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
                     <button onclick="closeAdminModal()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -325,16 +325,26 @@
                     </div>
                 </div>
 
-                <!-- نموذج إضافة قسم جديد -->
+                <!-- قسم إدارة الأقسام (إضافة + تعديل + حذف) -->
                 <div class="bg-gray-100 dark:bg-gray-800/60 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 space-y-3">
-                    <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
-                        <i class="fa-solid fa-folder-plus text-emerald-500"></i> إضافة قسم جديد للأقسام الإلكترونية
+                    <h4 id="catFormHeader" class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
+                        <i class="fa-solid fa-folder-plus text-emerald-500"></i> إضافة / تعديل قسم جديد
                     </h4>
+                    <input type="hidden" id="editCatId" value="">
                     <div class="flex gap-2">
                         <input type="text" id="newCategoryName" placeholder="اسم القسم الجديد (مثال: ألعاب فيديو، شاشات...)" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
-                        <button type="button" onclick="addNewCategory()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 flex items-center gap-1">
-                            <i class="fa-solid fa-plus"></i> إضافة القسم
+                        <button type="button" id="catSubmitBtn" onclick="saveCategory()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> إضافة
                         </button>
+                        <button type="button" id="catCancelBtn" onclick="resetCatForm()" class="hidden px-3 py-2 rounded-xl bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-xs shrink-0">
+                            إلغاء
+                        </button>
+                    </div>
+
+                    <!-- قائمة الأقسام المضافة مع أزرار التعديل والحذف -->
+                    <div class="pt-2">
+                        <span class="block text-[11px] font-bold text-gray-500 dark:text-gray-400 mb-1.5">الأقسام المضافة حالياً:</span>
+                        <div id="adminCategoriesList" class="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto"></div>
                     </div>
                 </div>
 
@@ -483,10 +493,8 @@
             }
 
             if (isFirebaseActive) {
-                // زيادة إجمالي مشاهدات الصفحة والدخول اليومي
                 database.ref('analytics/totalViews').transaction(current => (current || 0) + 1);
 
-                // تسجيل زائر فريد جديد
                 if (isNewVisitor) {
                     database.ref('analytics/uniqueVisitors').transaction(current => (current || 0) + 1);
                     database.ref('analytics/visitorsList/' + visitorId).set({
@@ -495,13 +503,11 @@
                     });
                 }
 
-                // الاستماع للتغييرات في الوقت الفعلي وتحديث العداد بجميع أرجاء الموقع
                 database.ref('analytics').on('value', (snapshot) => {
                     const data = snapshot.val() || {};
                     const uVal = data.uniqueVisitors || 1;
                     const tVal = data.totalViews || 1;
 
-                    // تحديث العداد بالواجهة الرئيسية والمودال
                     document.getElementById('uniqueVisitorsCount').textContent = uVal;
                     document.getElementById('totalViewsCount').textContent = tVal;
                     document.getElementById('publicUniqueVisitors').textContent = uVal;
@@ -524,46 +530,136 @@
             }
         }
 
-        // --- إدارة الأقسام الديناميكية ---
+        // --- إدارة الأقسام الشاملة (إضافة، تعديل، حذف) ---
         function initCategories() {
             if (isFirebaseActive) {
                 database.ref('categories').on('value', (snapshot) => {
                     const data = snapshot.val();
                     customCategories = data ? Object.values(data) : [];
                     renderCategoriesUI();
+                    if(isAdminAuthenticated) renderAdminCategoriesList();
                 });
             } else {
                 const storedCats = localStorage.getItem('saad_custom_categories');
                 customCategories = storedCats ? JSON.parse(storedCats) : [];
                 renderCategoriesUI();
+                if(isAdminAuthenticated) renderAdminCategoriesList();
             }
         }
 
-        function addNewCategory() {
+        function saveCategory() {
             const catInput = document.getElementById('newCategoryName');
+            const editCatId = document.getElementById('editCatId').value;
             const name = catInput.value.trim();
-            if(!name) { showToast('يرجى كتابة اسم القسم الجديد!'); return; }
 
-            const catId = 'cat_' + Date.now();
-            const newCat = { id: catId, name: name };
+            if(!name) { showToast('يرجى كتابة اسم القسم أولاً!'); return; }
 
-            if(isFirebaseActive) {
-                database.ref('categories/' + catId).set(newCat);
+            if(editCatId) {
+                // تعديل اسم قسم موجود
+                const catObj = { id: editCatId, name: name };
+                if(isFirebaseActive) {
+                    database.ref('categories/' + editCatId).set(catObj);
+                } else {
+                    const idx = customCategories.findIndex(c => c.id === editCatId);
+                    if(idx !== -1) customCategories[idx] = catObj;
+                    localStorage.setItem('saad_custom_categories', JSON.stringify(customCategories));
+                    renderCategoriesUI();
+                    renderAdminCategoriesList();
+                }
+                showToast('تم تعديل اسم القسم بنجاح ✏️');
             } else {
-                customCategories.push(newCat);
-                localStorage.setItem('saad_custom_categories', JSON.stringify(customCategories));
-                renderCategoriesUI();
+                // إضافة قسم جديد
+                const catId = 'cat_' + Date.now();
+                const newCat = { id: catId, name: name };
+
+                if(isFirebaseActive) {
+                    database.ref('categories/' + catId).set(newCat);
+                } else {
+                    customCategories.push(newCat);
+                    localStorage.setItem('saad_custom_categories', JSON.stringify(customCategories));
+                    renderCategoriesUI();
+                    renderAdminCategoriesList();
+                }
+                showToast('تمت إضافة القسم الجديد بنجاح! 📁');
             }
 
-            catInput.value = '';
-            showToast('تمت إضافة القسم الجديد بنجاح! 📁');
+            resetCatForm();
+        }
+
+        function editCategory(catId) {
+            const cat = customCategories.find(c => c.id === catId);
+            if(!cat) return;
+
+            document.getElementById('editCatId').value = cat.id;
+            document.getElementById('newCategoryName').value = cat.name;
+            document.getElementById('catFormHeader').innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-500"></i> تعديل اسم القسم`;
+            document.getElementById('catSubmitBtn').innerHTML = `<i class="fa-solid fa-check"></i> حفظ`;
+            document.getElementById('catCancelBtn').classList.remove('hidden');
+        }
+
+        function deleteCategory(catId) {
+            if(!isAdminAuthenticated) return;
+            const cat = customCategories.find(c => c.id === catId);
+            if(!cat) return;
+
+            if(confirm(`هل أنت متأكد من حذف القسم "${cat.name}"؟ سيمسح القسم من أشرطة التصفح.`)) {
+                if(isFirebaseActive) {
+                    database.ref('categories/' + catId).remove();
+                } else {
+                    customCategories = customCategories.filter(c => c.id !== catId);
+                    localStorage.setItem('saad_custom_categories', JSON.stringify(customCategories));
+                    renderCategoriesUI();
+                    renderAdminCategoriesList();
+                }
+
+                // تحويل المنتجات المتربطة بهذا القسم إلى قسم "الكل" أو قسم آخر لمنع فقدانها
+                products.forEach(p => {
+                    if(p.category === catId) {
+                        p.category = 'electronics'; // قسم احتياطي
+                        if(isFirebaseActive) database.ref('products/' + p.id).set(p);
+                    }
+                });
+
+                if(currentCategory === catId) filterCategory('all');
+                showToast('تم حذف القسم بنجاح 🗑️');
+            }
+        }
+
+        function resetCatForm() {
+            document.getElementById('editCatId').value = '';
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('catFormHeader').innerHTML = `<i class="fa-solid fa-folder-plus text-emerald-500"></i> إضافة / تعديل قسم جديد`;
+            document.getElementById('catSubmitBtn').innerHTML = `<i class="fa-solid fa-plus"></i> إضافة`;
+            document.getElementById('catCancelBtn').classList.add('hidden');
+        }
+
+        function renderAdminCategoriesList() {
+            const listEl = document.getElementById('adminCategoriesList');
+            if(!listEl) return;
+            listEl.innerHTML = '';
+
+            if(customCategories.length === 0) {
+                listEl.innerHTML = '<span class="text-[10px] text-gray-400">لا توجد أقسام مخصصة مضافة حالياً.</span>';
+                return;
+            }
+
+            customCategories.forEach(cat => {
+                listEl.innerHTML += `
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-xs font-bold text-gray-800 dark:text-gray-200">
+                        <span>${cat.name}</span>
+                        <div class="flex items-center gap-1 mr-1">
+                            <button onclick="editCategory('${cat.id}')" class="text-amber-500 hover:text-amber-600"><i class="fa-solid fa-pen text-[10px]"></i></button>
+                            <button onclick="deleteCategory('${cat.id}')" class="text-red-500 hover:text-red-600"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
         function renderCategoriesUI() {
             const container = document.getElementById('categoriesContainer');
             const selectEl = document.getElementById('prodCategory');
 
-            // إرجاع خيارات القائمة الأساسية
             let defaultButtonsHtml = `
                 <button onclick="filterCategory('all')" id="cat-all" class="cat-btn ${currentCategory === 'all' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all">الكل</button>
                 <button onclick="filterCategory('playstation')" id="cat-playstation" class="cat-btn ${currentCategory === 'playstation' ? 'bg-brand-600 text-white shadow-sm' : 'text-gray-700 dark:text-gray-300'} px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all"><i class="fa-brands fa-playstation ml-1"></i> بلايستيشن</button>
@@ -577,7 +673,6 @@
                 <option value="accessories">إكسسوارات بلايستيشن</option>
             `;
 
-            // إضافة الأقسام المضافة من اللوحة
             customCategories.forEach(cat => {
                 const isActive = currentCategory === cat.id;
                 defaultButtonsHtml += `
@@ -755,8 +850,12 @@
             }
         }
         function logoutAdmin() { isAdminAuthenticated = false; closeAdminModal(); showToast('تم تسجيل الخروج 🔒'); }
-        function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); renderAdminProductList(); }
-        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); resetForm(); }
+        function openAdminModal() { 
+            document.getElementById('adminModal').classList.remove('hidden'); 
+            renderAdminCategoriesList(); 
+            renderAdminProductList(); 
+        }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); resetForm(); resetCatForm(); }
 
         function renderAdminProductList() {
             const list = document.getElementById('adminProductList');
