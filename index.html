@@ -248,19 +248,35 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 
-                <!-- كارت الأرقام المتعددة مع أصحاب الأرقام -->
+                <!-- أرقام الاتصال -->
                 <div class="glass-card p-6 rounded-2xl text-center space-y-3">
                     <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 flex items-center justify-center text-xl"><i class="fa-solid fa-phone"></i></div>
                     <h3 class="font-bold text-lg text-gray-900 dark:text-white">أرقام الاتصال والواتساب</h3>
                     <div id="phoneNumbersContainer" class="space-y-3 pt-1"></div>
                 </div>
 
+                <!-- أوقات العمل والموظف المتواجد المباشر -->
                 <div class="glass-card p-6 rounded-2xl text-center space-y-3">
                     <div class="w-12 h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
-                    <h3 class="font-bold text-lg text-gray-900 dark:text-white">أوقات العمل</h3>
-                    <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-semibold">يومياً من الساعة 9:00 صباحاً حتى 11:00 مساءً</p>
+                    <h3 class="font-bold text-lg text-gray-900 dark:text-white">أوقات العمل والتواجد</h3>
+                    
+                    <div class="space-y-2 pt-1">
+                        <div class="p-2.5 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700/60">
+                            <span class="block text-[11px] font-bold text-gray-400">ساعات الدوام اليومي</span>
+                            <span id="displayWorkHours" class="text-sm font-black text-brand-600 dark:text-neon-blue">يومياً من 9:00 صباحاً حتى 11:00 مساءً</span>
+                        </div>
+                        <div class="p-2 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700/60">
+                            <span class="block text-[11px] font-bold text-gray-400">أيام العمل في الأسبوع</span>
+                            <span id="displayWorkDays" class="text-xs font-bold text-gray-700 dark:text-gray-200">طيلة أيام الأسبوع</span>
+                        </div>
+                        <div class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                            <span class="block text-[10px] font-bold">الموظف المناوب والمتواجد الآن بالمحل:</span>
+                            <span id="displayCurrentStaff" class="text-sm font-black flex items-center justify-center gap-1 mt-0.5"><i class="fa-solid fa-user-check text-xs"></i> سعد</span>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- مواقع التواصل -->
                 <div class="glass-card p-6 rounded-2xl text-center space-y-3 sm:col-span-2 lg:col-span-1">
                     <div class="w-12 h-12 mx-auto rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 flex items-center justify-center text-xl"><i class="fa-solid fa-share-nodes"></i></div>
                     <h3 class="font-bold text-lg text-gray-900 dark:text-white">مواقع التواصل</h3>
@@ -274,23 +290,19 @@
         </div>
     </section>
 
-    <!-- Admin Login Modal (اسم المستخدم + كلمة المرور) -->
+    <!-- Admin Login Modal -->
     <div id="pinAuthModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-user-lock"></i></div>
             <h3 class="text-lg font-black text-gray-900 dark:text-white">دخول الموظفين ولوحة التحكم</h3>
             <form onsubmit="verifyAdminAuth(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 text-right mb-1">اسم الموظف / صاحب المحل</label>
-                    <select id="adminUserSelect" required class="w-full text-center text-sm font-bold px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
-                        <option value="سعد">سعد</option>
-                        <option value="حسين">حسين</option>
-                        <option value="وسام">وسام</option>
-                    </select>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 text-right mb-1">اختر اسم الموظف</label>
+                    <select id="adminUserSelect" required class="w-full text-center text-sm font-bold px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white"></select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 text-right mb-1">رمز الدخول السرّي</label>
-                    <input type="password" id="adminPinInput" maxlength="15" required placeholder="أدخل كلمة المرور..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
+                    <input type="password" id="adminPinInput" maxlength="20" required placeholder="أدخل كلمة المرور..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
                 </div>
                 <div class="flex gap-2 pt-1">
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-brand-600 text-white font-bold text-xs">تأكيد الدخول</button>
@@ -300,7 +312,23 @@
         </div>
     </div>
 
-    <!-- Developer Pin Verification Modal (الرمز السرّي 1962 للمبرمج) -->
+    <!-- Master Key Authorization Modal (نافذة تأكيد الرمز 1962 للحذف) -->
+    <div id="masterKeyModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-red-500/40 p-6 text-center space-y-4">
+            <div class="w-12 h-12 mx-auto rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-cat"></i></div>
+            <h3 class="text-lg font-black text-gray-900 dark:text-white">إذن المبرمج حسين مطلوب 🔒</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">أدخل الرمز السرّي المخصص للحذف (1962) لإتمام هذه العملية</p>
+            <form onsubmit="confirmMasterKeyAction(event)" class="space-y-3">
+                <input type="password" id="masterKeyInput" maxlength="10" required placeholder="أدخل رمز الحذف السرّي..." class="w-full text-center tracking-widest text-lg font-bold px-4 py-2.5 rounded-xl border border-red-300 dark:border-red-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white">
+                <div class="flex gap-2">
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs">تأكيد الحذف النهائي</button>
+                    <button type="button" onclick="closeMasterKeyModal()" class="w-1/3 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Developer Pin Verification Modal -->
     <div id="devLockModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#1a1a2a] w-full max-w-sm rounded-3xl shadow-2xl border border-purple-500/30 p-6 text-center space-y-4">
             <div class="w-12 h-12 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-key"></i></div>
@@ -326,7 +354,7 @@
                     <i class="fa-solid fa-sliders text-xl"></i>
                     <div>
                         <h3 class="font-bold text-base" id="adminModalTitle">لوحة التحكم السحابية - أهلاً بك (<span id="currentUserBadge" class="text-amber-300 font-black"></span>)</h3>
-                        <p class="text-[10px] text-blue-200">إدارة المنتجات، الأقسام، هوية الموقع وتتبع أحدث الإشعارات</p>
+                        <p class="text-[10px] text-blue-200">إدارة المنتجات، الأقسام، صلاحيات الموظفين، وأوقات الدوام</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -337,19 +365,25 @@
 
             <!-- Admin Navigation Tabs -->
             <div class="flex border-b border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 px-3 pt-2 gap-1 overflow-x-auto shrink-0">
-                <button onclick="switchAdminTab('productsTab')" id="tabBtn-productsTab" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl transition-all border-b-2 border-brand-600 text-brand-600 bg-white dark:bg-[#1a1a2a] dark:text-white flex items-center gap-1.5 whitespace-nowrap">
+                <button onclick="switchAdminTab('productsTab')" id="tabBtn-productsTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all border-b-2 border-brand-600 text-brand-600 bg-white dark:bg-[#1a1a2a] dark:text-white flex items-center gap-1 whitespace-nowrap">
                     <i class="fa-solid fa-boxes-stacked"></i> المنتجات والأقسام
                 </button>
-                <button onclick="switchAdminTab('logsTab')" id="tabBtn-logsTab" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1.5 whitespace-nowrap">
-                    <i class="fa-solid fa-bell text-amber-500"></i> أحدث الإشعارات والتعديلات
+                <button onclick="switchAdminTab('hoursTab')" id="tabBtn-hoursTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
+                    <i class="fa-solid fa-business-time text-emerald-500"></i> أوقات الدوام والمناوب
                 </button>
-                <button onclick="switchAdminTab('siteTab')" id="tabBtn-siteTab" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1.5 whitespace-nowrap">
+                <button onclick="switchAdminTab('staffTab')" id="tabBtn-staffTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
+                    <i class="fa-solid fa-users-gear text-blue-500"></i> الموظفين والصلاحيات
+                </button>
+                <button onclick="switchAdminTab('logsTab')" id="tabBtn-logsTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
+                    <i class="fa-solid fa-bell text-amber-500"></i> الإشعارات والتعديلات
+                </button>
+                <button onclick="switchAdminTab('siteTab')" id="tabBtn-siteTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
                     <i class="fa-solid fa-globe"></i> إعدادات اسم الموقع
                 </button>
-                <button onclick="switchAdminTab('socialTab')" id="tabBtn-socialTab" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1.5 whitespace-nowrap">
+                <button onclick="switchAdminTab('socialTab')" id="tabBtn-socialTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
                     <i class="fa-solid fa-share-nodes"></i> التواصل والأرقام
                 </button>
-                <button onclick="switchAdminTab('devTab')" id="tabBtn-devTab" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1.5 whitespace-nowrap">
+                <button onclick="switchAdminTab('devTab')" id="tabBtn-devTab" class="admin-tab-btn px-3 py-2 text-xs font-bold rounded-t-xl transition-all text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center gap-1 whitespace-nowrap">
                     <i class="fa-solid fa-lock text-purple-500"></i> حقوق المبرمج
                 </button>
             </div>
@@ -467,6 +501,78 @@
                     </div>
                 </div>
 
+                <!-- TAB: أوقات الدوام والموظف المناوب -->
+                <div id="adminTab-hoursTab" class="admin-tab-content hidden space-y-4">
+                    <form onsubmit="saveWorkHoursSettings(event)" class="space-y-4 bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-emerald-500"></i> تعديل أوقات وساعات الدوام والموظف المتواجد
+                        </h4>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">ساعات الدوام اليومية الظاهرة للزوار</label>
+                            <input type="text" id="settingWorkHours" required placeholder="مثال: يومياً من 9:00 صباحاً حتى 11:00 مساءً" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">أيام العمل في الأسبوع</label>
+                            <input type="text" id="settingWorkDays" required placeholder="مثال: طيلة أيام الأسبوع / من السبت إلى الخميس" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">الموظف المناوب والمتواجد حالياً في المحل اليوم</label>
+                            <select id="settingCurrentStaff" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm font-bold"></select>
+                        </div>
+
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث أوقات الدوام والمناوب
+                        </button>
+                    </form>
+                </div>
+
+                <!-- TAB: إضافة وإدارة الموظفين والمستخدمين وتعيين الصلاحيات -->
+                <div id="adminTab-staffTab" class="admin-tab-content hidden space-y-4">
+                    <!-- نموذج إضافة موظف جديد -->
+                    <form onsubmit="addNewStaffMember(event)" class="space-y-3 bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus text-blue-500"></i> إضافة موظف جديد وتحديد صلاحياته
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">اسم الموظف الجديد</label>
+                                <input type="text" id="newStaffName" required placeholder="مثال: علي، محمد..." class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">رمز السر الخاص بالدخول</label>
+                                <input type="text" id="newStaffPin" required placeholder="مثال: sad2026" class="w-full px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs sm:text-sm" dir="ltr">
+                            </div>
+                        </div>
+
+                        <!-- تحديد صلاحيات الموظف الجديد -->
+                        <div class="p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 space-y-2">
+                            <label class="block text-xs font-bold text-brand-600 dark:text-brand-400">تحديد صلاحيات الدخول والتحكم للعميل/الموظف:</label>
+                            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                                <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permProducts" checked class="rounded"> إدارة المنتجات والأقسام</label>
+                                <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permHours" checked class="rounded"> تعديل أوقات الدوام والمناوب</label>
+                                <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permSocial" class="rounded"> تعديل أرقام التواصل والروابط</label>
+                                <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" id="permSite" class="rounded"> تعديل اسم وعنوان الموقع</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-check"></i> إضافة الموظف الجديد للوحة
+                        </button>
+                    </form>
+
+                    <!-- قائمة الموظفين الحاليين -->
+                    <div class="bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 space-y-3">
+                        <h4 class="font-bold text-xs sm:text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
+                            <i class="fa-solid fa-users text-indigo-500"></i> الموظفين المسجلين حالياً (حذف الموظفين محمي بالرمز 1962):
+                        </h4>
+                        <div id="staffMembersList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                    </div>
+                </div>
+
                 <!-- TAB: أحدث الإشعارات والتعديلات -->
                 <div id="adminTab-logsTab" class="admin-tab-content hidden space-y-4">
                     <div class="bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 space-y-3">
@@ -474,7 +580,7 @@
                             <h4 class="font-bold text-sm text-gray-900 dark:text-white flex items-center gap-2">
                                 <i class="fa-solid fa-clock-rotate-left text-amber-500"></i> سجل أحدث الإشعارات والتعديلات المباشرة
                             </h4>
-                            <button onclick="clearAuditLogs()" class="text-[10px] bg-red-500/20 text-red-500 hover:bg-red-500/30 px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-trash-can"></i> مسح السجل</button>
+                            <button onclick="requestMasterKeyForAction('clearLogs')" class="text-[10px] bg-red-500/20 text-red-500 hover:bg-red-500/30 px-2.5 py-1 rounded-lg font-bold"><i class="fa-solid fa-shield-halved ml-1"></i> مسح السجل (1962)</button>
                         </div>
 
                         <div id="logsContainerList" class="space-y-2 max-h-80 overflow-y-auto pr-1">
@@ -519,7 +625,6 @@
                             <i class="fa-solid fa-headset text-emerald-500"></i> تعديل وإضافة أرقام التواصل وأسماء أصحاب الأرقام
                         </h4>
 
-                        <!-- أرقام الهواتف الثلاثة مع أسماء أصحاب الأرقام -->
                         <div class="space-y-3 bg-white dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700">
                             <span class="block text-xs font-bold text-emerald-600 dark:text-emerald-400">إدارة الأرقام وأسماء أصحاب الأرقام:</span>
                             
@@ -660,14 +765,16 @@
             console.error("Firebase Initialization Error:", e);
         }
 
-        // إعدادات الدخول للموظفين المحددين
-        const AUTHORIZED_USERS = {
-            "سعد": "sad1996",
-            "حسين": "sad2007",
-            "وسام": "sad1984"
-        };
+        const MASTER_PIN_CODE = "1962"; // الرمز الرئيسي لحسين والمبرمج للحذف
+        let pendingMasterAction = null;
+        let targetStaffToDelete = null;
 
-        const DEV_PIN_CODE = "1962"; // الرمز المقفول للمبرمج
+        // هيكل الموظفين مع كلمة السر والصلاحيات الخاصة بكل موظف
+        let authorizedUsersList = {
+            "حسين": { pin: "sad2007", permissions: ["productsTab", "hoursTab", "staffTab", "logsTab", "siteTab", "socialTab", "devTab"] },
+            "سعد": { pin: "sad1996", permissions: ["productsTab", "hoursTab", "socialTab"] },
+            "وسام": { pin: "sad1984", permissions: ["productsTab", "hoursTab"] }
+        };
 
         let loggedInUser = null;
         let isAdminAuthenticated = false;
@@ -690,7 +797,6 @@
         let auditLogsList = [];
         let currentCategory = 'all';
 
-        // إعدادات الموقع الافتراضية
         let siteConfig = {
             siteName: "سعد للإلكترونيات",
             siteEst: "1996",
@@ -701,6 +807,9 @@
             phone2Owner: "",
             phone3: "",
             phone3Owner: "",
+            workHours: "يومياً من 9:00 صباحاً حتى 11:00 مساءً",
+            workDays: "طيلة أيام الأسبوع",
+            currentStaff: "سعد",
             facebook: "https://www.facebook.com/share/1EZL4V5ELX/?mibextid=wwXIfr",
             instagram: "https://www.instagram.com/xv8f?stkn=MTJ0dGFjdWllbnJoaQ%3D%3D&utm_source=qr",
             devName: "حسين محمد",
@@ -729,7 +838,24 @@
             label.textContent = isDark ? 'الوضع الليلي' : 'الوضع النهاري';
         }
 
-        // --- التنقل بين تبويبات لوحة التحكم + حماية قسم المبرمج ---
+        // --- التحكم بتبويبات اللوحة بناءً على صلاحيات الموظف المسجل ---
+        function applyUserPermissionsUI() {
+            if(!loggedInUser || !authorizedUsersList[loggedInUser]) return;
+            const perms = authorizedUsersList[loggedInUser].permissions || [];
+
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                const tabName = btn.id.replace('tabBtn-', '');
+                if(perms.includes(tabName) || loggedInUser === 'حسين') {
+                    btn.classList.remove('hidden');
+                } else {
+                    btn.classList.add('hidden');
+                }
+            });
+
+            const firstAvailable = perms[0] || 'productsTab';
+            switchAdminTab(firstAvailable);
+        }
+
         function switchAdminTab(tabId) {
             if(tabId === 'devTab' && !isDevUnlocked) {
                 document.getElementById('devLockModal').classList.remove('hidden');
@@ -743,7 +869,9 @@
                 btn.classList.add('text-gray-500', 'dark:text-gray-400');
             });
 
-            document.getElementById('adminTab-' + tabId).classList.remove('hidden');
+            const targetTab = document.getElementById('adminTab-' + tabId);
+            if(targetTab) targetTab.classList.remove('hidden');
+            
             const activeBtn = document.getElementById('tabBtn-' + tabId);
             if(activeBtn) {
                 activeBtn.classList.add('border-b-2', 'border-brand-600', 'text-brand-600', 'bg-white', 'dark:bg-[#1a1a2a]', 'dark:text-white');
@@ -754,7 +882,7 @@
         function verifyDevPin(e) {
             e.preventDefault();
             const input = document.getElementById('devPinInput').value.trim();
-            if(input === DEV_PIN_CODE) {
+            if(input === MASTER_PIN_CODE) {
                 isDevUnlocked = true;
                 closeDevLockModal();
                 showToast('تم فتح قسم المبرمج بنجاح 🔓');
@@ -769,7 +897,40 @@
             document.getElementById('devPinInput').value = '';
         }
 
-        // --- نظام تسجيل السجلات والإشعارات للتعديلات (Audit Trail) ---
+        // --- نظام حماية الحذف المتقدم برمز المبرمج الرئيسي (1962) ---
+        function requestMasterKeyForAction(action, data = null) {
+            pendingMasterAction = action;
+            targetStaffToDelete = data;
+            document.getElementById('masterKeyInput').value = '';
+            document.getElementById('masterKeyModal').classList.remove('hidden');
+            document.getElementById('masterKeyInput').focus();
+        }
+
+        function closeMasterKeyModal() {
+            document.getElementById('masterKeyModal').classList.add('hidden');
+            pendingMasterAction = null;
+            targetStaffToDelete = null;
+        }
+
+        function confirmMasterKeyAction(e) {
+            e.preventDefault();
+            const enteredKey = document.getElementById('masterKeyInput').value.trim();
+
+            if(enteredKey === MASTER_PIN_CODE) {
+                closeMasterKeyModal();
+
+                if(pendingMasterAction === 'clearLogs') {
+                    executeClearAuditLogs();
+                } else if(pendingMasterAction === 'deleteStaff' && targetStaffToDelete) {
+                    executeDeleteStaffMember(targetStaffToDelete);
+                }
+            } else {
+                showToast('رمز الحماية السرّي للمبرمج غير صحيح! ❌');
+                document.getElementById('masterKeyInput').value = '';
+            }
+        }
+
+        // --- سجلات التعديل والعمليات ---
         function addAuditLog(actionText) {
             const user = loggedInUser || 'غير معروف';
             const timestamp = new Date().toLocaleString('ar-IQ', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric' });
@@ -827,20 +988,119 @@
             });
         }
 
-        function clearAuditLogs() {
-            if(!isAdminAuthenticated) return;
-            if(confirm('هل أنت متأكد من مسح كافة الإشعارات والعمليات السابقة؟')) {
-                if(isFirebaseActive) database.ref('auditLogs').remove();
-                else {
-                    auditLogsList = [];
-                    localStorage.setItem('saad_audit_logs', JSON.stringify([]));
-                    renderAuditLogs();
-                }
-                showToast('تم مسح السجلات بنجاح 🗑️');
+        function executeClearAuditLogs() {
+            if(isFirebaseActive) database.ref('auditLogs').remove();
+            else {
+                auditLogsList = [];
+                localStorage.setItem('saad_audit_logs', JSON.stringify([]));
+                renderAuditLogs();
+            }
+            showToast('تم مسح السجلات بنجاح بعد التأكيد 🗑️');
+        }
+
+        // --- إدارة الموظفين الجدد والصلاحيات ---
+        function initStaffMembers() {
+            if(isFirebaseActive) {
+                database.ref('authorizedUsers').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if(data) authorizedUsersList = data;
+                    renderStaffUI();
+                });
+            } else {
+                const stored = localStorage.getItem('saad_authorized_users');
+                if(stored) authorizedUsersList = JSON.parse(stored);
+                renderStaffUI();
             }
         }
 
-        // --- إدارة إعدادات الهوية والتواصل المباشرة بالسحابة ---
+        function renderStaffUI() {
+            const selectEl = document.getElementById('adminUserSelect');
+            const staffSelectSetting = document.getElementById('settingCurrentStaff');
+            const staffListEl = document.getElementById('staffMembersList');
+
+            if(selectEl) selectEl.innerHTML = '';
+            if(staffSelectSetting) staffSelectSetting.innerHTML = '';
+            if(staffListEl) staffListEl.innerHTML = '';
+
+            Object.keys(authorizedUsersList).forEach(name => {
+                if(selectEl) selectEl.innerHTML += `<option value="${name}">${name}</option>`;
+                if(staffSelectSetting) {
+                    const selected = siteConfig.currentStaff === name ? 'selected' : '';
+                    staffSelectSetting.innerHTML += `<option value="${name}" ${selected}>${name}</option>`;
+                }
+
+                if(staffListEl) {
+                    const uData = authorizedUsersList[name];
+                    const pinVal = typeof uData === 'object' ? uData.pin : uData;
+
+                    staffListEl.innerHTML += `
+                        <div class="flex items-center justify-between p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-user-gear text-indigo-500"></i>
+                                <span class="font-bold text-gray-900 dark:text-white">${name}</span>
+                                <span class="text-[10px] text-gray-400" dir="ltr">(${pinVal})</span>
+                            </div>
+                            <button onclick="requestMasterKeyForAction('deleteStaff', '${name}')" class="text-red-500 hover:text-red-700 font-bold text-xs"><i class="fa-solid fa-shield-halved ml-1"></i> حذف (1962)</button>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function addNewStaffMember(e) {
+            e.preventDefault();
+            if(!isAdminAuthenticated) return;
+
+            const name = document.getElementById('newStaffName').value.trim();
+            const pin = document.getElementById('newStaffPin').value.trim();
+
+            if(!name || !pin) return;
+
+            let userPerms = [];
+            if(document.getElementById('permProducts').checked) userPerms.push('productsTab');
+            if(document.getElementById('permHours').checked) userPerms.push('hoursTab');
+            if(document.getElementById('permSocial').checked) userPerms.push('socialTab');
+            if(document.getElementById('permSite').checked) userPerms.push('siteTab');
+
+            authorizedUsersList[name] = {
+                pin: pin,
+                permissions: userPerms
+            };
+
+            if(isFirebaseActive) {
+                database.ref('authorizedUsers').set(authorizedUsersList);
+            } else {
+                localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
+                renderStaffUI();
+            }
+
+            addAuditLog(`قام بإضافة موظف جديد وتحديد صلاحياته: "${name}"`);
+            showToast(`تمت إضافة الموظف (${name}) وصلاحياته بنجاح! 👤`);
+
+            document.getElementById('newStaffName').value = '';
+            document.getElementById('newStaffPin').value = '';
+        }
+
+        function executeDeleteStaffMember(name) {
+            if(Object.keys(authorizedUsersList).length <= 1) {
+                showToast('لا يمكن حذف جميع الموظفين! يجب بقاء موظف واحد على الأقل.');
+                return;
+            }
+
+            delete authorizedUsersList[name];
+
+            if(isFirebaseActive) {
+                database.ref('authorizedUsers').set(authorizedUsersList);
+            } else {
+                localStorage.setItem('saad_authorized_users', JSON.stringify(authorizedUsersList));
+                renderStaffUI();
+            }
+
+            addAuditLog(`قام بحذف الموظف بالرمز السرّي: "${name}"`);
+            showToast(`تم حذف الموظف (${name}) بنجاح 🗑️`);
+        }
+
+        // --- إدارة إعدادات الموقع والعنوان وأوقات الدوام ---
         function initSiteSettings() {
             if(isFirebaseActive) {
                 database.ref('siteConfig').on('value', (snapshot) => {
@@ -865,7 +1125,10 @@
             document.getElementById('siteEstBadge').textContent = siteConfig.siteEst;
             document.getElementById('pageTitle').textContent = siteConfig.siteName + " | " + siteConfig.siteAddress;
 
-            // عرض أرقام الهواتف وأصحاب الأرقام
+            document.getElementById('displayWorkHours').textContent = siteConfig.workHours || "يومياً من 9:00 صباحاً حتى 11:00 مساءً";
+            document.getElementById('displayWorkDays').textContent = siteConfig.workDays || "طيلة أيام الأسبوع";
+            document.getElementById('displayCurrentStaff').innerHTML = `<i class="fa-solid fa-user-check text-xs"></i> ${siteConfig.currentStaff || "سعد"}`;
+
             const phoneContainer = document.getElementById('phoneNumbersContainer');
             phoneContainer.innerHTML = '';
 
@@ -878,7 +1141,6 @@
             phonePairs.forEach(item => {
                 const cleanPhone = item.phone.replace(/[^0-9]/g, '');
                 const intlPhone = cleanPhone.startsWith('0') ? '964' + cleanPhone.substring(1) : cleanPhone;
-                const ownerText = item.owner ? ` (${item.owner})` : '';
 
                 phoneContainer.innerHTML += `
                     <div class="p-2.5 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700/60">
@@ -914,6 +1176,9 @@
             document.getElementById('settingSiteEst').value = siteConfig.siteEst;
             document.getElementById('settingSiteAddress').value = siteConfig.siteAddress;
 
+            document.getElementById('settingWorkHours').value = siteConfig.workHours || '';
+            document.getElementById('settingWorkDays').value = siteConfig.workDays || '';
+
             document.getElementById('settingPhone1').value = siteConfig.phone1 || '';
             document.getElementById('settingPhone1Owner').value = siteConfig.phone1Owner || '';
             document.getElementById('settingPhone2').value = siteConfig.phone2 || '';
@@ -940,6 +1205,18 @@
 
             addAuditLog(`قام بتغيير اسم/عنوان الموقع إلى "${siteConfig.siteName}"`);
             saveConfigData('تم تحديث بيانات واسم الموقع بنجاح! 🏛️');
+        }
+
+        function saveWorkHoursSettings(e) {
+            e.preventDefault();
+            if(!isAdminAuthenticated) return;
+
+            siteConfig.workHours = document.getElementById('settingWorkHours').value.trim();
+            siteConfig.workDays = document.getElementById('settingWorkDays').value.trim();
+            siteConfig.currentStaff = document.getElementById('settingCurrentStaff').value;
+
+            addAuditLog(`قام بتعديل أوقات الدوام، وتحديد الموظف المتواجد اليوم: (${siteConfig.currentStaff})`);
+            saveConfigData('تم تحديث أوقات الدوام والموظف المتواجد بنجاح! ⏰');
         }
 
         function saveSocialSettings(e) {
@@ -1399,11 +1676,12 @@
             renderProducts();
         }
 
-        // --- نظام تسجيل الدخول بحسابات الموظفين الثلاثة (سعد، حسين، وسام) ---
+        // --- نظام تسجيل الدخول بحسابات الموظفين والصلاحيات ---
         function promptAdminPin() {
             if(isAdminAuthenticated) {
                 openAdminModal();
             } else {
+                renderStaffUI();
                 document.getElementById('adminPinInput').value = '';
                 document.getElementById('pinAuthModal').classList.remove('hidden');
                 document.getElementById('adminPinInput').focus();
@@ -1417,7 +1695,10 @@
             const selectedUser = document.getElementById('adminUserSelect').value;
             const enteredPin = document.getElementById('adminPinInput').value.trim();
 
-            if (AUTHORIZED_USERS[selectedUser] && AUTHORIZED_USERS[selectedUser] === enteredPin) {
+            const userObj = authorizedUsersList[selectedUser];
+            const storedPin = typeof userObj === 'object' ? userObj.pin : userObj;
+
+            if (storedPin && storedPin === enteredPin) {
                 isAdminAuthenticated = true;
                 loggedInUser = selectedUser;
                 closePinModal();
@@ -1444,7 +1725,7 @@
             document.getElementById('adminModal').classList.remove('hidden'); 
             renderAdminCategoriesList(); 
             renderAdminProductList(); 
-            switchAdminTab('productsTab');
+            applyUserPermissionsUI();
         }
 
         function closeAdminModal() { 
@@ -1494,6 +1775,7 @@
 
         window.onload = function() { 
             initTheme(); 
+            initStaffMembers();
             initSiteSettings();
             initCategories();
             initProducts(); 
