@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سعد للإلكترونيات - Saad Electronics</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #0070d1; /* PlayStation Blue */
+            --accent-hover: #005bb5;
+            --border-color: #334155;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --modal-overlay: rgba(0, 0, 0, 0.75);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --accent-color: #0070d1;
+            --accent-hover: #005bb5;
+            --border-color: #e2e8f0;
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, var(--card-bg) 0%, var(--bg-color) 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        /* Filter Section */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: #fff;
+            border: none;
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        /* About & Contact */
+        .section-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-credit {
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fa-brands fa-playstation"></i>
+                سعد للإلكترونيات
+            </div>
+            <ul class="nav-links">
+                <li><a href="#products">المنتجات</a></li>
+                <li><a href="#about">عن المحل</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+            <div class="nav-btns">
+                <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="تغيير المظهر">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+                <button class="btn-primary" onclick="promptAdminLogin()">
+                    <i class="fa-solid fa-lock"></i> لوحة التحكم
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>مرحباً بكم في سعد للإلكترونيات</h1>
+        <p>وجهتك الأولى لعالم البلايستيشن والأجهزة الإلكترونية والصيانة الاحترافية منذ عام 1996.</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Filter Options -->
+        <div class="filter-bar" id="products">
+            <button class="filter-btn active" onclick="filterCategory('all', this)">الكل</button>
+            <button class="filter-btn" onclick="filterCategory('playstation', this)">بلايستيشن</button>
+            <button class="filter-btn" onclick="filterCategory('electronics', this)">إلكترونيات</button>
+            <button class="filter-btn" onclick="filterCategory('accessories', this)">ملحقات وإكسسوارات</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- المنتجات تظهر هنا عبر JS -->
+        </div>
+
+        <!-- About Us Section -->
+        <div class="section-box" id="about">
+            <h2 class="section-title"><i class="fa-solid fa-store"></i> من نحن</h2>
+            <p>محل <strong>سعد للإلكترونيات</strong> هو متجر متخصص في بيع وصيانة أجهزة البلايستيشن بكافة أنواعها، والألعاب، والإلكترونيات الذكية. نعمل بخبرة ممتدة منذ عام 1996 لتقديم أفضل المنتجات والخدمات لعملائنا الكرام.</p>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section-box" id="contact">
+            <h2 class="section-title"><i class="fa-solid fa-phone"></i> معلومات التواصل</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent-color);"></i>
+                    <span>الهاتف: 07718277535</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
+                    <a href="https://instagram.com" target="_blank" style="color: var(--text-color); text-decoration: none;">انستغرام المتجر</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAdminPanel()">&times;</span>
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد</h3>
+            <form id="addProductForm" onsubmit="handleAddProduct(event)">
+                <div class="form-group">
+                    <label>اسم المنتج</label>
+                    <input type="text" id="prodTitle" required placeholder="مثال: جهاز بلايستيشن 5">
+                </div>
+                <div class="form-group">
+                    <label>السعر (د.ع)</label>
+                    <input type="number" id="prodPrice" required placeholder="مثال: 650000">
+                </div>
+                <div class="form-group">
+                    <label>القسم</label>
+                    <select id="prodCategory">
+                        <option value="playstation">بلايستيشن</option>
+                        <option value="electronics">إلكترونيات</option>
+                        <option value="accessories">ملحقات وإكسسوارات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>رابط الصورة</label>
+                    <input type="url" id="prodImg" required placeholder="https://example.com/image.jpg">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">إضافة المنتج</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 سعد للإلكترونيات - جميع الحقوق محفوظة</p>
+        <div class="footer-credit">
+            الموقع مصمم ومبرمج بواسطة حسين محمد، رقم الهاتف 07722337379، معرف الإنستغرام xv8f.
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        const ADMIN_CODE = "141312";
+        let isAdminLoggedIn = false;
+
+        // Default products
+        const defaultProducts = [
+            { id: 1, title: "جهاز بلايستيشن 5", price: 680000, category: "playstation", img: "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMlIhnAA85AmlL2malQ6slEyMvt-ZaMHwjF7xnd46pKdnCCstPc3XEHBM8B8AcpVUHNHgRMu0IenT52N4" },
+            { id: 2, title: "مجموعة ألعاب بلايستيشن 4", price: 35000, category: "playstation", img: "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRPURbODZVTJT0u5OFt4wYEGIFoXlPPR-oeAVWxvzgF-dIhS9NSfJEGx7RspXpmZXGsALGD3aPRaTUAPiQ" }
+        ];
+
+        // Load products from LocalStorage
+        function getProducts() {
+            const stored = localStorage.getItem("saad_products");
+            if (!stored) {
+                localStorage.setItem("saad_products", JSON.stringify(defaultProducts));
+                return defaultProducts;
+            }
+            return JSON.parse(stored);
+        }
+
+        // Render products
+        function renderProducts(categoryFilter = 'all') {
+            const grid = document.getElementById("productsGrid");
+            const products = getProducts();
+            grid.innerHTML = "";
+
+            const filtered = categoryFilter === 'all' 
+                ? products 
+                : products.filter(p => p.category === categoryFilter);
+
+            filtered.forEach(prod => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <img src="${prod.img}" class="product-img" alt="${prod.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                    <div class="product-info">
+                        <div class="product-title">${prod.title}</div>
+                        <div class="product-price">${Number(prod.price).toLocaleString()} د.ع</div>
+                        ${isAdminLoggedIn ? `<button class="delete-btn" onclick="deleteProduct(${prod.id})"><i class="fa-solid fa-trash"></i> حذف المنتج</button>` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter functionality
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(cat);
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById("themeBtn");
+            if (body.getAttribute("data-theme") === "dark") {
+                body.setAttribute("data-theme", "light");
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                body.setAttribute("data-theme", "dark");
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        }
+
+        // Admin Auth
+        function promptAdminLogin() {
+            if (isAdminLoggedIn) {
+                document.getElementById("adminModal").style.display = "flex";
+                return;
+            }
+            const pass = prompt("يرجى إدخال رمز دخول الأدمن:");
+            if (pass === ADMIN_CODE) {
+                isAdminLoggedIn = true;
+                alert("تم تسجيل الدخول بنجاح كمدير للنظام!");
+                document.getElementById("adminModal").style.display = "flex";
+                renderProducts(); // Re-render to show delete buttons
+            } else if (pass !== null) {
+                alert("رمز الدخول غير صحيح!");
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById("adminModal").style.display = "none";
+        }
+
+        // Add Product
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const title = document.getElementById("prodTitle").value;
+            const price = document.getElementById("prodPrice").value;
+            const category = document.getElementById("prodCategory").value;
+            const img = document.getElementById("prodImg").value;
+
+            const products = getProducts();
+            const newProd = {
+                id: Date.now(),
+                title,
+                price,
+                category,
+                img
+            };
+
+            products.push(newProd);
+            localStorage.setItem("saad_products", JSON.stringify(products));
+            
+            document.getElementById("addProductForm").reset();
+            closeAdminPanel();
+            renderProducts();
+            alert("تمت إضافة المنتج بنجاح!");
+        }
+
+        // Delete Product
+        function deleteProduct(id) {
+            if (confirm("هل أنت تأكد من رغبتك في حذف هذا المنتج؟")) {
+                let products = getProducts();
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem("saad_products", JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        // Initial Load
+        window.onload = () => {
+            renderProducts();
+        };
+    </script>
+</body>
+</html>
