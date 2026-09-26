@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title id="pageTitle">سعد للالكترونيات | بابل - المسيب - شارع الحسينيه</title>
     
+    <!-- أيقونات المتصفح والشاشة الرئيسية (تتحدث تلقائياً عند تغيير الشعار) -->
+    <link id="dynamicFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M64 352L224 400V256L64 213.333V352Z' fill='%23F15A24'/%3E%3Cpath d='M256 400L448 352V160L256 213.333V400Z' fill='%2300AEEF'/%3E%3Cpath d='M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z' fill='%238DC63F'/%3E%3Cpath d='M256 128V213.333L448 160L256 128Z' fill='%23FFC20E'/%3E%3Cpath d='M64 213.333L256 256V400L64 352V213.333Z' fill='%23EC008C'/%3E%3C/svg%3E">
+    <link id="dynamicAppleTouchIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M64 352L224 400V256L64 213.333V352Z' fill='%23F15A24'/%3E%3Cpath d='M256 400L448 352V160L256 213.333V400Z' fill='%2300AEEF'/%3E%3Cpath d='M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z' fill='%238DC63F'/%3E%3Cpath d='M256 128V213.333L448 160L256 128Z' fill='%23FFC20E'/%3E%3Cpath d='M64 213.333L256 256V400L64 352V213.333Z' fill='%23EC008C'/%3E%3C/svg%3E">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -107,9 +111,15 @@
                             <i class="fa-solid fa-location-dot"></i> <span class="site-address-text">بابل - المسيب - شارع الحسينيه</span>
                         </p>
                     </div>
-                    <!-- أيقونة / شعار الموقع المخفي لفتح لوحة التحكم عند الضغط 3 مرات -->
-                    <div id="siteLogoHeaderContainer" onclick="handleLogoTripleClick()" class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-slate-800 to-cyan-900 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-lg shadow-cyan-500/20 shrink-0 overflow-hidden cursor-pointer select-none transition-transform active:scale-95" title="اضغط 3 مرات لفتح لوحة التحكم">
-                        <i class="fa-solid fa-plug text-xl sm:text-2xl" id="siteLogoHeaderIcon"></i>
+                    <!-- شعار الموقع في الهيدر -->
+                    <div id="siteLogoHeaderContainer" class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-slate-900 to-indigo-950 border border-indigo-500/30 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 shrink-0 overflow-hidden select-none">
+                        <svg id="siteLogoHeaderIcon" class="w-7 h-7" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M64 352L224 400V256L64 213.333V352Z" fill="#F15A24"/>
+                            <path d="M256 400L448 352V160L256 213.333V400Z" fill="#00AEEF"/>
+                            <path d="M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z" fill="#8DC63F"/>
+                            <path d="M256 128V213.333L448 160L256 128Z" fill="#FFC20E"/>
+                            <path d="M64 213.333L256 256V400L64 352V213.333Z" fill="#EC008C"/>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -131,8 +141,12 @@
                     <button onclick="toggleSidebarMenu()" class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><i class="fa-solid fa-xmark text-lg"></i></button>
                     <div class="flex items-center gap-2">
                         <span class="font-black text-white text-sm site-name-text">سعد للالكترونيات</span>
-                        <div id="siteLogoSidebarContainer" class="w-9 h-9 rounded-xl bg-cyan-900/50 border border-cyan-500/40 flex items-center justify-center text-cyan-400 overflow-hidden">
-                            <i class="fa-solid fa-plug" id="siteLogoSidebarIcon"></i>
+                        <div id="siteLogoSidebarContainer" class="w-9 h-9 rounded-xl bg-indigo-950 border border-indigo-500/40 flex items-center justify-center text-white overflow-hidden">
+                            <svg id="siteLogoSidebarIcon" class="w-5 h-5" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M64 352L224 400V256L64 213.333V352Z" fill="#F15A24"/>
+                                <path d="M256 400L448 352V160L256 213.333V400Z" fill="#00AEEF"/>
+                                <path d="M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z" fill="#8DC63F"/>
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -573,12 +587,20 @@
 
     <!-- Footer -->
     <footer class="bg-[#0e0e17] text-white border-t border-white/10 py-6 mt-auto text-center space-y-3">
-        <div class="flex items-center justify-center gap-2 font-black text-cyan-400">
-            <i class="fa-solid fa-plug"></i><span class="site-name-text">سعد للالكترونيات</span>
+        <div class="flex items-center justify-center gap-2.5 font-black text-cyan-400">
+            <!-- أيقونة الموقع في الفوتر (قابلة للنقر لفتح لوحة التحكم) -->
+            <div id="siteLogoFooterContainer" onclick="promptAdminPin()" class="w-8 h-8 rounded-xl bg-indigo-950 border border-indigo-500/40 flex items-center justify-center text-white overflow-hidden shrink-0 cursor-pointer select-none transition-transform hover:scale-110 active:scale-95 shadow-md" title="اضغط لفتح لوحة التحكم">
+                <svg id="siteLogoFooterIcon" class="w-5 h-5" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M64 352L224 400V256L64 213.333V352Z" fill="#F15A24"/>
+                    <path d="M256 400L448 352V160L256 213.333V400Z" fill="#00AEEF"/>
+                    <path d="M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z" fill="#8DC63F"/>
+                    <path d="M256 128V213.333L448 160L256 128Z" fill="#FFC20E"/>
+                    <path d="M64 213.333L256 256V400L64 352V213.333Z" fill="#EC008C"/>
+                </svg>
+            </div>
+            <span class="site-name-text">سعد للالكترونيات</span>
         </div>
         <p class="text-xs text-gray-400">العنوان: <span class="site-address-text">بابل - المسيب - شارع الحسينيه</span></p>
-
-        <!-- تم إزالة زر الإدارة البارز من هنا بناءً على طلبك -->
 
         <div class="pt-2 text-[11px] text-gray-400 flex items-center justify-center gap-2 flex-wrap border-t border-white/5 max-w-lg mx-auto">
             <span>تم التصميم بواسطة <span id="devNameContainer"></span></span> | 
@@ -610,22 +632,6 @@
         });
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-        // نظام النقرات الثلاث لفتح لوحة التحكم من خلال أيقونة الهيدر
-        let logoClickCount = 0;
-        let logoClickTimer = null;
-        function handleLogoTripleClick() {
-            logoClickCount++;
-            if(logoClickCount === 1) {
-                logoClickTimer = setTimeout(() => {
-                    logoClickCount = 0;
-                }, 500); // مهلة نصف ثانية للنقرات الثلاث
-            } else if(logoClickCount === 3) {
-                clearTimeout(logoClickTimer);
-                logoClickCount = 0;
-                promptAdminPin();
-            }
-        }
 
         const firebaseConfig = {
             apiKey: "AIzaSyB-rA8w5O7MLCtHFYDZtBpfFfYCRqHU4XQ",
@@ -670,6 +676,16 @@
         let categoriesList = [];
         let currentCategory = 'all';
         let searchQuery = '';
+
+        const defaultPs1Svg = `<svg class="w-full h-full p-0.5" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M64 352L224 400V256L64 213.333V352Z" fill="#F15A24"/>
+            <path d="M256 400L448 352V160L256 213.333V400Z" fill="#00AEEF"/>
+            <path d="M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z" fill="#8DC63F"/>
+            <path d="M256 128V213.333L448 160L256 128Z" fill="#FFC20E"/>
+            <path d="M64 213.333L256 256V400L64 352V213.333Z" fill="#EC008C"/>
+        </svg>`;
+
+        const defaultPs1DataUri = `data:image/svg+xml;utf8,<svg viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M64 352L224 400V256L64 213.333V352Z' fill='%23F15A24'/><path d='M256 400L448 352V160L256 213.333V400Z' fill='%2300AEEF'/><path d='M64 181.333L256 128L448 181.333L256 234.667L64 181.333Z' fill='%238DC63F'/><path d='M256 128V213.333L448 160L256 128Z' fill='%23FFC20E'/><path d='M64 213.333L256 256V400L64 352V213.333Z' fill='%23EC008C'/></svg>`;
 
         let siteConfig = {
             siteName: "سعد للالكترونيات",
@@ -853,13 +869,22 @@
 
             const headerContainer = document.getElementById('siteLogoHeaderContainer');
             const sidebarContainer = document.getElementById('siteLogoSidebarContainer');
+            const footerLogoContainer = document.getElementById('siteLogoFooterContainer');
+            const faviconEl = document.getElementById('dynamicFavicon');
+            const appleTouchIconEl = document.getElementById('dynamicAppleTouchIcon');
 
             if(siteConfig.siteLogo && siteConfig.siteLogo.trim() !== '') {
                 headerContainer.innerHTML = `<img src="${siteConfig.siteLogo}" class="w-full h-full object-cover">`;
                 sidebarContainer.innerHTML = `<img src="${siteConfig.siteLogo}" class="w-full h-full object-cover">`;
+                footerLogoContainer.innerHTML = `<img src="${siteConfig.siteLogo}" class="w-full h-full object-cover">`;
+                if(faviconEl) faviconEl.href = siteConfig.siteLogo;
+                if(appleTouchIconEl) appleTouchIconEl.href = siteConfig.siteLogo;
             } else {
-                headerContainer.innerHTML = `<i class="fa-solid fa-plug text-xl sm:text-2xl" id="siteLogoHeaderIcon"></i>`;
-                sidebarContainer.innerHTML = `<i class="fa-solid fa-plug" id="siteLogoSidebarIcon"></i>`;
+                headerContainer.innerHTML = defaultPs1Svg;
+                sidebarContainer.innerHTML = defaultPs1Svg;
+                footerLogoContainer.innerHTML = defaultPs1Svg;
+                if(faviconEl) faviconEl.href = defaultPs1DataUri;
+                if(appleTouchIconEl) appleTouchIconEl.href = defaultPs1DataUri;
             }
             
             const devNameContainer = document.getElementById('devNameContainer');
@@ -956,7 +981,7 @@
             siteConfig.siteLogo = "";
             document.getElementById('siteLogoData').value = "";
             document.getElementById('siteLogoPreviewContainer').classList.add('hidden');
-            saveConfig('تمت إعادة أيقونة الموقع الافتراضية');
+            saveConfig('تمت إعادة أيقونة شعار البلايستيشن الافتراضية');
             logActivity('قام بإعادة شعار الموقع للوضع الافتراضي');
         }
 
@@ -1650,7 +1675,7 @@
                 pinInput.value = '';
                 closePinModal();
                 openAdminModal();
-                logActivity('قام بتسجيل الدخول إلى لوحة التحكم');
+                logActivity('قام بتجيل الدخول إلى لوحة التحكم');
                 showToast(`أهلاً بك يا ${u}!`);
             } else { 
                 pinInput.value = '';
@@ -1732,7 +1757,9 @@
             else if(perms.site) switchAdminTab('siteTab');
             else if(perms.social) switchAdminTab('socialTab');
         }
-        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+        function closeAdminModal() { 
+            document.getElementById('adminModal').classList.add('hidden'); 
+        }
 
         function showToast(msg) {
             const c = document.getElementById('toastContainer');
